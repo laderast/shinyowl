@@ -1,3 +1,29 @@
 ---
-title: "Make it Modular"
+title: "Make it Modular and Fast"
 ---
+
+## Shiny Modules
+
+- Reuse Code 
+
+
+
+
+## profvis()
+
+> Premature optimization is the root of all evil
+
+Optimization takes time and effort. 
+
+
+
+
+## shinyLoadTest
+
+
+
+
+
+
+
+

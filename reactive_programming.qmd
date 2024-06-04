@@ -1,0 +1,45 @@
+---
+title: "Demystifying Reactive Programming"
+engine: knitr
+filters: 
+  - shinylive
+---
+
+## `observeEvent()` is for side effects
+
+
+
+## `eventReactive()` is for specific events
+
+
+
+## `isolate()`: read once, don't use a dependency
+
+
+## Be careful with `observe()`
+
+
+```{shinylive-r}
+#| components: [editor, viewer]
+#| standalone: true
+#| viewerHeight: 800
+library(palmerpenguins)
+library(ggplot2)
+library(dplyr)
+library(shiny)
+library(bslib)
+
+ui <- shiny::fluidPage(
+  actionButton("buttonup", "Press to Increment")
+  actionButton("buttondown", "Press to Decrement"),
+  textOutput("my_text")
+)
+
+server <- function(input, output){
+  
+  reactiveEvent(
+    
+  )
+  
+}
+```
