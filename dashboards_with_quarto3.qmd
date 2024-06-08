@@ -1,20 +1,31 @@
 ---
 title: "Dashboards with Quarto"
 server: shiny
+format: dashboard
 ---
 
-## Context is Key with Quarto Dashboards
+```{r}
+#| context: setup
+library(ggplot2)
+library(palmerpenguins)
+data(penguins)
+choices <- c("species", "island")  
+```
+
+## {.toolbar}
 
 ```{r}
-choices <- c("species", "island")   
 selectInput("variable", "Select Variable to color by", choices)
+```
+
+## Row
+
+```{r}
 plotOutput("my_plot")
 ```
 
 ```{r}
 #| context: server
-library(ggplot2)
-library(palmerpenguins)
 output$my_plot <- renderPlot({
   req(input$variable)
   
@@ -24,6 +35,5 @@ output$my_plot <- renderPlot({
         color= .data[[input$variable]] ) +
       geom_point()
     
-  
 })
 ```

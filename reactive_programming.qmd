@@ -1,45 +1,92 @@
 ---
 title: "Demystifying Reactive Programming"
 engine: knitr
-filters: 
-  - shinylive
+format: html
 ---
 
-## `observeEvent()` is for side effects
+## Avoiding Tying Big Changes to Controls
 
+## `reactive()` - the most general case
+
+If any one of `latSlider`, or `longSlider` are changed, then recompute.
+
+```{mermaid}
+flowchart LR
+    D["coords()"] --> E
+    B[latSlider] --> D
+    C[longSlider] --> D
+    E[leafletPlot]
+```
+
+## `isolate()`: don't use an input as a dependency
+
+Use in a reactive to disconnect controls from recomputation. If `longSlider` changes, then don't recompute. If `latSlider` changes, recompute
+
+```{mermaid}
+flowchart LR
+    D["coords()"] --> E
+    B["latSlider"] --> D
+    C["isolate(longSlider)"] --X --> D
+    E[leafletPlot]
+```
+
+## `reactiveValues`
+
+Use like a list to store values for multiple reactive expressions. Recompute when any reactive expression changes:
+
+
+```{mermaid}
+flowchart LR
+  D["coords()"] --> E
+  E[leafletPlot]
+  subgraph reactiveValues
+    B[latSlider] --> D
+    C[longSlider] --> D
+  end
+  
+```
+
+## `req()`
+
+Use in a reactive to require an input value before any calculation. Don't compute at all unless `longSlider` is set.
+
+
+```{mermaid}
+flowchart LR
+    D["coords()"] --> E
+    B["latSlider"] --> D
+    C["req(longSlider)"] --> D
+    E[leafletPlot]
+```
 
 
 ## `eventReactive()` is for specific events
 
+Trigger reactive computation only when `actButton` is pressed (this is the event). Don't change when `latSlider` or `longSlider` are changed. Returns a reactive when called
+
+```{mermaid}
+flowchart LR
+  A[actButton] --> D
+  D["eventReactive(input$actButton, )"] --> E
+  B[latSlider] -- X --> D
+  C[longSlider] -- X --> D
+  E[leafletPlot]
+```
+
+## `observeEvent()` is for side effects
+
+Use `observeEvent()` when you don't need to return a reactive; usually something like saving a file, or printing a file, or triggering a function.
 
 
-## `isolate()`: read once, don't use a dependency
+```{r}
+
+```
+
+### Useful with `observeEvent()`: `bslib::input_task_button()`
+
+"Locks up" when pressed. Won't let you press again until your task is done. 
 
 
 ## Be careful with `observe()`
 
 
-```{shinylive-r}
-#| components: [editor, viewer]
-#| standalone: true
-#| viewerHeight: 800
-library(palmerpenguins)
-library(ggplot2)
-library(dplyr)
-library(shiny)
-library(bslib)
-
-ui <- shiny::fluidPage(
-  actionButton("buttonup", "Press to Increment")
-  actionButton("buttondown", "Press to Decrement"),
-  textOutput("my_text")
-)
-
-server <- function(input, output){
-  
-  reactiveEvent(
-    
-  )
-  
-}
-```
