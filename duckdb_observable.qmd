@@ -17,18 +17,17 @@ data(flights)
 dbcon <- dbConnect(duckdb())
 duckdb::duckdb_register(dbcon, "flights", flights)
 #num_rows <- dbExecute(dbcon, "create table flights as select * FROM 'data/flights-10m.parquet'")
-origin <- dbGetQuery(dbcon, "select distinct origin from flights")
+origin <- dbGetQuery(dbcon, "select distinct dest from flights")
 ```
 
-## {.toolbar}
+# {.toolbar}
 
 ```{r}
 sliderInput("distance", "Select Distance", min = 11, max=4962, value = 2000)
-selectInput("origin", "Select Origin", choices=origin, selected=origin[1])
-#actionButton("recalc", "Regraph")
+selectInput("origin", "Select Destination", choices=origin, selected=origin[1])
 ```
 
-## Row
+# Row
 
 ```{r}
 plotOutput("flights_delay")
@@ -51,7 +50,7 @@ plotOutput("flights_delay")
 flights_filtered <- reactive({
   carr <- input$origin
   distance <- input$distance
-  query <- glue::glue_sql("select * from flights WHERE distance < {distance} and origin = {carr}", .con = dbcon)
+  query <- glue::glue_sql("select * from flights WHERE distance < {distance} and dest = {carr}", .con = dbcon)
   
   print(query)
   out_frame <- dbGetQuery(conn = dbcon, statement = query)
