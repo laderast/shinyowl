@@ -6,9 +6,21 @@ format: html
 
 ## Avoiding Tying Big Changes to Controls
 
+```{r}
+#| context: setup
+
+library(shiny)
+library(bslib)
+```
+
 ## `reactive()` - the most general case
 
-If any one of `latSlider`, or `longSlider` are changed, then recompute.
+```{r}
+sliderInput("latSlider", "Choose a Latitude", min = 30, max=40, value=35)
+sliderInput("longSlider", "Choose a Longitude", min= 30, max=40, value=35)
+```
+
+If either `latSlider`, or `longSlider` are changed, then recompute.
 
 ```{mermaid}
 flowchart LR
@@ -62,6 +74,12 @@ flowchart LR
 
 ## `eventReactive()` is for specific events
 
+```{r}
+actionButton("actButton", "Push to Update")
+sliderInput("latSlider", "Choose a Latitude", min = 30, max=40, value=35)
+sliderInput("longSlider", "Choose a Longitude", min= 30, max=40, value=35)
+```
+
 Trigger reactive computation only when `actButton` is pressed (this is the event). Don't change when `latSlider` or `longSlider` are changed. Returns a reactive when called
 
 ```{mermaid}
@@ -72,6 +90,7 @@ flowchart LR
   C[longSlider] -- X --> D
   E[leafletPlot]
 ```
+
 
 ## `observeEvent()` is for side effects
 
@@ -87,6 +106,32 @@ Use `observeEvent()` when you don't need to return a reactive; usually something
 "Locks up" when pressed. Won't let you press again until your task is done. 
 
 
+```{r}
+#| eval: false
+
+ui <- page_sidebar(
+  sidebar = sidebar(
+    open = "always",
+    input_task_button("resample", "Resample"),
+  ),
+  verbatimTextOutput("summary")
+)
+
+server <- function(input, output, session) {
+  sample <- eventReactive(input$resample, ignoreNULL=FALSE, {
+    Sys.sleep(2)  # Make this artificially slow
+    rnorm(100)
+  })
+
+  output$summary <- renderPrint({
+    summary(sample())
+  })
+}
+
+shinyApp(ui, server)
+```
+
+
 ## Be careful with `observe()`
 
-
+### `observe() |> bind_event()`

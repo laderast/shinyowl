@@ -1,0 +1,56 @@
+---
+title: "Speeding up with DuckDB"
+server: shiny
+format: html
+---
+
+<https://www.appsilon.com/post/r-shiny-duckd?utm_source=social&utm_medium=linkedin&utm_campaign=blog&utm_term=damian-rodziewicz>
+
+```{r}
+#| context: setup
+
+library(nycflights13)
+library(duckdb)
+library(ggplot2)
+data(flights)
+
+dbcon <- dbConnect(duckdb())
+duckdb::duckdb_register(dbcon, "flights", flights)
+#num_rows <- dbExecute(dbcon, "create table flights as select * FROM 'data/flights-10m.parquet'")
+carrier <- dbGetQuery(dbcon, "select distinct carrier from flights")
+```
+
+```{r}
+sliderInput("distance", "Select Distance", min = 11, max=4962, value = 2000)
+selectInput("carrier", "Select Carrier", choices=carrier, selected=carrier[1])
+```
+
+```{r}
+plotOutput("flights_delay")
+```
+
+
+```{r}
+#| context: server
+flights_filtered <- reactive({
+  carr <- as.character(input$carrier)
+  distance <- input$distance
+  query <- glue::glue_sql("select * from flights WHERE distance > {distance} and carrier = {carr}", .con = dbcon)
+  
+  print(query)
+  out_frame <- dbGetQuery(conn = dbcon, statement = query)
+  return(out_frame)
+})
+
+#output$flights_table <- renderTable(
+#  knitr::kable(flights_filtered())
+  
+#)
+
+output$flights_delay <- renderPlot({
+  
+  ggplot(flights_filtered(), aes(x=month, y=arr_delay)) +
+    geom_point()
+})
+
+```
