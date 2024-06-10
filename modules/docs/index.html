@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Shiny Modules: Why you might want to use them</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Ted Laderas" />
+    <meta name="date" content="2021-05-13" />
+    <script src="libs/header-attrs/header-attrs.js"></script>
+    <link href="libs/tile-view/tile-view.css" rel="stylesheet" />
+    <script src="libs/tile-view/tile-view.js"></script>
+    <link href="libs/tachyons/tachyons.min.css" rel="stylesheet" />
+    <link href="libs/panelset/panelset.css" rel="stylesheet" />
+    <script src="libs/panelset/panelset.js"></script>
+    <link rel="stylesheet" href="xaringan-themer.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# Shiny Modules: Why you might want to use them
+### Ted Laderas
+### DNAnexus
+### 2021-05-13
+
+---
+
+
+
+
+
+
+
+
+# Why Modules?
+
+- Motivating example
+- Why?
+- module code
+
+---
+# Motivating Example
+
+- An ui that lets you pass in a dataset
+- Lets you select columns from that dataset
+- Want multiple plots in the same app
+
+---
+&lt;img src="module1.png"&gt;
+
+
+---
+# Using Shiny modules
+
+.pull-left.tiny[
+
+## ui
+
+
+
+
+&lt;code class ='r hljs remark-code'&gt;ui &lt;- fluidPage( &amp;nbsp;&amp;nbsp;&lt;br&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&lt;span style="background-color:#cdecff"&gt;select_hist_ui&lt;/span&gt;(id = "&lt;span style="background-color:#ffb700"&gt;mtcars_module&lt;/span&gt;", &lt;br&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;var_choices = mtcars_var_choices)&lt;br&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;)&lt;/code&gt;
+
+- note that .bg-lightest-blue[`select_hist_ui()`] is a function that takes an `id` argument
+- uses an `id` called .bg-gold[`mtcars_module`]
+  
+]
+
+.pull-right.tiny[
+
+]
+
+---
+# Using Shiny modules
+
+.pull-left.tiny[
+
+## ui
+
+
+
+
+&lt;code class ='r hljs remark-code'&gt;ui &lt;- fluidPage( &amp;nbsp;&amp;nbsp;&lt;br&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&lt;span style="background-color:#cdecff"&gt;select_hist_ui&lt;/span&gt;(id = "&lt;span style="background-color:#ffb700"&gt;mtcars_module&lt;/span&gt;", &lt;br&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;var_choices = mtcars_var_choices)&lt;br&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;)&lt;/code&gt;
+
+]
+
+.pull-right.tiny[
+
+## server
+
+
+
+&lt;code class ='r hljs remark-code'&gt;server &lt;- function(input, output) {&lt;br&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&lt;span style="background-color:#cdecff"&gt;select_hist_server&lt;/span&gt;(id="&lt;span style="background-color:#ffb700"&gt;mtcars_module&lt;/span&gt;", &lt;br&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;data=mtcars)&lt;br&gt;}&lt;/code&gt;
+
+- Note that we have a function .bg-lightest-blue[`select_hist_server()`] 
+- Also uses the `id` .bg-gold[`"mtcars_module"`] 
+]
+
+
+---
+# Reusing code
+
+.pull-left.tiny[
+
+## ui
+
+
+
+
+&lt;code class ='r hljs remark-code'&gt;ui &lt;- fluidPage( &amp;nbsp;&amp;nbsp;&lt;br&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&lt;span style="background-color:#cdecff"&gt;select_hist_ui&lt;/span&gt;(id = "mtcars_module", &lt;br&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;var_choices = mtcars_var_choices),&lt;br&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&lt;span style="background-color:#cdecff"&gt;select_hist_ui&lt;/span&gt;(id = "&lt;span style="background-color:#ffb700"&gt;penguin_module&lt;/span&gt;",&lt;br&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;var_choices = penguin_choices)&lt;br&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;)&lt;/code&gt;
+
+- note we have two .bg-lightest-blue[`select_hist_ui()`] functions
+- the second one has the `id` of .bg-gold[`penguin_module`]
+
+]
+
+.pull-right.tiny[
+
+]
+---
+
+# Reusing code
+
+.pull-left.tiny[
+
+## ui
+
+
+
+
+&lt;code class ='r hljs remark-code'&gt;ui &lt;- fluidPage( &amp;nbsp;&amp;nbsp;&lt;br&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&lt;span style="background-color:#cdecff"&gt;select_hist_ui&lt;/span&gt;(id = "mtcars_module", &lt;br&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;var_choices = mtcars_var_choices),&lt;br&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&lt;span style="background-color:#cdecff"&gt;select_hist_ui&lt;/span&gt;(id = "&lt;span style="background-color:#ffb700"&gt;penguin_module&lt;/span&gt;",&lt;br&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;var_choices = penguin_choices)&lt;br&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;)&lt;/code&gt;
+
+]
+
+.pull-right.tiny[
+
+## server
+
+
+
+&lt;code class ='r hljs remark-code'&gt;server &lt;- function(input, output) {&lt;br&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&lt;span style="background-color:#cdecff"&gt;select_hist_server&lt;/span&gt;(id="mtcars_module", &lt;br&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;data=mtcars)&lt;br&gt;&amp;nbsp;&amp;nbsp;&lt;br&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&lt;span style="background-color:#cdecff"&gt;select_hist_server&lt;/span&gt;(id="&lt;span style="background-color:#ffb700"&gt;penguin_module&lt;/span&gt;", &lt;br&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;data=penguins)&lt;br&gt;}&lt;/code&gt;
+
+- Note that we have two functions .bg-lightest-blue[`select_hist_server()`] 
+- The second one use the `id` .bg-gold[`"penguin_module"`] 
+- We can have two different plots/interfaces!
+]
+
+---
+# Two modules, two datasets
+
+.pull-left[
+- dataset is `mtcars`
+
+&lt;img src="module1.png" width=500&gt;
+
+]
+.pull-right[
+- dataset is `penguins`
+
+&lt;img src="module2.png" width=400&gt;
+]
+
+---
+# You may want to use Shiny Modules if:
+
+- You want to reuse your code, especially in the same app
+- You are tired of thinking up unique ids for all the elements in your app
+- You need to break up a monolithic shiny application into pieces
+- Separate presentation from code
+
+---
+# Maybe not:
+
+- Your app is a one and done - single version
+- It doesn't have that many controls
+
+---
+# ui module
+
+
+
+
+&lt;code class ='r hljs remark-code'&gt;select_hist_ui &lt;- function(id, var_choices){&lt;br&gt;&amp;nbsp;&amp;nbsp;#initialize a namespace ID function - our key to our namespace&lt;br&gt;&amp;nbsp;&amp;nbsp;&lt;span style="background-color:#ffb700"&gt;ns &lt;- NS(id)&lt;/span&gt;&lt;br&gt;&amp;nbsp;&amp;nbsp;&lt;br&gt;&amp;nbsp;&amp;nbsp;#return a tagList with our ui elements&lt;br&gt;&amp;nbsp;&amp;nbsp;tagList(&lt;br&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;#note we have to wrap the input id in our namespace function ns()&lt;br&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;selectInput(inputId = &lt;span style="background-color:#ffb700"&gt;ns("x_var")&lt;/span&gt;, label="Select X Variable", &lt;br&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;choices=var_choices, selected = var_choices[1]),&lt;br&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;plotOutput(&lt;span style="background-color:#ffb700"&gt;ns("hist_plot")&lt;/span&gt;)&lt;br&gt;&amp;nbsp;&amp;nbsp;)&lt;br&gt;}&lt;/code&gt;
+
+- Initialize the namespace for `id` using .bg-gold[`NS()`] function
+- Need to refer to any controls/plots with ids wrapped in `ns()`, such as .bg-gold[`ns("x_var")`] or
+.bg-gold[`ns("hist_plot")`]
+
+---
+# Server Module
+
+
+
+
+&lt;code class ='r hljs remark-code'&gt;select_hist_server &lt;- function(id, data) {&lt;br&gt; &amp;nbsp;&lt;span style="background-color:#ffb700"&gt;moduleServer&lt;/span&gt;(id, function(input, output, session) {&lt;br&gt;&lt;br&gt;&lt;span style="background-color:#ffff7f"&gt; &amp;nbsp;&amp;nbsp;&amp;nbsp;output$hist_plot &lt;- renderPlot({&lt;/span&gt;&lt;br&gt;&lt;span style="background-color:#ffff7f"&gt; &amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;#notice we don't use ns() here to refer to input objects&lt;/span&gt;&lt;br&gt;&lt;span style="background-color:#ffff7f"&gt; &amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;x_var &lt;- input$x_var&lt;/span&gt;&lt;br&gt;&lt;br&gt;&lt;span style="background-color:#ffff7f"&gt; &amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;data %&gt;% ggplot(aes_string(x=x_var)) +&lt;/span&gt;&lt;br&gt;&lt;span style="background-color:#ffff7f"&gt; &amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;geom_histogram()&lt;/span&gt;&lt;br&gt;&lt;span style="background-color:#ffff7f"&gt; &amp;nbsp;&amp;nbsp;&amp;nbsp;&lt;/span&gt;&lt;br&gt;&lt;span style="background-color:#ffff7f"&gt; &amp;nbsp;&amp;nbsp;&amp;nbsp;})&lt;/span&gt;&lt;br&gt; &amp;nbsp;&amp;nbsp;&amp;nbsp;&lt;br&gt;})&lt;br&gt; &amp;nbsp;&lt;br&gt;}&lt;/code&gt;
+
+- .bg-gold[`moduleServer()`] encapsulates your server code (in .bg-yellow[yellow])
+- be really careful with closing curly brackets and parentheses
+
+---
+# Try them out
+
+Install `shiny`, `palmerpenguins`, `tidyverse` first
+
+Clone this repository:
+
+https://github.com/laderast/shiny_module_tutorial/
+
+Open up `shiny_module_tutorial.Rproj`
+
+- Individual apps are in `module_demo_01` and `module_demo_02`
+
+---
+# For More Info/Thanks!
+
+- [Mastering Shiny: Modules](https://mastering-shiny.org/scaling-modules.html)
+- Slides were done using `xaringan`, `xaringanExtra`, and `flair`
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"ratio": "16:9",
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>

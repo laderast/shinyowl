@@ -1,0 +1,62 @@
+---
+title: "Speeding up with DuckDB"
+server: shiny
+format: dashboard
+---
+
+```{r}
+#| context: setup
+
+library(nycflights13)
+library(duckdb)
+library(ggplot2)
+data(flights)
+
+dbcon <- dbConnect(duckdb())
+duckdb::duckdb_register(dbcon, "flights", flights)
+```
+
+## {.toolbar}
+
+```{ojs}
+
+viewof xcol = Inputs.select(cols, {label: "Origin", value: cols[0]})
+
+viewof distance = Inputs.range(
+  [11, 4500], 
+  {value: 2000, step: 100, label: "Distance Traveled (m):"}
+)
+
+viewof button = Inputs.button("Recalculate")
+```
+
+
+
+## 
+
+```{ojs}
+Plot.plot({
+    marks: [
+    Plot.boxY(transpose(flights_filtered), 
+    {x: "carrier", y: "arr_delay", fill: "carrier"})
+    ]
+    })
+```
+
+
+```{r}
+#| context: server
+flights_filtered <- eventReactive(input$button,{
+  carr <- input$xcol
+  distance <- input$distance
+  query <- glue::glue_sql("select * from flights WHERE distance < {distance} and origin = {carr}", .con = dbcon)
+  
+  print(query)
+  out_frame <- dbGetQuery(conn = dbcon, statement = query)
+  return(out_frame)
+})
+
+cols <- reactive({dbGetQuery(dbcon, "select distinct origin from flights")}[, "origin"])  
+  
+ojs_define(flights_filtered, cols)
+```

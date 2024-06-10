@@ -62,6 +62,22 @@ flights_filtered <- reactive({
 #  knitr::kable(flights_filtered())
   
 #)
+```
+
+
+::: {.panel-fill layout="[ [1], [1] ]"}
+
+```{ojs}
+Plot.rect(transpose(selectedData), Plot.bin({fillOpacity: "count"}, {x: xcol, y: ycol, fill: "species"})).plot()
+```
+
+```{ojs}
+import {SummaryTable} from "@observablehq/summary-table"
+
+SummaryTable(transpose(selectedData))
+```
+
+:::
 
 output$flights_delay <- renderPlot({
   

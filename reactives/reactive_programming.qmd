@@ -1,10 +1,11 @@
 ---
 title: "Demystifying Reactive Programming"
 engine: knitr
-format: html
+format: revealjs
+server: shiny
 ---
 
-## Avoiding Tying Big Changes to Controls
+## Avoid Tying Big Changes to Controls
 
 ```{r}
 #| context: setup
@@ -12,6 +13,18 @@ format: html
 library(shiny)
 library(bslib)
 ```
+
+## Direct Interaction
+
+If any slider changes, then update plot
+
+```{mermaid}
+flowchart LR
+    B[latSlider] --> E
+    C[longSlider] --> E
+    E[leafletPlot]
+```
+
 
 ## `reactive()` - the most general case
 

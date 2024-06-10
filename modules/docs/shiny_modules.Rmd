@@ -1,0 +1,268 @@
+---
+title: "Shiny Modules"
+author: "Ted Laderas"
+date: "5/12/2019"
+output: 
+  html_document:
+    highlight: tango
+    toc: true
+    toc_float: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(shiny)
+```
+
+## Why Shiny Modules?
+
+There are two main reasons why you'd want to modularize your shiny code.
+
+1. **Don't Repeat Yourself**. One issue with monolithic Shiny apps is that it is difficult to reuse parts of them. By taking a little more time and designing each part of your app so they are modular with Shiny modules. 
+
+2. **Managing all of the ids in a global namespace is difficult**. Remember that for a shiny app, each ui element needs a unique id. As you add more and more ui elements, it becomes difficult to name and track all of these. Shiny modules give each module pair their own namespace, which means that you can reuse element ids without worry. 
+
+The goal of this document is to get you to the point where you feel comfortable with building and using Shiny Modules in your work.
+
+## Shiny Module Concepts
+
+A Shiny module usually will have two functions: a `ui` functions, and a `server` function. They are tied together by a *namespace* id, so they know what *namespace* to look into. 
+
+A *namespace* can be thought of an isolated little world where you can reuse ids without worries. Say I had two different parts of my application, a histogram, and a scatterplot, and they both have `selectInputs`. If we don't use modules, we have to use unique ids for both of these selectInputs. For example, we might use 
+
+```
+selectInput(id = "select_box_histogram")
+```
+for the histogram, and
+
+```
+selectInput(id = "select_box_scatter")
+```
+
+for the scatterplot.
+
+Keeping track of these unique ids is a pain. So, let's make two different *namespaces* for each part of these apps, one called `histogram` and one called `scatter`. 
+
+If I have an id called `select_box` in the `histogram` namespace, it will not collide (cause Shiny to throw up its hands in confusion) for an id called `select_box` in the `scatter` namespace.
+
+Another consequence of namespaces is that you can reuse code and have the code each have an independent namespace.
+
+I try to use the naming convention of `MODULENAME_ui` for the `ui` function, and `MODULENAME_server` for the server function. 
+
+## Our Goal
+
+We want to build a reusable module that will make a scatterplot when we pass a data frame into it. Here's our app that uses our module pair, (`select_scatter_ui()` and `select_scatter_server()`). `select_scatter_ui` will take two arguments: the namespace id, and the choices we want to pass into our `selectInput` dropdown. `select_scatter_server()` takes the following arguments: `input`, `output`, `session`, and an additional one we're adding called `data`. 
+
+Try running the app first so you can see what it does.
+
+```{r eval=FALSE}
+shiny::runApp("module_demo_01")
+```
+
+Let's first look at the `app.R` in `module_demo_01` that uses our modules. For simplicity's sake, I've omitted the library calls below.
+
+The first thing to note that we specify the variable `mtcars_id`, which is the id of the namespace shared between the `select_scatter_ui()` and `select_scatter_server()` functions in our module. We're also picking the column name choices for our app by calling `colnames()` on `mtcars`. Then we load our module code.
+
+```
+mtcars_id <- "mtcars_mod"
+mtcars <- data.frame(mtcars)
+mtcars_var_choices = colnames(mtcars)
+
+#load the module code
+source("modules.R")
+```
+
+In our `ui` function, we directly call our ui module function called `select_scatter_ui()`, and `mtcars_id` is our id argument. We have an additional argument called `var_choices` where we pass our `mtcars_var_choices` in.
+
+```
+ui <- fluidPage(
+    #select_scatter_ui is how we initialize the ui module with id "mtcars"
+    select_scatter_ui(id = mtcars_id, var_choices = mtcars_var_choices)
+)
+```
+
+In our server function, we're using the `callModule()` function to invoke our server module function, `select_scatter_server()`, passing it `mtcars_id` and `mtcars` as our function. 
+
+```
+server <- function(input, output) {
+    #callModule on select_scatter_server with id "mtcars"
+    callModule(select_scatter_server, mtcars_id, data=mtcars)
+}
+```
+
+Having specified our `ui` and `server` functions, we run our shiny app as usual:
+
+```
+# Run the application 
+shinyApp(ui = ui, server = server)
+```
+
+Here's the full app.R code for your reference:
+
+```
+mtcars_id <- "mtcars_mod"
+mtcars <- data.frame(mtcars)
+mtcars_var_choices = colnames(mtcars)
+
+#load the module code
+source("modules.R")
+
+ui <- fluidPage(
+    #select_scatter_ui is how we initialize the ui module with id "mtcars"
+    select_scatter_ui(
+      id = mtcars_id,
+      var_choices = mtcars_var_choices)
+)
+
+# Define server logic required to draw a histogram
+server <- function(input, output) {
+    #callModule on select_scatter_server with id "mtcars"
+    callModule(select_scatter_server, 
+        id=mtcars_id, 
+        data=mtcars)
+}
+
+# Run the application 
+shinyApp(ui = ui, server = server)
+```
+# Reusing our code
+
+So what if we want to have two independent instances of our module? They will need separate namespace ids so their elements, such as the `selectInput` UI elements will not collide. Try running `module_demo_02` and notice that it has two instances.
+
+```{r eval=FALSE}
+shiny::runApp("module_demo_02")
+```
+
+In the first part of the code, we specify the elements for each dataset. Our first instance uses `mtcars` as before, and our new instance will use `iris`:
+
+```
+data(mtcars)
+mtcars_id <- "mtcars_mod"
+mtcars <- data.frame(mtcars)
+mtcars_var_choices = colnames(mtcars)
+
+data(iris)
+iris_id <- "iris_mod"
+iris_var_choices <- colnames(iris)
+```
+
+In our `ui` function, we call two separate instances of `select_scatter_ui`, each with our separate ids, `mtcars_id` and `iris_id`:
+
+```
+ui <- fluidPage(
+    #select_scatter_ui is how we initialize the ui module with id "mtcars"
+    select_scatter_ui(id = mtcars_id, var_choices = mtcars_var_choices),
+    #use select_scatter_ui with iris data
+    select_scatter_ui(id = iris_id, var_choices = iris_var_choices)
+)
+```
+
+In our `server` function, we do the same, except with `callModule`, and pass our unique ids for our two modules:
+
+```
+# Define server logic required to draw a histogram
+server <- function(input, output) {
+    #callModule on select_scatter_server with mtcars_id
+    callModule(select_scatter_server, mtcars_id, data=mtcars)
+    #callModule on select_scatter_server with iris_id
+    callModule(select_scatter_server, iris_id, data=iris)
+}
+```
+
+Then our two modules, `mtcars_id` and `iris_id` will run independent of each other. Neat, huh?
+
+## Anatomy of the ui component of a Shiny Module
+
+So far, we've seen how to use the module. Let's look at the actual module code now. Looking in `module_demo_01/modules.R`:
+
+```
+select_scatter_ui <- function(id, var_choices) {
+  #initialize a namespace ID function - our key to our namespace
+  ns <- NS(id)
+  
+  #return a tagList with our ui elements
+  tagList(
+    #note we have to wrap the input id in our namespace function ns()
+    selectInput(inputId = ns("x_var"), label="Select X Variable", 
+                choices=var_choices, selected = var_choices[1]),
+    plotOutput(ns("scatter_plot"))
+  )
+}
+```
+
+Let's take this code apart, looking at the signature first. 
+
+```
+select_scatter_ui <- function(id, var_choices) {
+  ...
+}
+```
+
+The first argument to a Shiny Module ui component is always `id` - this is a unique identifier for the namespace. So what does this line do?
+
+```
+ns <- NS(id)
+```
+
+This line makes a namespace function. Try out this code:
+
+```{r}
+id <- "newspace"
+ns <- NS(id)
+ns("x_variable")
+```
+
+You'll see that it just adds `newspace-` before our "x_variable" string, giving us: `newspace-x_variable`. Adding this extra bit (the namespace identifier), uniquely defines our element for our namespace. Thus, we can reuse a ui `selectInput` component with an id `select_box` in the namespaces `histogram` and `scatter` because in the app, the components are actually renamed as `histogram-select_box` and `scatter-select_box`. 
+
+As long as the namespace ids are unique for each module, they won't interfere with each other when the modules are running.
+
+Going back to the code in `modules.R`, we see that we initialize the namespace function `ns()` and we use it in identifying all of the ui components, the `selectInput()` and the `plotOutput()` functions. 
+
+```
+  #return a tagList with our ui elements
+  tagList(
+    #note we have to wrap the input id in our namespace function ns()
+    selectInput(inputId = ns("x_var"), 
+                  label="Select X Variable", 
+                  choices=var_choices, selected = var_choices[1]),
+    plotOutput(ns("scatter_plot"))
+  )
+```
+
+## Anatomy of the server component of a Shiny Module
+
+Server components are slightly different. They are also defined as a function, but they have a required function signature:
+
+```
+select_scatter_server <- function(input, output, session, data) {
+  ...
+}
+```
+
+Of the four arguments in the function signature, three are required: `input`, `output`, and `session`.  If you look at how the `server` function is defined, you will notice that it uses `input` and `output`. 
+
+We've added the `data` argument because it lets us customize the module for our dataset.
+
+What about the namespace identifier? Remember, it gets handled by `callModule` and so we don't need to explicitly refer to it.
+
+The actual code in `select_scatter_server()` is pretty much identical to regular server code. Note we are just assigning our `renderPlot` to `output$scatter_plot` as usual, not `output$ns("scatter_plot")`. Again, `callModule` handles the namespacing for our server function.
+
+```
+select_scatter_server <- function(input, output, session, data) {
+  
+  output$scatter_plot <- renderPlot({
+    #notice we don't use ns() here to refer to input objects - 
+    #this is handled by callModule
+    x_var <- input$x_var
+
+    data %>% ggplot(aes_string(x=x_var)) +
+      geom_histogram()
+    
+  })
+```
+
+## TODO: Chaining Modules with reactives
+
+
+
+## TODO: Nesting Modules
