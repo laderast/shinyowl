@@ -104,6 +104,15 @@ flowchart LR
   E[leafletPlot]
 ```
 
+## reactive() |> bindEvent()
+
+Make a reactive only recalculate given a specific input event
+
+```{r}
+
+
+```
+
 
 ## `observeEvent()` is for side effects
 
@@ -117,7 +126,6 @@ Use `observeEvent()` when you don't need to return a reactive; usually something
 ### Useful with `observeEvent()`: `bslib::input_task_button()`
 
 "Locks up" when pressed. Won't let you press again until your task is done. 
-
 
 ```{r}
 #| eval: false
@@ -143,6 +151,15 @@ server <- function(input, output, session) {
 
 shinyApp(ui, server)
 ```
+
+## `ExtendedTask`
+
+Spin an operation off into its own process; makes users of shiny app have a more responsive experience.
+
+
+## `bind_cache()`
+
+Explicitly caches a reactive expression based on an input.
 
 
 ## Be careful with `observe()`
