@@ -1,18 +1,10 @@
 ---
 title: "Demystifying Reactive Programming"
 engine: knitr
-format: revealjs
-server: shiny
+format: html
 ---
 
-## Avoid Tying Big Changes to Controls
-
-```{r}
-#| context: setup
-
-library(shiny)
-library(bslib)
-```
+# Avoid Tying Big Changes to Controls
 
 ## Direct Interaction
 
@@ -20,11 +12,45 @@ If any slider changes, then update plot
 
 ```{mermaid}
 flowchart LR
-    B[latSlider] --> E
-    C[longSlider] --> E
-    E[leafletPlot]
+    B[variable] --> E
+    C[x_plot] --> E
+    E[direct_plot]
 ```
 
+```{r}
+#| standalone: true
+library(shiny)
+library(ggplot2)
+library(palmerpenguins)
+library(shiny)
+library(reactlog)
+
+reactlog_enable()
+
+choices <- c("flipper_length_mm", "bill_length_mm", "body_mass_g")
+
+ui <- page_sidebar(
+  sidebar = sidebar(
+    radioButtons("variable", "Select Variable to Color", 
+                 choices=c("species", "island"), 
+                 selected="island"),
+    selectInput("x_plot", "Select X Variable", 
+                choices = choices, selected=choices[1])),
+  plotOutput("direct_plot")
+)
+
+server <- function(input, output, session){
+  
+  output$direct_plot <- renderPlot({
+    ggplot(penguins, aes(x=.data[[input$x_plot]], y=bill_depth_mm,
+      color=.data[[input$variable]])) +
+      geom_point()
+  })
+  
+}
+
+shinyApp(ui, server)
+```
 
 ## `reactive()` - the most general case
 
@@ -43,6 +69,40 @@ flowchart LR
     E[leafletPlot]
 ```
 
+```{r}
+library(shiny)
+library(reactlog)
+
+reactlog_enable()
+
+library(palmerpenguins)
+choices <- unique(penguins$species)
+
+ui <- page_sidebar(
+  sidebar = sidebar(
+    open="always",
+    radioButtons("radio", "Select Species", 
+                 choices=choices, selected = "Gentoo")),
+  plotOutput("species_plot")
+)
+
+server <- function(input, output){
+  
+  my_data <- reactive({ 
+    penguins |> dplyr::filter(species == input$radio)
+      }) 
+  
+  output$species_plot <- renderPlot({
+    ggplot(my_data(), aes(x=bill_depth_mm, 
+                          y=bill_length_mm, 
+                          color=island)) +
+      geom_point()
+  })
+}
+
+shinyApp(ui, server)
+```
+
 ## `isolate()`: don't use an input as a dependency
 
 Use in a reactive to disconnect controls from recomputation. If `longSlider` changes, then don't recompute. If `latSlider` changes, recompute
@@ -55,10 +115,48 @@ flowchart LR
     E[leafletPlot]
 ```
 
+```{r}
+library(palmerpenguins)
+library(reactlog)
+
+reactlog_enable()
+choices <- unique(penguins$species)
+islands <- unique(penguins$island)
+
+ui <- page_sidebar(
+  sidebar = sidebar(
+    open="always",
+    radioButtons("radio", "Select Species", 
+                 choices=choices, selected = "Gentoo"),
+    selectInput("island", "Select Islands", 
+                 choices=islands, selected="Biscoe")
+  ),
+  plotOutput("species_plot")
+)
+
+server <- function(input, output){
+  
+  my_data <- reactive({ 
+    penguins |> dplyr::filter(species == input$radio) |>
+      ## Use isolate() in this filter statement
+      ## reactive won't update when input$island changes
+      dplyr::filter(island %in% isolate(input$island))
+      }) 
+  
+  output$species_plot <- renderPlot({
+    ggplot(my_data(), aes(x=bill_depth_mm, 
+                          y=bill_length_mm, 
+                          color=island)) +
+      geom_point()
+      })
+}
+
+shinyApp(ui, server)
+```
+
 ## `reactiveValues`
 
 Use like a list to store values for multiple reactive expressions. Recompute when any reactive expression changes:
-
 
 ```{mermaid}
 flowchart LR
@@ -75,15 +173,50 @@ flowchart LR
 
 Use in a reactive to require an input value before any calculation. Don't compute at all unless `longSlider` is set.
 
-
 ```{mermaid}
 flowchart LR
-    D["coords()"] --> E
+    D["my_data()"] --> E
     B["latSlider"] --> D
     C["req(longSlider)"] --> D
     E[leafletPlot]
 ```
 
+```{r}
+library(palmerpenguins)
+choices <- unique(penguins$species)
+islands <- unique(penguins$island)
+library(reactlog)
+
+reactlog_enable()
+
+ui <- page_sidebar(
+  sidebar = sidebar(
+    open="always",
+    radioButtons("radio", "Select Species", choices=choices),
+    selectInput("island", "Select Islands", choices=islands,selected=NULL,multiple = TRUE)
+  ),
+  plotOutput("species_plot")
+)
+
+server <- function(input, output){
+  
+  my_data <- reactive({ 
+    req(input$radio)
+    penguins |> dplyr::filter(species == input$radio) |>
+      dplyr::filter(island %in% input$island)
+    }) 
+  
+  output$species_plot <- renderPlot({
+    ggplot(my_data(), aes(x=bill_depth_mm, 
+                          y=bill_length_mm, 
+                          color=island)) +
+      geom_point()
+    })
+}
+
+shinyApp(ui, server)
+
+```
 
 ## `eventReactive()` is for specific events
 
@@ -104,31 +237,112 @@ flowchart LR
   E[leafletPlot]
 ```
 
-## reactive() |> bindEvent()
-
-Make a reactive only recalculate given a specific input event
-
 ```{r}
+library(palmerpenguins)
+library(reactlog)
 
+reactlog_enable()
+choices <- unique(penguins$species)
+
+ui <- page_sidebar(
+  sidebar = sidebar(
+    open="always",
+    radioButtons("radio", "Select Species", choices=choices, selected = "Gentoo"),
+    actionButton("activate", "Click to Filter")
+  ),
+  plotOutput("species_plot")
+)
+
+server <- function(input, output){
+  
+  my_data <- eventReactive( input$activate,
+    { penguins |> dplyr::filter(species == input$radio)}) 
+  
+  output$species_plot <- renderPlot({
+    ggplot(my_data(), aes(x=bill_depth_mm, y=bill_length_mm, color=island)) +
+      geom_point()
+  })
+}
+
+shinyApp(ui, server)
 
 ```
 
+## `reactive() |> bindEvent()`
+
+Make a reactive only recalculate given a specific input event. A little easier to type than reformatting wiht `eventReactive()`. In fact, `observeEvent()` is literally defined as \`bindEvent(observeEvent())
+
+```{r}
+library(palmerpenguins)
+choices <- unique(penguins$species)
+library(reactlog)
+
+reactlog_enable()
+
+ui <- page_sidebar(
+  sidebar = sidebar(
+    open="always",
+    radioButtons("radio", "Select Species", choices=choices, selected = "Gentoo"),
+    actionButton("activate", "Click to Filter")
+  ),
+  plotOutput("species_plot")
+)
+
+server <- function(input, output){
+  
+  my_data <- reactive({ penguins |> dplyr::filter(species == input$radio)}) |> 
+    bindEvent(input$activate)
+  
+  output$species_plot <- renderPlot({
+    ggplot(my_data(), aes(x=bill_depth_mm, y=bill_length_mm, color=island)) +
+      geom_point()
+  })
+}
+
+shinyApp(ui, server)
+
+```
 
 ## `observeEvent()` is for side effects
 
-Use `observeEvent()` when you don't need to return a reactive; usually something like saving a file, or printing a file, or triggering a function.
+Use `observeEvent()` when you don't need to return a reactive; usually something like saving a file, or printing a file, or triggering a function that doesn't change your dashboard.
 
+We'll see it will be helpful when we use `ExtendedTask()` to speed things up. 
+
+Here we're using `observeEvent()` to trigger a message in the console, but it could be anything you want to happen in R.
 
 ```{r}
+library(palmerpenguins)
+choices <- unique(penguins$species)
+library(reactlog)
+
+reactlog_enable()
+
+ui <- fluidPage(
+    actionButton("activate", "Click to Activate")
+)
+
+server <- function(input, output){
+  
+  observeEvent(input$activate, {
+    print("Activated in the Console")
+  })
+  }
+
+shinyApp(ui, server)
 
 ```
 
-### Useful with `observeEvent()`: `bslib::input_task_button()`
+### `bslib::input_task_button()`
 
-"Locks up" when pressed. Won't let you press again until your task is done. 
+Useful with `ExtendedTask`. "Locks up" when pressed. Won't let you press again until your task is done.
 
 ```{r}
 #| eval: false
+library(shiny)
+library(reactlog)
+
+reactlog_enable()
 
 ui <- page_sidebar(
   sidebar = sidebar(
@@ -152,16 +366,118 @@ server <- function(input, output, session) {
 shinyApp(ui, server)
 ```
 
+# Optimizing Your App
+
+## Optimizing
+
+- Caching
+- `ExtendedTask()`
+
+# Setting Up ExtendedTask
+
+- Spins a long running calculation into its own process
+- Uses `futures::promise()`
+- 
+
+## Take a reactive() |> bind_event()
+
+```{r}
+#| eval: false
+sum_values <- reactive({
+  input$x + input$y
+})
+
+output$sum <- renderText({
+  sum_values()
+})
+```
+
 ## `ExtendedTask`
 
 Spin an operation off into its own process; makes users of shiny app have a more responsive experience.
 
+```{r}
+#| eval: false
+#| code-line-numbers: "1-6|8-10|12-14"
+  sum_values <- ExtendedTask$new(function(x, y) {
+    future_promise({
+      Sys.sleep(3)
+      x + y
+    })
+  }) |> bind_task_button("btn")
 
-## `bind_cache()`
+  observeEvent(input$btn, {
+    sum_values$invoke(input$x, input$y)
+  })
 
-Explicitly caches a reactive expression based on an input.
+  output$sum <- renderText({
+    sum_values$result()
+  })
+```
 
+## Full `ExtendedTask()` example
+
+```{r}
+library(shiny)
+library(bslib)
+library(future)
+library(promises)
+future::plan(multisession)
+
+library(reactlog)
+reactlog_enable()
+
+ui <- page_fluid(
+  p("The time is ", textOutput("current_time", inline=TRUE)),
+  p("The Sum is ", textOutput("sum"), inline=TRUE),
+  hr(),
+  numericInput("x", "x", value = 1),
+  numericInput("y", "y", value = 2),
+  input_task_button("btn", "Add numbers")#,
+  # textOutput("sum")
+)
+
+server <- function(input, output, session) {
+  output$current_time <- renderText({
+    invalidateLater(1000)
+    format(Sys.time(), "%H:%M:%S %p")
+  })
+
+  sum_values <- ExtendedTask$new(function(x, y) {
+    future_promise({
+      Sys.sleep(3)
+      x + y
+    })
+  }) |> bind_task_button("btn")
+
+  observeEvent(input$btn, {
+    sum_values$invoke(input$x, input$y)
+  })
+
+  output$sum <- renderText({
+    sum_values$result()
+  })
+}
+
+shinyApp(ui, server)
+```
+
+# Caching
+
+## Caching in Shiny
+
+Lets you save results as cached; can speed up perceived performance of an app
+
+- `bindCache()` - use for `reactive()`s and plots
+- `memoise()` - use for functions
+
+## `bindCache()`
+
+Explicitly caches a reactive expression.
+
+## `memoise()`
 
 ## Be careful with `observe()`
 
 ### `observe() |> bind_event()`
+

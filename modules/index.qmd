@@ -1,0 +1,324 @@
+---
+title: "Part 3: Shiny Modules"
+author: "Ted Laderas"
+institute: "Fred Hutch Cancer Center"
+execute: 
+  echo: true
+format: 
+  revealjs:
+    incremental: false
+---
+
+## Modules
+
+```{css, echo=FALSE}
+code {
+  font-size: 0.7em;
+  /* or try font-size: xx-large; */
+}
+```
+
+- Why?
+- Motivating example
+- How to code
+
+## Why?
+
+- A new way to thinking about apps
+- Modularize code into smaller apps
+- makes it easier to develop with others
+- makes it easier to test code
+
+## Use Shiny Modules if:
+
+- You want to reuse your code, especially in the same app
+- You are tired of thinking up unique ids for all the elements in your app
+- You need to break up a monolithic shiny application into pieces
+    - multiple Shiny developers
+
+## Maybe not:
+
+- Your app is a one and done - single version
+- It doesn't have that many controls that need to be reused
+
+## Motivating Example
+
+- An ui that lets you pass in a dataset
+- Lets you select columns from that dataset
+- Want multiple plots in the same app
+
+##
+<img src="docs/module1.png">
+
+
+## Using Shiny modules
+
+::::{.columns}
+:::{.column}
+ui
+
+```{r}
+#| echo: true
+#| eval: false
+#| code-line-numbers: "2|3"
+ui <- fluidPage(   
+    select_hist_ui(
+      id = "mtcars_module", 
+      var_choices = mtcars_var_choices)
+    )
+```
+- note that `select_hist_ui()` is a function that takes an `id` argument
+- uses an `id` called `mtcars_module`
+
+:::
+:::{.column}
+:::
+::::
+
+
+## Using Shiny modules
+
+::::{.columns}
+:::{.column}
+ui
+
+```{r}
+#| eval: false
+ui <- fluidPage(   
+    select_hist_ui(
+      id = "mtcars_module", 
+      var_choices = mtcars_var_choices)
+    )
+```
+:::
+:::{.column}
+
+server
+
+```{r}
+#| eval: false
+#| code-line-numbers: "2|3"
+server <- function(input, output) {
+    select_hist_server(
+      id="mtcars_module", 
+      data=mtcars)
+}
+```
+
+- Note that we have a function `select_hist_server()` 
+- Also uses the `id` `"mtcars_module"`
+:::
+::::
+
+
+## Reusing code
+
+::::{.columns}
+:::{.column}
+```{r}
+#| eval: false
+#| code-line-numbers: "2,4|4"
+ui <- fluidPage(   
+    select_hist_ui(id = "mtcars_module", 
+                   var_choices = mtcars_var_choices),
+    select_hist_ui(id = "penguin_module",
+                   var_choices = penguin_choices)
+    )
+```
+
+- note we have two `select_hist_ui()` functions
+- the second one has the `id` of `penguin_module`
+:::
+
+:::{.column}
+:::
+::::
+
+
+## Reusing code
+
+::::{.columns}
+:::{.column}
+ui
+
+```{r}
+#| eval: false
+ui <- fluidPage(   
+    select_hist_ui(id = "mtcars_module", 
+                   var_choices = mtcars_var_choices),
+    select_hist_ui(id = "penguin_module",
+                   var_choices = penguin_choices)
+    )
+```
+
+:::
+:::{.column}
+
+
+server
+```{r}
+#| eval: false
+#| code-line-numbers: "2,4|4"
+server <- function(input, output) {
+    select_hist_server(id="mtcars_module", 
+                       data=mtcars)
+    select_hist_server(id="penguin_module", 
+                       data=penguins)
+}
+```
+
+- Note that we have two functions .bg-lightest-blue[`select_hist_server()`] 
+- The second one use the `id` .bg-gold[`"penguin_module"`] 
+- We can have two different plots/interfaces!
+:::
+::::
+
+
+## Two modules, two datasets
+
+::::{.columns}
+:::{.column}
+- dataset is `mtcars`
+
+<img src="docs/module1.png" width=500>
+:::
+:::{.column}
+- dataset is `penguins`
+
+<img src="docs/module2.png" width=400>
+:::
+::::
+
+## Making Your Own Modules
+
+- ui module
+- server module
+- demo app
+
+## Make it easy on yourself
+
+- Put your code in a package (`usethis::create_package()`)
+- Use `<module_name>_server` and `<module_name>_ui` for your module names
+- Have a demo app `<module_name>_demo` (makes it easier for testing)
+
+:::{.nonincremental}
+
+## ui module 
+
+```{r}
+#| eval: false
+#| code-line-numbers: "2|4|8"
+select_hist_ui <- function(id, var_choices){
+  ns <- NS(id)
+  tagList(
+    selectInput(inputId = ns("x_var"), 
+                label="Select X Variable", 
+                choices=var_choices, 
+                selected = var_choices[1]),
+    plotOutput(ns("hist_plot"))
+  )
+}
+```
+
+- Initialize the namespace for `id` using `NS()` function
+- Need to refer to any controls/plots with ids wrapped in `ns()`
+  - such as `ns("x_var")` or `ns("hist_plot")`
+
+:::
+
+:::{.nonincremental}
+
+## Server Module {auto-animate=true}
+
+```{r}
+#| eval: false
+#| code-line-numbers: "1,6|2-4"
+select_hist_server <- function(id, data) {
+  moduleServer(id, function(input, output, session) {
+
+  })
+  
+}
+```
+
+- define a function that takes an `id` as input
+- `moduleServer()` encapsulates your server code
+
+:::
+
+:::{.nonincremental}
+
+## Server Module {auto-animate=true}
+
+```{r}
+#| eval: false
+#| code-line-numbers: "4-9"
+select_hist_server <- function(id, data) {
+  moduleServer(id, function(input, output, session) {
+
+    output$hist_plot <- 
+      renderPlot({
+        x_var <- input$x_var
+        data %>% ggplot(aes(x=.data[[x_var]])) +
+          geom_histogram()
+    })
+    
+  })
+  
+}
+```
+
+- Put your server code in `moduleServer()`
+- be really careful with closing curly brackets and parentheses
+
+:::
+
+## Write a demo app function
+
+```{r}
+#| eval: false
+select_hist_demo <- function(data=mtcars){
+  var_choices <- names(data)
+  ui <- fluidPage(
+    select_hist_ui(id = "module", 
+                   var_choices = var_choices)  
+  )
+  server <- function(input,output,session){
+    select_ui_server("module", data=data)
+  }
+  shinyApp(ui, server)
+}
+```
+
+- write an `<module_name>_demo()` function
+- useful for documentation
+
+
+# Communicate Between Modules
+
+##
+
+## Try them out
+
+Install `shiny`, `palmerpenguins`, `tidyverse` first
+
+- Clone this repository:
+
+- <https://github.com/laderast/shiny_module_tutorial/>
+
+- Open up `shiny_module_tutorial.Rproj`
+
+- Individual apps are in `module_demo_01` and `module_demo_02`
+
+
+## Go Further
+
+- [Shiny Modules for Beginners](https://emilyriederer.netlify.app/post/shiny-modules/index.html) - Emily Riederer
+- `{rhino}` - framework for developing apps from Appsilon
+- Observable
+- 
+
+## For More Info/Thanks!
+
+- [Mastering Shiny: Modules](https://mastering-shiny.org/scaling-modules.html)
+- Slides were done using `xaringan`, `xaringanExtra`, and `flair`

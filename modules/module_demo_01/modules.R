@@ -1,4 +1,5 @@
-
+library(dplyr)
+library(ggplot2)
 
 select_hist_ui <- function(id, var_choices){
   #initialize a namespace ID function - our key to our namespace
@@ -27,4 +28,16 @@ select_hist_server <- function(id, data) {
     })
     
   })
+}
+
+select_hist_demo <- function(data=mtcars){
+  var_choices <- names(data)
+  ui <- fluidPage(
+    select_hist_ui(id = "module", 
+                   var_choices = var_choices)  
+  )
+  server <- function(input,output,session){
+    select_hist_server("module", data=data)
+  }
+  shinyApp(ui, server)
 }
