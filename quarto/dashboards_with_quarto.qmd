@@ -1,9 +1,12 @@
 ---
 title: "Dashboards with Quarto"
 server: shiny
+format: 
+  dashboard:
+    theme: 
+      - minty
+      - my_sass2.css
 ---
-
-## Context is Key with Quarto Dashboards
 
 ```{r}
 choices <- c("species", "island")   
@@ -23,7 +26,5 @@ output$my_plot <- renderPlot({
         y=bill_depth_mm, 
         color= .data[[input$variable]] ) +
       geom_point()
-    
-  
 })
 ```

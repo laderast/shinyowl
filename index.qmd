@@ -1,7 +1,8 @@
 ---
 title: "shinyowl: intermediate shiny"
 engine: knitr
-filters: 
+format: html
+filters:
   - shinylive
 ---
 
@@ -117,11 +118,5 @@ server <- function(input, output) {
 
 # Create Shiny app ----
 shinyApp(ui, server)
-
-```
-
-
-```{shinylive-r}
-
 
 ```
