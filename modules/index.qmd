@@ -48,7 +48,7 @@ code {
 - Want multiple plots in the same app
 
 ##
-<img src="docs/module1.png">
+<img src="img/module1.png">
 
 
 ## Using Shiny modules
@@ -110,11 +110,17 @@ server <- function(input, output) {
 :::
 ::::
 
+## Try it out!
+
+```r
+runApp("modules/module_demo_01")
+```
 
 ## Reusing code
 
 ::::{.columns}
 :::{.column}
+ui
 ```{r}
 #| eval: false
 #| code-line-numbers: "2,4|4"
@@ -180,12 +186,12 @@ server <- function(input, output) {
 :::{.column}
 - dataset is `mtcars`
 
-<img src="docs/module1.png" width=500>
+<img src="img/module1.png" width=500>
 :::
 :::{.column}
 - dataset is `penguins`
 
-<img src="docs/module2.png" width=400>
+<img src="img/module2.png" width=400>
 :::
 ::::
 
@@ -243,7 +249,6 @@ select_hist_server <- function(id, data) {
 
 - define a function that takes an `id` as input
 - `moduleServer()` encapsulates your server code
-
 :::
 
 :::{.nonincremental}
@@ -277,6 +282,7 @@ select_hist_server <- function(id, data) {
 
 ```{r}
 #| eval: false
+## modules.R
 select_hist_demo <- function(data=mtcars){
   var_choices <- names(data)
   ui <- fluidPage(
@@ -284,41 +290,98 @@ select_hist_demo <- function(data=mtcars){
                    var_choices = var_choices)  
   )
   server <- function(input,output,session){
-    select_ui_server("module", data=data)
+    select_hist_server(id="module", data=data)
   }
   shinyApp(ui, server)
 }
 ```
 
 - write an `<module_name>_demo()` function
-- useful for documentation
+- useful for documentation and testing
+
+## Exercise: Use a Shiny Module
+
+- In RStudio, open up `"modules/module_demo_02/app.R"`
+- Wire in a new dataset to one of the plots
 
 
-# Communicate Between Modules
 
-##
+# Module Design
 
-## Try them out
+## Module Design
 
-Install `shiny`, `palmerpenguins`, `tidyverse` first
+::::{.columns}
+:::{.column}
+### Careful design
+::: {.incremental}
+- What does the module do?
+- What is it trying to accomplish?
+- What is the module's name?
+:::
+:::
+:::{.column}
+### Inputs and Return Values
+::: {.incremental}
+- Static or Reactive Inputs?
+- Complexity of return values
+- Which outputs serve as inputs for other modules?
+:::
+:::
+::::
 
-- Clone this repository:
+[Eric Nantz: Effective Use of Shiny modules in App development](https://youtu.be/ylLLVo2VL50?si=qB28MwaNgiFbcjcM)
+:::
 
-- <https://github.com/laderast/shiny_module_tutorial/>
+## Communicating between modules
 
-- Open up `shiny_module_tutorial.Rproj`
+- modules can return single objects or named lists
+- [Ames Housing App](https://rpodcast.shinyapps.io/modules_article1/)
 
-- Individual apps are in `module_demo_01` and `module_demo_02`
+```{r}
+#| eval: false
+#| code-line-numbers: "2-3|6-10"
+  # execute plot variable selection modules
+  plot1vars <- varselect_mod_server("plot1_vars") #returns a reactive
+  plot2vars <- varselect_mod_server("plot2_vars") #returns a reactive
+  
+  # execute scatterplot module
+  res <- scatterplot_mod_server(
+                    "plots",
+                    dataset = ames,
+                    plot1vars = plot1vars,
+                    plot2vars = plot2vars)
+```
 
+## `scatterplot_mod_server`
+
+```{r}
+#| eval: false
+#| code-line-numbers: "5,6|9,14"
+scatterplot_mod_server <- function(input, 
+                                   output, 
+                                   session, 
+                                   dataset, 
+                                   plot1vars, 
+                                   plot2vars) {
+  
+  plot1_obj <- reactive({
+    p <- scatter_sales(dataset, xvar = plot1vars$xvar(), yvar = plot1vars$yvar())
+    return(p)
+  })
+  
+  plot2_obj <- reactive({
+    p <- scatter_sales(dataset, xvar = plot2vars$xvar(), yvar = plot2vars$yvar())
+    return(p)
+  })
+  
+  output$plot1 <- renderPlot({
+    plot1_obj()
+  })
+```
 
 ## Go Further
 
 - [Shiny Modules for Beginners](https://emilyriederer.netlify.app/post/shiny-modules/index.html) - Emily Riederer
-- `{rhino}` - framework for developing apps from Appsilon
-- Observable
-- 
-
-## For More Info/Thanks!
-
+- [Eric Nantz: Effective Use of Shiny modules in App development](https://youtu.be/ylLLVo2VL50?si=qB28MwaNgiFbcjcM)
 - [Mastering Shiny: Modules](https://mastering-shiny.org/scaling-modules.html)
-- Slides were done using `xaringan`, `xaringanExtra`, and `flair`
+- `{rhino}` - framework for developing apps from Appsilon
