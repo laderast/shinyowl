@@ -4,7 +4,7 @@ title: "Exploring Reactivity"
 
 # Slides
 
-<iframe style="height:600px; width:100%" src="http://localhost/ressources/pdf/R-Intro.pdf"></iframe>
+{{< pdf reactivity.pdf height=600 >}}
 
 ### Exercise 1
 
