@@ -1,0 +1,27 @@
+project:
+  type: website
+  render: 
+    - "!duckdb/"
+    - "!reactives/reactive_programming.qmd"
+
+website:
+  title: "shinyowl"
+  navbar:
+    left:
+      - href: index.qmd
+        text: Home
+      - href: layouts/index.qmd
+        text: Layouts
+      - href: reactives/index.qmd
+        text: Reactivity
+      - href: modules/index.qmd
+        text: Modules
+
+format:
+  html:
+    theme: cosmo
+    css: styles.css
+    toc: true
+
+editor: visual
+
