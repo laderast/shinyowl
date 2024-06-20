@@ -1,0 +1,27 @@
+---
+title: "Exploring Reactivity"
+---
+
+# Slides
+
+<iframe style="height:600px; width:100%" src="http://localhost/ressources/pdf/R-Intro.pdf"></iframe>
+
+### Exercise 1
+
+```r
+runApp("reactives/app_reactive.R")
+runApp("reactives/app_isolate.R")
+```
+
+### Exercise 2
+
+```r
+runApp("reactives/app_eventReactive.R")
+runApp("reactives/app_observeEvent.R")
+```
+
+### Exercise 3
+
+```r
+runApp("reactives/app_ExtendedTaskSingle.R")
+```
