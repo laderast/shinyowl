@@ -1,1 +1,0 @@
-Sitemap: https://shinyowl.netlify.app/sitemap.xml
