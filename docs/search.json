@@ -599,7 +599,7 @@
     "href": "reactives/index.html",
     "title": "Exploring Reactivity",
     "section": "",
-    "text": "Slides\n\nExercise 1\nCompare the two apps with a partner. Look at the reactive graph. Are they any different?\nrunApp(\"reactives/app_reactive.R\")\nrunApp(\"reactives/app_isolate.R\")\n\n\nExercise 2\nrunApp(\"reactives/app_eventReactive.R\")\nrunApp(\"reactives/app_observeEvent.R\")\n\n\nExercise 3\nrunApp(\"reactives/app_ExtendedTaskSingle.R\")"
+    "text": "Slides\nDownload PDF file.\n\nExercise 1\nCompare the two apps with a partner. Look at the reactive graph. Are they any different?\nrunApp(\"reactives/app_reactive.R\")\nrunApp(\"reactives/app_isolate.R\")\n\n\nExercise 2\nrunApp(\"reactives/app_eventReactive.R\")\nrunApp(\"reactives/app_observeEvent.R\")\n\n\nExercise 3\nrunApp(\"reactives/app_ExtendedTaskSingle.R\")"
   },
   {
     "objectID": "modules/index.html#you-have-linkedin-to-blame",
