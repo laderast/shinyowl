@@ -9,6 +9,10 @@ format:
     incremental: false
 ---
 
+## You have LinkedIn to Blame
+
+![](img/survey.png)
+
 ## Modules
 
 ```{css, echo=FALSE}
@@ -24,17 +28,21 @@ code {
 
 ## Why?
 
+:::{.incremental}
 - A new way to thinking about apps
 - Modularize code into smaller apps
 - makes it easier to develop with others
 - makes it easier to test code
+:::
 
 ## Use Shiny Modules if:
 
+:::{.incremental}
 - You want to reuse your code, especially in the same app
-- You are tired of thinking up unique ids for all the elements in your app
+- You are tired of thinking up unique ids for all the elements in your app (namespacing)
 - You need to break up a monolithic shiny application into pieces
     - multiple Shiny developers
+:::
 
 ## Maybe not:
 
@@ -43,9 +51,11 @@ code {
 
 ## Motivating Example
 
+:::{.incremental}
 - An ui that lets you pass in a dataset
 - Lets you select columns from that dataset
 - Want multiple plots in the same app
+:::
 
 ##
 <img src="img/module1.png">
@@ -92,7 +102,6 @@ ui <- fluidPage(
 ```
 :::
 :::{.column}
-
 server
 
 ```{r}
@@ -113,7 +122,7 @@ server <- function(input, output) {
 ## Try it out!
 
 ```r
-runApp("modules/module_demo_01")
+runApp("modules/module_demo_01/")
 ```
 
 ## Reusing code
@@ -173,8 +182,8 @@ server <- function(input, output) {
 }
 ```
 
-- Note that we have two functions .bg-lightest-blue[`select_hist_server()`] 
-- The second one use the `id` .bg-gold[`"penguin_module"`] 
+- Note that we have two instances of `select_hist_server()`
+- The second one use the `id` `"penguin_module"` 
 - We can have two different plots/interfaces!
 :::
 ::::

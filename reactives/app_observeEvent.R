@@ -1,5 +1,3 @@
-ibrary(palmerpenguins)
-choices <- unique(penguins$species)
 library(reactlog)
 
 reactlog_enable()

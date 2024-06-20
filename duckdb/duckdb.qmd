@@ -4,7 +4,7 @@ server: shiny
 format: dashboard
 ---
 
-<https://www.appsilon.com/post/r-shiny-duckd?utm_source=social&utm_medium=linkedin&utm_campaign=blog&utm_term=damian-rodziewicz>
+For more info about duckDB and Shiny: <https://www.appsilon.com/post/r-shiny-duckd?utm_source=social&utm_medium=linkedin&utm_campaign=blog&utm_term=damian-rodziewicz>
 
 ```{r}
 #| context: setup
@@ -13,10 +13,10 @@ library(nycflights13)
 library(duckdb)
 library(ggplot2)
 data(flights)
+library(pool)
 
 dbcon <- dbConnect(duckdb())
 duckdb::duckdb_register(dbcon, "flights", flights)
-#num_rows <- dbExecute(dbcon, "create table flights as select * FROM 'data/flights-10m.parquet'")
 origin <- dbGetQuery(dbcon, "select distinct origin from flights")
 ```
 
