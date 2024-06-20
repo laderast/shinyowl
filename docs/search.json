@@ -588,6 +588,13 @@
     "text": "Your Turn: Exercise 3\nHarness the power of custom JavaScript in the Art Viewer App!\n\nlibrary(countdown)\ncountdown(minutes = 10, seconds = 0)\n\n\n−+\n10:00\n\n\n\n\n\n\nhttps;//shinyowl.netlify.com/layouts/"
   },
   {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Intermediate shiny: drawing the owl",
+    "section": "",
+    "text": "Learning Objectives\nThis workshop aims to get you over the hill to faster, better looking, and dynamic Shiny Apps.\n\nDashboards with Quarto\nDemystifying Reactive Programming\nMaking it modular\n\n\n\nPosit.cloud project\n\nPlease create a free user account at posit.cloud\nInvite yourself to the workspace here"
+  },
+  {
     "objectID": "reactives/index.html",
     "href": "reactives/index.html",
     "title": "Exploring Reactivity",
