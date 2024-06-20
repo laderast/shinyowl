@@ -28,8 +28,8 @@ server <- function(input, output, session) {
                       choices = x,
                       selected = tail(x, 1)
     )
-  })
+  }) |>
+    bindEvent(input$inCheckboxGroup)
 }
 
 shinyApp(ui, server)
-}

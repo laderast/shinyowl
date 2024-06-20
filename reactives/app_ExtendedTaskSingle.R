@@ -9,13 +9,10 @@ library(reactlog)
 reactlog_enable()
 
 ui <- page_fluid(
-  p("The time is ", textOutput("current_time", inline=TRUE)),
-  p("The Sum is ", textOutput("sum"), inline=TRUE),
-  hr(),
   numericInput("x", "x", value = 1),
   numericInput("y", "y", value = 2),
   input_task_button("btn", "Add numbers"),
-  textOutput("sum")
+   textOutput("sum")
 )
 
 server <- function(input, output, session) {
