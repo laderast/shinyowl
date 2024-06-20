@@ -1,0 +1,471 @@
+[
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Intermediate shiny: drawing the owl",
+    "section": "",
+    "text": "Learning Objectives\nThis workshop aims to get you over the hill to faster, better looking, and dynamic Shiny Apps.\n\nDashboards with Quarto\nDemystifying Reactive Programming\nMaking it modular\n\n\n\nPosit.cloud project\nPlease create a free user account at posit.cloud"
+  },
+  {
+    "objectID": "layouts/index.html#learning-objectives",
+    "href": "layouts/index.html#learning-objectives",
+    "title": "Part 1: UI Layout and Customizing",
+    "section": "Learning Objectives",
+    "text": "Learning Objectives\nBy the end of this session, you should be able to:\n\nLayout your shiny app using {bslib}\nStyle your shiny app using bslib::bs_themer()\nStyle your shiny app using {thematic}"
+  },
+  {
+    "objectID": "layouts/index.html#what-are-shiny-uis",
+    "href": "layouts/index.html#what-are-shiny-uis",
+    "title": "Part 1: UI Layout and Customizing",
+    "section": "What are Shiny UIs?",
+    "text": "What are Shiny UIs?\n\nUnderneath, it’s HTML + JavaScript\nBuilt on a library called Bootstrap\nJavaScript gives us the power to update parts of the HTML dynamically"
+  },
+  {
+    "objectID": "layouts/index.html#language-of-the-web",
+    "href": "layouts/index.html#language-of-the-web",
+    "title": "Part 1: UI Layout and Customizing",
+    "section": "Language of the Web",
+    "text": "Language of the Web\n\n\nShiny\ndept_choices &lt;- c(\"Ancient Near Easter Art\", \"American\")\nselectInput(\n  \"dept\",\n  \"Select Department\",\n  choices = dept_choices\n)\n\nHTML\n&lt;div class=\"form-group shiny-input-container\"&gt;\n  &lt;label class=\"control-label\" id=\"dept-label\" for=\"dept\"&gt;\n    Select Department\n  &lt;/label&gt;\n  &lt;div&gt;\n    &lt;select id=\"dept\" class=\"form-control\"&gt;\n      &lt;option value=\"Ancient Near Easter Art\" selected&gt;Ancient Near Easter Art&lt;/option&gt;\n      &lt;option value=\"American\"&gt;American&lt;/option&gt;\n    &lt;/select&gt;\n  &lt;/div&gt;\n&lt;/div&gt;"
+  },
+  {
+    "objectID": "layouts/index.html#designhtml-is-all-about-containers",
+    "href": "layouts/index.html#designhtml-is-all-about-containers",
+    "title": "Part 1: UI Layout and Customizing",
+    "section": "Design/HTML is all about containers",
+    "text": "Design/HTML is all about containers\n\n&lt;div class=\"form-group shiny-input-container\"&gt;\n  &lt;label class=\"control-label\" id=\"dept-label\" for=\"dept\"&gt;\n    Select Department\n  &lt;/label&gt;\n  &lt;div&gt;\n    &lt;select id=\"dept\" class=\"form-control\"&gt;\n      &lt;option value=\"Ancient Near Easter Art\" selected&gt;Ancient Near Easter Art&lt;/option&gt;\n      &lt;option value=\"American\"&gt;American&lt;/option&gt;\n    &lt;/select&gt;\n  &lt;/div&gt;\n&lt;/div&gt;"
+  },
+  {
+    "objectID": "layouts/index.html#what-is-bslib",
+    "href": "layouts/index.html#what-is-bslib",
+    "title": "Part 1: UI Layout and Customizing",
+    "section": "What is {bslib}?",
+    "text": "What is {bslib}?\n\nShort for BootstrapLibrary\n\n\n\nlibrary(bslib)\nlibrary(bsicons)\nlibrary(shiny)"
+  },
+  {
+    "objectID": "layouts/index.html#components-of-bslib",
+    "href": "layouts/index.html#components-of-bslib",
+    "title": "Part 1: UI Layout and Customizing",
+    "section": "Components of {bslib}",
+    "text": "Components of {bslib}\n\ncard\nsidebars\nvalue boxes"
+  },
+  {
+    "objectID": "layouts/index.html#layouts-pages",
+    "href": "layouts/index.html#layouts-pages",
+    "title": "Part 1: UI Layout and Customizing",
+    "section": "Layouts / Pages",
+    "text": "Layouts / Pages\n\n\nLayouts\n\nlayout_sidebar()\nlayout_column_wrap()\nlayout_columns()\n\n\nPages\n\npage_sidebar()/sidebar()\npage_navbar()/navbarPage()\npage_fillable()/layout_"
+  },
+  {
+    "objectID": "layouts/index.html#cards",
+    "href": "layouts/index.html#cards",
+    "title": "Part 1: UI Layout and Customizing",
+    "section": "Cards",
+    "text": "Cards\n\nlibrary(bslib)\nui &lt;- page(\n  card({\n    plotOutput(\"penguins\")\n  })\n)"
+  },
+  {
+    "objectID": "layouts/index.html#page_sidebar",
+    "href": "layouts/index.html#page_sidebar",
+    "title": "Part 1: UI Layout and Customizing",
+    "section": "page_sidebar()",
+    "text": "page_sidebar()\n\nlibrary(bslib)\nui &lt;- page_sidebar(\n  sidebar = sidebar(\n    selectInput(\"var\", \"Select Island\",\n      choices,\n      selected = choices[1]\n    )\n  ),\n  card({\n    plotOutput(\"penguins\")\n  })\n)"
+  },
+  {
+    "objectID": "layouts/index.html#layout_column_wrap",
+    "href": "layouts/index.html#layout_column_wrap",
+    "title": "Part 1: UI Layout and Customizing",
+    "section": "layout_column_wrap()",
+    "text": "layout_column_wrap()\n\nui &lt;- page_sidebar(\n  sidebar = sidebar(\n    selectInput(\"var\", \"Select Island\", choices, selected = choices[1])\n  ),\n  card(\n    layout_column_wrap(\n      plotOutput(\"penguins\"),\n      plotOutput(\"penguins2\")\n    )\n  )\n)"
+  },
+  {
+    "objectID": "layouts/index.html#value-boxes",
+    "href": "layouts/index.html#value-boxes",
+    "title": "Part 1: UI Layout and Customizing",
+    "section": "Value Boxes",
+    "text": "Value Boxes\n\nvalue_box(\n  title = \"I got\",\n  value = \"99 problems\",\n  showcase = bs_icon(\"music-note-beamed\"),\n  p(\"bslib ain't one\", bs_icon(\"emoji-smile\")),\n  p(\"hit me\", bs_icon(\"suit-spade\"))\n)\n\n\n\n\n\n\n\n\nI got\n99 problems\n\nbslib ain't one\n\n\n\n\nhit me"
+  },
+  {
+    "objectID": "layouts/index.html#dynamic-value-box",
+    "href": "layouts/index.html#dynamic-value-box",
+    "title": "Part 1: UI Layout and Customizing",
+    "section": "Dynamic Value Box",
+    "text": "Dynamic Value Box\n\nlibrary(bsicons)\nui &lt;- page_fixed(\n  value_box(\n    title = \"The current time\",\n    value = textOutput(\"time\"),\n    showcase = bs_icon(\"clock\")\n  )\n)\n\nserver &lt;- function(input, output) {\n  output$time &lt;- renderText({\n    invalidateLater(1000)\n    format(Sys.time())\n  })\n}\n\nshinyApp(ui, server)\n\nShiny applications not supported in static R Markdown documents"
+  },
+  {
+    "objectID": "layouts/index.html#laying-out-value-boxes",
+    "href": "layouts/index.html#laying-out-value-boxes",
+    "title": "Part 1: UI Layout and Customizing",
+    "section": "Laying out value boxes",
+    "text": "Laying out value boxes\n\npage_fillable(\n  layout_column_wrap(\n    width = \"250px\",\n    fill = FALSE,\n    vbs[[1]], vbs[[2]]\n  ),\n  card(\n    min_height = 200,\n    plotly::plot_ly(x = rnorm(100))\n  )\n)\n\n\n\n\n\n\n\n\n\n1st value\n123\nThe 1st detail\n\n\n\n\n\n\n\n\n\n\n\n\n2nd value\n456\nThe 2nd detail\nThe 3rd detail"
+  },
+  {
+    "objectID": "layouts/index.html#navbars",
+    "href": "layouts/index.html#navbars",
+    "title": "Part 1: UI Layout and Customizing",
+    "section": "navbars",
+    "text": "navbars"
+  },
+  {
+    "objectID": "layouts/index.html#style-your-app-with-bslib-and-thematic",
+    "href": "layouts/index.html#style-your-app-with-bslib-and-thematic",
+    "title": "Part 1: UI Layout and Customizing",
+    "section": "Style your App with {bslib} and {thematic}",
+    "text": "Style your App with {bslib} and {thematic}\n\nbslib::bs_themer()\nbslib::run_with_themer()\nthematic::"
+  },
+  {
+    "objectID": "layouts/index.html#exercise",
+    "href": "layouts/index.html#exercise",
+    "title": "Part 1: UI Layout and Customizing",
+    "section": "Exercise",
+    "text": "Exercise\nTry running\nlibrary(bslib)\nrun_with_themer(\"app_bs_themer.R\")"
+  },
+  {
+    "objectID": "layouts/index.html#accessibility",
+    "href": "layouts/index.html#accessibility",
+    "title": "Part 1: UI Layout and Customizing",
+    "section": "Accessibility",
+    "text": "Accessibility\nPrioritizing accessibility leads to better UX!\n\n\nKeyboard navigation (without mouse)\nVisualization color palettes accounting for vision deficiencies\nMetadata for HTML tag attributes"
+  },
+  {
+    "objectID": "layouts/index.html#guides-with-cicerone",
+    "href": "layouts/index.html#guides-with-cicerone",
+    "title": "Part 1: UI Layout and Customizing",
+    "section": "Guides with {cicerone}",
+    "text": "Guides with {cicerone}\n\nA convienent API to create guided tours of Shiny applications using driver.js"
+  },
+  {
+    "objectID": "layouts/index.html#the-cicerone-workflow",
+    "href": "layouts/index.html#the-cicerone-workflow",
+    "title": "Part 1: UI Layout and Customizing",
+    "section": "The {cicerone} Workflow",
+    "text": "The {cicerone} Workflow\n\n\nNote the input IDs of elements for guide\nUse the Cicerone R6 class and step() methods to define steps\nImport dependencies by declaring use_cicerone() in app UI\nDefine triggers to start guide in app server"
+  },
+  {
+    "objectID": "layouts/index.html#section",
+    "href": "layouts/index.html#section",
+    "title": "Part 1: UI Layout and Customizing",
+    "section": "",
+    "text": "Beautify with Bootstrap"
+  },
+  {
+    "objectID": "layouts/index.html#but-im-not-a-web-designer",
+    "href": "layouts/index.html#but-im-not-a-web-designer",
+    "title": "Part 1: UI Layout and Customizing",
+    "section": "But … I’m not a Web Designer?",
+    "text": "But … I’m not a Web Designer?\n\n\nWealth of packages available in the Shiny ecosystem\nPlug-in favorite theme styles\nAbility to go as low-level as desired with CSS and JavaScript\n\n\n💡 It’s not all about you! (That’s good)"
+  },
+  {
+    "objectID": "layouts/index.html#language-of-the-web-1",
+    "href": "layouts/index.html#language-of-the-web-1",
+    "title": "Part 1: UI Layout and Customizing",
+    "section": "Language of the Web",
+    "text": "Language of the Web"
+  },
+  {
+    "objectID": "layouts/index.html#multiple-levels-of-abstraction",
+    "href": "layouts/index.html#multiple-levels-of-abstraction",
+    "title": "Part 1: UI Layout and Customizing",
+    "section": "Multiple Levels of Abstraction",
+    "text": "Multiple Levels of Abstraction\n\n\n\n{shiny}\nfluidRow()\n\n{htmltools}\ndiv(class=\"row\", ...)\n\nRaw HTML\n&lt;div class=\"row\"&gt;...&lt;/div&gt;\n\n\n\nEmpowers users across spectrum of design experience"
+  },
+  {
+    "objectID": "layouts/index.html#cascading-style-sheets-css",
+    "href": "layouts/index.html#cascading-style-sheets-css",
+    "title": "Part 1: UI Layout and Customizing",
+    "section": "Cascading Style Sheets (CSS)",
+    "text": "Cascading Style Sheets (CSS)\nSet of rules that define how HTML content is presented in the browser\n\nselector {\n  property1: value;\n  property2: value;\n}\n\n\nselector defines which elements on page to apply rule\nproperty list set properties of elements to specific values"
+  },
+  {
+    "objectID": "layouts/index.html#customizing-css-in-shiny-1",
+    "href": "layouts/index.html#customizing-css-in-shiny-1",
+    "title": "Part 1: UI Layout and Customizing",
+    "section": "Customizing CSS in Shiny (1)",
+    "text": "Customizing CSS in Shiny (1)\n\n\nui &lt;- fluidPage(\n  tags$head(\n    tags$style(\n      HTML(\"\n      body {\n        background-color: blue;\n        color: white;\n      }\")\n    )\n  ),\n  # application UI\n  ...\n)\n\n\ntags originates from {htmltools}, but imported with {shiny}"
+  },
+  {
+    "objectID": "layouts/index.html#customizing-css-in-shiny-2",
+    "href": "layouts/index.html#customizing-css-in-shiny-2",
+    "title": "Part 1: UI Layout and Customizing",
+    "section": "Customizing CSS in Shiny (2)",
+    "text": "Customizing CSS in Shiny (2)\n\n\n# app.R\n\nui &lt;- fluidPage(\n  tags$head(\n    tags$link(\n      rel = \"stylesheet\", \n      type = \"text/css\", \n      href = \"custom.css\"\n    )\n  )\n)\n\n/* www/custom.css */\n\nbody {\n  background-color: blue;\n  color: white;\n}"
+  },
+  {
+    "objectID": "layouts/index.html#customizing-css-in-shiny-3",
+    "href": "layouts/index.html#customizing-css-in-shiny-3",
+    "title": "Part 1: UI Layout and Customizing",
+    "section": "Customizing CSS in Shiny (3)",
+    "text": "Customizing CSS in Shiny (3)\nui &lt;- fluidPage(\n  h2(\n  \"Art Viewer Application\", \n  style = \"font-family: monospace;\"\n  ),\n  ...\n)"
+  },
+  {
+    "objectID": "layouts/index.html#your-turn-exercise-1",
+    "href": "layouts/index.html#your-turn-exercise-1",
+    "title": "Part 1: UI Layout and Customizing",
+    "section": "Your Turn: Exercise 1",
+    "text": "Your Turn: Exercise 1\nIn the application ex-1/app.R, give the image display a bit of style! Visit the exercise page for more details.\n\nlibrary(countdown)\ncountdown(minutes = 5, seconds = 0)\n\n\n−+\n05:00"
+  },
+  {
+    "objectID": "layouts/index.html#almost-endless-possibilities",
+    "href": "layouts/index.html#almost-endless-possibilities",
+    "title": "Part 1: UI Layout and Customizing",
+    "section": "(Almost) Endless Possibilities",
+    "text": "(Almost) Endless Possibilities\n\n\nShiny UI powered by Bootstrap\nDefaults are clean and simple\nRevising the style for every element …"
+  },
+  {
+    "objectID": "layouts/index.html#enter-bslib",
+    "href": "layouts/index.html#enter-bslib",
+    "title": "Part 1: UI Layout and Customizing",
+    "section": "Enter {bslib}",
+    "text": "Enter {bslib}\n\nProvides tools for customizing Bootstrap themes directly in R\n\n\nEasy to explore theme options interactively\nLogical parameters to most common elements for color, font, and more\nBuilt upon the Sass stylesheet language to extend traditional CSS with modern features"
+  },
+  {
+    "objectID": "layouts/index.html#your-turn-exercise-2",
+    "href": "layouts/index.html#your-turn-exercise-2",
+    "title": "Part 1: UI Layout and Customizing",
+    "section": "Your Turn: Exercise 2",
+    "text": "Your Turn: Exercise 2\nBuilding upon the app from exercise 1, use {bslib} to customize font and other theme elements!\n\nlibrary(countdown)\ncountdown(minutes = 5, seconds = 0)\n\n\n−+\n05:00"
+  },
+  {
+    "objectID": "layouts/index.html#accessibility-1",
+    "href": "layouts/index.html#accessibility-1",
+    "title": "Part 1: UI Layout and Customizing",
+    "section": "Accessibility",
+    "text": "Accessibility\nPrioritizing accessibility leads to better UX!\n\n\nKeyboard navigation (without mouse)\nVisualization color palettes accounting for vision deficiencies\nMetadata for HTML tag attributes"
+  },
+  {
+    "objectID": "layouts/index.html#guides-with-cicerone-1",
+    "href": "layouts/index.html#guides-with-cicerone-1",
+    "title": "Part 1: UI Layout and Customizing",
+    "section": "Guides with {cicerone}",
+    "text": "Guides with {cicerone}\n\nA convienent API to create guided tours of Shiny applications using driver.js"
+  },
+  {
+    "objectID": "layouts/index.html#the-cicerone-workflow-1",
+    "href": "layouts/index.html#the-cicerone-workflow-1",
+    "title": "Part 1: UI Layout and Customizing",
+    "section": "The {cicerone} Workflow",
+    "text": "The {cicerone} Workflow\n\n\nNote the input IDs of elements for guide\nUse the Cicerone R6 class and step() methods to define steps\nImport dependencies by declaring use_cicerone() in app UI\nDefine triggers to start guide in app server"
+  },
+  {
+    "objectID": "layouts/index.html#shinywidgets",
+    "href": "layouts/index.html#shinywidgets",
+    "title": "Part 1: UI Layout and Customizing",
+    "section": "{shinyWidgets}",
+    "text": "{shinyWidgets}\n\nCustom widgets and other components to enhance your Shiny application\n\n\n\nAlternatives to many classic Shiny inputs wrapping specialized frameworks within Bootstrap, Material Design, and more\nFantastic demonstration app: shinyapps.dreamrs.fr/shinyWidgets"
+  },
+  {
+    "objectID": "layouts/index.html#the-shiny-ui-ecosystem",
+    "href": "layouts/index.html#the-shiny-ui-ecosystem",
+    "title": "Part 1: UI Layout and Customizing",
+    "section": "The Shiny UI Ecosystem",
+    "text": "The Shiny UI Ecosystem\n\nbs4dash.rinterface.com"
+  },
+  {
+    "objectID": "layouts/index.html#choose-your-widget",
+    "href": "layouts/index.html#choose-your-widget",
+    "title": "Part 1: UI Layout and Customizing",
+    "section": "Choose your Widget",
+    "text": "Choose your Widget\n\n\n{shinydashboard}\n\n\n😀 Easy, right?\n\nlibrary(shiny)\nlibrary(shinydashboard)\nui &lt;- fluidPage(\n  h2(\"My Title\")\n  valueBox(4024, \"Total downloads\")\n)\n\n\n\n😐 Not quite: {shiny} and {shinydashboard} use different styling toolkits under the hood"
+  },
+  {
+    "objectID": "layouts/index.html#htmltools-to-the-rescue",
+    "href": "layouts/index.html#htmltools-to-the-rescue",
+    "title": "Part 1: UI Layout and Customizing",
+    "section": "💪 {htmltools} to the Rescue",
+    "text": "💪 {htmltools} to the Rescue\n\nDefine WidgetApp Usage\n\n\nuseValueBox &lt;- function() {\n  if (!requireNamespace(package = \"shinydashboard\")) {\n    message(\"package 'shinydashboard' is required to run this function\")\n  }\n  \n  deps &lt;- htmltools::findDependencies(\n      shinydashboard::dashboardPage(\n        header = shinydashboard::dashboardHeader(),\n        sidebar = shinydashboard::dashboardSidebar(),\n        body = shinydashboard::dashboardBody()\n      )\n  )\n  htmltools::attachDependencies(tags$div(), value = deps)\n}\n\nvalue_box &lt;- function(...) shinydashboard::valueBox(...)\n\n\nlibrary(shiny)\nlibrary(shinydashboard)\n\nui &lt;- fluidPage(\n  useValueBox()\n  h2(\"My Title\")\n  value_box(4024, \"Total downloads\")\n)"
+  },
+  {
+    "objectID": "layouts/index.html#back-to-shinywidgets",
+    "href": "layouts/index.html#back-to-shinywidgets",
+    "title": "Part 1: UI Layout and Customizing",
+    "section": "Back to {shinyWidgets}",
+    "text": "Back to {shinyWidgets}\nUsage of this powerful technique in {shinyWidgets}:\n\n\nuseArgonDash()\nusebs4Dash()\nuseShinyDashboard()\nuseShinyDashboardPlus()\nuseTablerDash()"
+  },
+  {
+    "objectID": "layouts/index.html#not-just-styling",
+    "href": "layouts/index.html#not-just-styling",
+    "title": "Part 1: UI Layout and Customizing",
+    "section": "Not Just Styling",
+    "text": "Not Just Styling\nAll of Shiny’s interactivity is powered by JavaScript\n\n\nDirect pipe to & from R process to client (browser)\nNormal use: Everything set up for you\n\n\nFoundations in place to extend Shiny’s power when desired"
+  },
+  {
+    "objectID": "layouts/index.html#shinyjs",
+    "href": "layouts/index.html#shinyjs",
+    "title": "Part 1: UI Layout and Customizing",
+    "section": "{shinyjs}",
+    "text": "{shinyjs}\n\nEasily improve the user experience of your Shiny apps in seconds, without having to know JS\n\n\n\nEnable & disable buttons\nShow & hide elements\nDynamically adding and removing CSS classes\nClick a shiny button from server side\nRun JS scripts easily if desired"
+  },
+  {
+    "objectID": "layouts/index.html#your-turn-exercise-3",
+    "href": "layouts/index.html#your-turn-exercise-3",
+    "title": "Part 1: UI Layout and Customizing",
+    "section": "Your Turn: Exercise 3",
+    "text": "Your Turn: Exercise 3\nHarness the power of custom JavaScript in the Art Viewer App!\n\nlibrary(countdown)\ncountdown(minutes = 10, seconds = 0)\n\n\n−+\n10:00\n\n\n\n\n\n\nhttps;//shinyowl.netlify.com/layouts/"
+  },
+  {
+    "objectID": "modules/index.html#modules",
+    "href": "modules/index.html#modules",
+    "title": "Part 3: Shiny Modules",
+    "section": "Modules",
+    "text": "Modules\n\n\n\n\nWhy?\nMotivating example\nHow to code"
+  },
+  {
+    "objectID": "modules/index.html#why",
+    "href": "modules/index.html#why",
+    "title": "Part 3: Shiny Modules",
+    "section": "Why?",
+    "text": "Why?\n\n\nA new way to thinking about apps\nModularize code into smaller apps\nmakes it easier to develop with others\nmakes it easier to test code"
+  },
+  {
+    "objectID": "modules/index.html#use-shiny-modules-if",
+    "href": "modules/index.html#use-shiny-modules-if",
+    "title": "Part 3: Shiny Modules",
+    "section": "Use Shiny Modules if:",
+    "text": "Use Shiny Modules if:\n\n\nYou want to reuse your code, especially in the same app\nYou are tired of thinking up unique ids for all the elements in your app (namespacing)\nYou need to break up a monolithic shiny application into pieces\n\nmultiple Shiny developers"
+  },
+  {
+    "objectID": "modules/index.html#maybe-not",
+    "href": "modules/index.html#maybe-not",
+    "title": "Part 3: Shiny Modules",
+    "section": "Maybe not:",
+    "text": "Maybe not:\n\nYour app is a one and done - single version\nIt doesn’t have that many controls that need to be reused"
+  },
+  {
+    "objectID": "modules/index.html#motivating-example",
+    "href": "modules/index.html#motivating-example",
+    "title": "Part 3: Shiny Modules",
+    "section": "Motivating Example",
+    "text": "Motivating Example\n\n\nAn ui that lets you pass in a dataset\nLets you select columns from that dataset\nWant multiple plots in the same app"
+  },
+  {
+    "objectID": "modules/index.html#using-shiny-modules",
+    "href": "modules/index.html#using-shiny-modules",
+    "title": "Part 3: Shiny Modules",
+    "section": "Using Shiny modules",
+    "text": "Using Shiny modules\n\n\nui\n\nui &lt;- fluidPage(   \n    select_hist_ui(\n      id = \"mtcars_module\", \n      var_choices = mtcars_var_choices)\n    )\n\n\nnote that select_hist_ui() is a function that takes an id argument\nuses an id called mtcars_module"
+  },
+  {
+    "objectID": "modules/index.html#using-shiny-modules-1",
+    "href": "modules/index.html#using-shiny-modules-1",
+    "title": "Part 3: Shiny Modules",
+    "section": "Using Shiny modules",
+    "text": "Using Shiny modules\n\n\nui\n\nui &lt;- fluidPage(   \n    select_hist_ui(\n      id = \"mtcars_module\", \n      var_choices = mtcars_var_choices)\n    )\n\n\nserver\n\nserver &lt;- function(input, output) {\n    select_hist_server(\n      id=\"mtcars_module\", \n      data=mtcars)\n}\n\n\nNote that we have a function select_hist_server()\nAlso uses the id \"mtcars_module\""
+  },
+  {
+    "objectID": "modules/index.html#try-it-out",
+    "href": "modules/index.html#try-it-out",
+    "title": "Part 3: Shiny Modules",
+    "section": "Try it out!",
+    "text": "Try it out!\nrunApp(\"modules/module_demo_01/\")"
+  },
+  {
+    "objectID": "modules/index.html#reusing-code",
+    "href": "modules/index.html#reusing-code",
+    "title": "Part 3: Shiny Modules",
+    "section": "Reusing code",
+    "text": "Reusing code\n\n\nui\n\nui &lt;- fluidPage(   \n    select_hist_ui(id = \"mtcars_module\", \n                   var_choices = mtcars_var_choices),\n    select_hist_ui(id = \"penguin_module\",\n                   var_choices = penguin_choices)\n    )\n\n\nnote we have two select_hist_ui() functions\nthe second one has the id of penguin_module"
+  },
+  {
+    "objectID": "modules/index.html#reusing-code-1",
+    "href": "modules/index.html#reusing-code-1",
+    "title": "Part 3: Shiny Modules",
+    "section": "Reusing code",
+    "text": "Reusing code\n\n\nui\n\nui &lt;- fluidPage(   \n    select_hist_ui(id = \"mtcars_module\", \n                   var_choices = mtcars_var_choices),\n    select_hist_ui(id = \"penguin_module\",\n                   var_choices = penguin_choices)\n    )\n\n\nserver\n\nserver &lt;- function(input, output) {\n    select_hist_server(id=\"mtcars_module\", \n                       data=mtcars)\n    select_hist_server(id=\"penguin_module\", \n                       data=penguins)\n}\n\n\nNote that we have two instances of select_hist_server()\nThe second one use the id \"penguin_module\"\nWe can have two different plots/interfaces!"
+  },
+  {
+    "objectID": "modules/index.html#two-modules-two-datasets",
+    "href": "modules/index.html#two-modules-two-datasets",
+    "title": "Part 3: Shiny Modules",
+    "section": "Two modules, two datasets",
+    "text": "Two modules, two datasets\n\n\n\ndataset is mtcars\n\n\n\n\ndataset is penguins"
+  },
+  {
+    "objectID": "modules/index.html#making-your-own-modules",
+    "href": "modules/index.html#making-your-own-modules",
+    "title": "Part 3: Shiny Modules",
+    "section": "Making Your Own Modules",
+    "text": "Making Your Own Modules\n\nui module\nserver module\ndemo app"
+  },
+  {
+    "objectID": "modules/index.html#make-it-easy-on-yourself",
+    "href": "modules/index.html#make-it-easy-on-yourself",
+    "title": "Part 3: Shiny Modules",
+    "section": "Make it easy on yourself",
+    "text": "Make it easy on yourself\n\nPut your code in a package (usethis::create_package())\nUse &lt;module_name&gt;_server and &lt;module_name&gt;_ui for your module names\nHave a demo app &lt;module_name&gt;_demo (makes it easier for testing)"
+  },
+  {
+    "objectID": "modules/index.html#ui-module",
+    "href": "modules/index.html#ui-module",
+    "title": "Part 3: Shiny Modules",
+    "section": "ui module",
+    "text": "ui module\n\nselect_hist_ui &lt;- function(id, var_choices){\n  ns &lt;- NS(id)\n  tagList(\n    selectInput(inputId = ns(\"x_var\"), \n                label=\"Select X Variable\", \n                choices=var_choices, \n                selected = var_choices[1]),\n    plotOutput(ns(\"hist_plot\"))\n  )\n}\n\n\nInitialize the namespace for id using NS() function\nNeed to refer to any controls/plots with ids wrapped in ns()\n\nsuch as ns(\"x_var\") or ns(\"hist_plot\")"
+  },
+  {
+    "objectID": "modules/index.html#server-module",
+    "href": "modules/index.html#server-module",
+    "title": "Part 3: Shiny Modules",
+    "section": "Server Module",
+    "text": "Server Module\n\nselect_hist_server &lt;- function(id, data) {\n  moduleServer(id, function(input, output, session) {\n\n  })\n  \n}\n\n\ndefine a function that takes an id as input\nmoduleServer() encapsulates your server code"
+  },
+  {
+    "objectID": "modules/index.html#server-module-1",
+    "href": "modules/index.html#server-module-1",
+    "title": "Part 3: Shiny Modules",
+    "section": "Server Module",
+    "text": "Server Module\n\nselect_hist_server &lt;- function(id, data) {\n  moduleServer(id, function(input, output, session) {\n\n    output$hist_plot &lt;- \n      renderPlot({\n        x_var &lt;- input$x_var\n        data %&gt;% ggplot(aes(x=.data[[x_var]])) +\n          geom_histogram()\n    })\n    \n  })\n  \n}\n\n\nPut your server code in moduleServer()\nbe really careful with closing curly brackets and parentheses"
+  },
+  {
+    "objectID": "modules/index.html#write-a-demo-app-function",
+    "href": "modules/index.html#write-a-demo-app-function",
+    "title": "Part 3: Shiny Modules",
+    "section": "Write a demo app function",
+    "text": "Write a demo app function\n\n## modules.R\nselect_hist_demo &lt;- function(data=mtcars){\n  var_choices &lt;- names(data)\n  ui &lt;- fluidPage(\n    select_hist_ui(id = \"module\", \n                   var_choices = var_choices)  \n  )\n  server &lt;- function(input,output,session){\n    select_hist_server(id=\"module\", data=data)\n  }\n  shinyApp(ui, server)\n}\n\n\nwrite an &lt;module_name&gt;_demo() function\nuseful for documentation and testing"
+  },
+  {
+    "objectID": "modules/index.html#exercise-use-a-shiny-module",
+    "href": "modules/index.html#exercise-use-a-shiny-module",
+    "title": "Part 3: Shiny Modules",
+    "section": "Exercise: Use a Shiny Module",
+    "text": "Exercise: Use a Shiny Module\n\nIn RStudio, open up \"modules/module_demo_02/app.R\"\nWire in a new dataset to one of the plots"
+  },
+  {
+    "objectID": "modules/index.html#module-design-1",
+    "href": "modules/index.html#module-design-1",
+    "title": "Part 3: Shiny Modules",
+    "section": "Module Design",
+    "text": "Module Design\n\n\nCareful design\n\n\nWhat does the module do?\nWhat is it trying to accomplish?\nWhat is the module’s name?\n\n\n\nInputs and Return Values\n\n\nStatic or Reactive Inputs?\nComplexity of return values\nWhich outputs serve as inputs for other modules?\n\n\n\n\nEric Nantz: Effective Use of Shiny modules in App development :::"
+  },
+  {
+    "objectID": "modules/index.html#communicating-between-modules",
+    "href": "modules/index.html#communicating-between-modules",
+    "title": "Part 3: Shiny Modules",
+    "section": "Communicating between modules",
+    "text": "Communicating between modules\n\nmodules can return single objects or named lists\nAmes Housing App\n\n\n  # execute plot variable selection modules\n  plot1vars &lt;- varselect_mod_server(\"plot1_vars\") #returns a reactive\n  plot2vars &lt;- varselect_mod_server(\"plot2_vars\") #returns a reactive\n  \n  # execute scatterplot module\n  res &lt;- scatterplot_mod_server(\n                    \"plots\",\n                    dataset = ames,\n                    plot1vars = plot1vars,\n                    plot2vars = plot2vars)"
+  },
+  {
+    "objectID": "modules/index.html#scatterplot_mod_server",
+    "href": "modules/index.html#scatterplot_mod_server",
+    "title": "Part 3: Shiny Modules",
+    "section": "scatterplot_mod_server",
+    "text": "scatterplot_mod_server\n\nscatterplot_mod_server &lt;- function(input, \n                                   output, \n                                   session, \n                                   dataset, \n                                   plot1vars, \n                                   plot2vars) {\n  \n  plot1_obj &lt;- reactive({\n    p &lt;- scatter_sales(dataset, xvar = plot1vars$xvar(), yvar = plot1vars$yvar())\n    return(p)\n  })\n  \n  plot2_obj &lt;- reactive({\n    p &lt;- scatter_sales(dataset, xvar = plot2vars$xvar(), yvar = plot2vars$yvar())\n    return(p)\n  })\n  \n  output$plot1 &lt;- renderPlot({\n    plot1_obj()\n  })"
+  },
+  {
+    "objectID": "modules/index.html#go-further",
+    "href": "modules/index.html#go-further",
+    "title": "Part 3: Shiny Modules",
+    "section": "Go Further",
+    "text": "Go Further\n\nShiny Modules for Beginners - Emily Riederer\nEric Nantz: Effective Use of Shiny modules in App development\nMastering Shiny: Modules\n{rhino} - framework for developing apps from Appsilon"
+  },
+  {
+    "objectID": "reactives/index.html",
+    "href": "reactives/index.html",
+    "title": "Exploring Reactivity",
+    "section": "",
+    "text": "Slides\n\n\n\nExercise 1\nrunApp(\"reactives/app_reactive.R\")\nrunApp(\"reactives/app_isolate.R\")\n\n\nExercise 2\nrunApp(\"reactives/app_eventReactive.R\")\nrunApp(\"reactives/app_observeEvent.R\")\n\n\nExercise 3\nrunApp(\"reactives/app_ExtendedTaskSingle.R\")"
+  },
+  {
+    "objectID": "modules/index.html#you-have-linkedin-to-blame",
+    "href": "modules/index.html#you-have-linkedin-to-blame",
+    "title": "Part 3: Shiny Modules",
+    "section": "You have LinkedIn to Blame",
+    "text": "You have LinkedIn to Blame"
+  }
+]
