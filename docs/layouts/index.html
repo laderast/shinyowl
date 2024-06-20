@@ -1,0 +1,1541 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-html/tabby.min.js"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/light-border.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-html.min.css" rel="stylesheet" data-mode="light">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.5.45">
+
+  <title>shinyowl – Part 1: UI Layout and Customizing</title>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+  <link rel="stylesheet" href="../site_libs/revealjs/dist/reset.css">
+  <link rel="stylesheet" href="../site_libs/revealjs/dist/reveal.css">
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+      vertical-align: middle;
+    }
+    /* CSS for syntax highlighting */
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      { color: #003b4f; background-color: #f1f3f5; }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span { color: #003b4f; } /* Normal */
+    code span.al { color: #ad0000; } /* Alert */
+    code span.an { color: #5e5e5e; } /* Annotation */
+    code span.at { color: #657422; } /* Attribute */
+    code span.bn { color: #ad0000; } /* BaseN */
+    code span.bu { } /* BuiltIn */
+    code span.cf { color: #003b4f; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #20794d; } /* Char */
+    code span.cn { color: #8f5902; } /* Constant */
+    code span.co { color: #5e5e5e; } /* Comment */
+    code span.cv { color: #5e5e5e; font-style: italic; } /* CommentVar */
+    code span.do { color: #5e5e5e; font-style: italic; } /* Documentation */
+    code span.dt { color: #ad0000; } /* DataType */
+    code span.dv { color: #ad0000; } /* DecVal */
+    code span.er { color: #ad0000; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #ad0000; } /* Float */
+    code span.fu { color: #4758ab; } /* Function */
+    code span.im { color: #00769e; } /* Import */
+    code span.in { color: #5e5e5e; } /* Information */
+    code span.kw { color: #003b4f; font-weight: bold; } /* Keyword */
+    code span.op { color: #5e5e5e; } /* Operator */
+    code span.ot { color: #003b4f; } /* Other */
+    code span.pp { color: #ad0000; } /* Preprocessor */
+    code span.sc { color: #5e5e5e; } /* SpecialChar */
+    code span.ss { color: #20794d; } /* SpecialString */
+    code span.st { color: #20794d; } /* String */
+    code span.va { color: #111111; } /* Variable */
+    code span.vs { color: #20794d; } /* VerbatimString */
+    code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
+  </style>
+  <link rel="stylesheet" href="../site_libs/revealjs/dist/theme/quarto.css">
+  <link href="../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
+  <link href="../site_libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
+  <link href="../site_libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
+  <link href="../site_libs/revealjs/plugin/quarto-support/footer.css" rel="stylesheet">
+  <style type="text/css">
+
+  .callout {
+    margin-top: 1em;
+    margin-bottom: 1em;  
+    border-radius: .25rem;
+  }
+
+  .callout.callout-style-simple { 
+    padding: 0em 0.5em;
+    border-left: solid #acacac .3rem;
+    border-right: solid 1px silver;
+    border-top: solid 1px silver;
+    border-bottom: solid 1px silver;
+    display: flex;
+  }
+
+  .callout.callout-style-default {
+    border-left: solid #acacac .3rem;
+    border-right: solid 1px silver;
+    border-top: solid 1px silver;
+    border-bottom: solid 1px silver;
+  }
+
+  .callout .callout-body-container {
+    flex-grow: 1;
+  }
+
+  .callout.callout-style-simple .callout-body {
+    font-size: 1rem;
+    font-weight: 400;
+  }
+
+  .callout.callout-style-default .callout-body {
+    font-size: 0.9rem;
+    font-weight: 400;
+  }
+
+  .callout.callout-titled.callout-style-simple .callout-body {
+    margin-top: 0.2em;
+  }
+
+  .callout:not(.callout-titled) .callout-body {
+      display: flex;
+  }
+
+  .callout:not(.no-icon).callout-titled.callout-style-simple .callout-content {
+    padding-left: 1.6em;
+  }
+
+  .callout.callout-titled .callout-header {
+    padding-top: 0.2em;
+    margin-bottom: -0.2em;
+  }
+
+  .callout.callout-titled .callout-title  p {
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
+  }
+    
+  .callout.callout-titled.callout-style-simple .callout-content  p {
+    margin-top: 0;
+  }
+
+  .callout.callout-titled.callout-style-default .callout-content  p {
+    margin-top: 0.7em;
+  }
+
+  .callout.callout-style-simple div.callout-title {
+    border-bottom: none;
+    font-size: .9rem;
+    font-weight: 600;
+    opacity: 75%;
+  }
+
+  .callout.callout-style-default  div.callout-title {
+    border-bottom: none;
+    font-weight: 600;
+    opacity: 85%;
+    font-size: 0.9rem;
+    padding-left: 0.5em;
+    padding-right: 0.5em;
+  }
+
+  .callout.callout-style-default div.callout-content {
+    padding-left: 0.5em;
+    padding-right: 0.5em;
+  }
+
+  .callout.callout-style-simple .callout-icon::before {
+    height: 1rem;
+    width: 1rem;
+    display: inline-block;
+    content: "";
+    background-repeat: no-repeat;
+    background-size: 1rem 1rem;
+  }
+
+  .callout.callout-style-default .callout-icon::before {
+    height: 0.9rem;
+    width: 0.9rem;
+    display: inline-block;
+    content: "";
+    background-repeat: no-repeat;
+    background-size: 0.9rem 0.9rem;
+  }
+
+  .callout-title {
+    display: flex
+  }
+    
+  .callout-icon::before {
+    margin-top: 1rem;
+    padding-right: .5rem;
+  }
+
+  .callout.no-icon::before {
+    display: none !important;
+  }
+
+  .callout.callout-titled .callout-body > .callout-content > :last-child {
+    padding-bottom: 0.5rem;
+    margin-bottom: 0;
+  }
+
+  .callout.callout-titled .callout-icon::before {
+    margin-top: .5rem;
+    padding-right: .5rem;
+  }
+
+  .callout:not(.callout-titled) .callout-icon::before {
+    margin-top: 1rem;
+    padding-right: .5rem;
+  }
+
+  /* Callout Types */
+
+  div.callout-note {
+    border-left-color: #4582ec !important;
+  }
+
+  div.callout-note .callout-icon::before {
+    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAERlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAA6ABAAMAAAABAAEAAKACAAQAAAABAAAAIKADAAQAAAABAAAAIAAAAACshmLzAAAEU0lEQVRYCcVXTWhcVRQ+586kSUMMxkyaElstCto2SIhitS5Ek8xUKV2poatCcVHtUlFQk8mbaaziwpWgglJwVaquitBOfhQXFlqlzSJpFSpIYyXNjBNiTCck7x2/8/LeNDOZxDuEkgOXe++553zfefee+/OYLOXFk3+1LLrRdiO81yNqZ6K9cG0P3MeFaMIQjXssE8Z1JzLO9ls20MBZX7oG8w9GxB0goaPrW5aNMp1yOZIa7Wv6o2ykpLtmAPs/vrG14Z+6d4jpbSKuhdcSyq9wGMPXjonwmESXrriLzFGOdDBLB8Y6MNYBu0dRokSygMA/mrun8MGFN3behm6VVAwg4WR3i6FvYK1T7MHo9BK7ydH+1uurECoouk5MPRyVSBrBHMYwVobG2aOXM07sWrn5qgB60rc6mcwIDJtQrnrEr44kmy+UO9r0u9O5/YbkS9juQckLed3DyW2XV/qWBBB3ptvI8EUY3I9p/67OW+g967TNr3Sotn3IuVlfMLVnsBwH4fsnebJvyGm5GeIUA3jljERmrv49SizPYuq+z7c2H/jlGC+Ghhupn/hcapqmcudB9jwJ/3jvnvu6vu5lVzF1fXyZuZZ7U8nRmVzytvT+H3kilYvH09mLWrQdwFSsFEsxFVs5fK7A0g8gMZjbif4ACpKbjv7gNGaD8bUrlk8x+KRflttr22JEMRUbTUwwDQScyzPgedQHZT0xnx7ujw2jfVfExwYHwOsDTjLdJ2ebmeQIlJ7neo41s/DrsL3kl+W2lWvAga0tR3zueGr6GL78M3ifH0rGXrBC2aAR8uYcIA5gwV8zIE8onoh8u0Fca/ciF7j1uOzEnqcIm59sEXoGc0+z6+H45V1CvAvHcD7THztu669cnp+L0okAeIc6zjbM/24LgGM1gZk7jnRu1aQWoU9sfUOuhrmtaPIO3YY1KLLWZaEO5TKUbMY5zx8W9UJ6elpLwKXbsaZ4EFl7B4bMtDv0iRipKoDQT2sNQI9b1utXFdYisi+wzZ/ri/1m7QfDgEuvgUUEIJPq3DhX/5DWNqIXDOweC2wvIR90Oq3lDpdMIgD2r0dXvGdsEW5H6x6HLRJYU7C69VefO1x8Gde1ZFSJLfWS1jbCnhtOPxmpfv2LXOA2Xk2tvnwKKPFuZ/oRmwBwqRQDcKNeVQkYcOjtWVBuM/JuYw5b6isojIkYxyYAFn5K7ZBF10fea52y8QltAg6jnMqNHFBmGkQ1j+U43HMi2xMar1Nv0zGsf1s8nUsmUtPOOrbFIR8bHFDMB5zL13Gmr/kGlCkUzedTzzmzsaJXhYawnA3UmARpiYj5ooJZiUoxFRtK3X6pgNPv+IZVPcnwbOl6f+aBaO1CNvPW9n9LmCp01nuSaTRF2YxHqZ8DYQT6WsXT+RD6eUztwYLZ8rM+rcPxamv1VQzFUkzFXvkiVrySGQgJNvXHJAxiU3/NwiC03rSf05VBaPtu/Z7/B8Yn/w7eguloAAAAAElFTkSuQmCC');
+  }
+
+  div.callout-note.callout-style-default .callout-title {
+    background-color: #dae6fb
+  }
+
+  div.callout-important {
+    border-left-color: #d9534f !important;
+  }
+
+  div.callout-important .callout-icon::before {
+    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAERlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAA6ABAAMAAAABAAEAAKACAAQAAAABAAAAIKADAAQAAAABAAAAIAAAAACshmLzAAAEKklEQVRYCcVXTWhcVRS+575MJym48A+hSRFr00ySRQhURRfd2HYjk2SSTokuBCkU2o0LoSKKraKIBTcuFCoidGFD08nkBzdREbpQ1EDNIv8qSGMFUboImMSZd4/f9zJv8ibJMC8xJQfO3HPPPef7zrvvvnvviIkpC9nsw0UttFunbUhpFzFtarSd6WJkStVMw5xyVqYTvkwfzuf/5FgtkVoB0729j1rjXwThS7Vio+Mo6DNnvLfahoZ+i/o32lULuJ3NNiz7q6+pyAUkJaFF6JwaM2lUJlV0MlnQn5aTRbEu0SEqHUa0A4AdiGuB1kFXRfVyg5d87+Dg4DL6m2TLAub60ilj7A1Ec4odSAc8X95sHh7+ZRPCFo6Fnp7HfU/fBng/hi10CjCnWnJjsxvDNxWw0NfV6Rv5GgP3I3jGWXumdTD/3cbEOP2ZbOZp69yniG3FQ9z1jD7bnBu9Fc2tKGC2q+uAJOQHBDRiZX1x36o7fWBs7J9ownbtO+n0/qWkvW7UPIfc37WgT6ZGR++EOJyeQDSb9UB+DZ1G6DdLDzyS+b/kBCYGsYgJbSQHuThGKRcw5xdeQf8YdNHsc6ePXrlSYMBuSIAFTGAtQo+VuALo4BX83N190NWZWbynBjhOHsmNfFWLeL6v+ynsA58zDvvAC8j5PkbOcXCMg2PZFk3q8MjI7WAG/Dp9AwP7jdGBOOQkAvlFUB+irtm16I1Zw9YBcpGTGXYmk3kQIC/Cds55l+iMI3jqhjAuaoe+am2Jw5GT3Nbz3CkE12NavmzN5+erJW7046n/CH1RO/RVa8lBLozXk9uqykkGAyRXLWlLv5jyp4RFsG5vGVzpDLnIjTWgnRy2Rr+tDKvRc7Y8AyZq10jj8DqXdnIRNtFZb+t/ZRtXcDiVnzpqx8mPcDWxgARUqx0W1QB9MeUZiNrV4qP+Ehc+BpNgATsTX8ozYKL2NtFYAHc84fG7ndxUPr+AR/iQSns7uSUufAymwDOb2+NjK27lEFocm/EE2WpyIy/Hi66MWuMKJn8RvxIcj87IM5Vh9663ziW36kR0HNenXuxmfaD8JC7tfKbrhFr7LiZCrMjrzTeGx+PmkosrkNzW94ObzwocJ7A1HokLolY+AvkTiD/q1H0cN48c5EL8Crkttsa/AXQVDmutfyku0E7jShx49XqV3MFK8IryDhYVbj7Sj2P2eBxwcXoe8T8idsKKPRcnZw1b+slFTubwUwhktrfnAt7J++jwQtLZcm3sr9LQrjRzz6cfMv9aLvgmnAGvpoaGLxM4mAEaLV7iAzQ3oU0IvD5x9ix3yF2RAAuYAOO2f7PEFWCXZ4C9Pb2UsgDeVnFSpbFK7/IWu7TPTvBqzbGdCHOJQSxiEjt6IyZmxQyEJHv6xyQsYk//moVFsN2zP6fRImjfq7/n/wFDguUQFNEwugAAAABJRU5ErkJggg==');
+  }
+
+  div.callout-important.callout-style-default .callout-title {
+    background-color: #f7dddc
+  }
+
+  div.callout-warning {
+    border-left-color: #f0ad4e !important;
+  }
+
+  div.callout-warning .callout-icon::before {
+    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAERlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAA6ABAAMAAAABAAEAAKACAAQAAAABAAAAIKADAAQAAAABAAAAIAAAAACshmLzAAAETklEQVRYCeVWW2gcVRg+58yaTUnizqbipZeX4uWhBEniBaoUX1Ioze52t7sRq6APio9V9MEaoWlVsFasRq0gltaAPuxms8lu0gcviE/FFOstVbSIxgcv6SU7EZqmdc7v9+9mJtNks51NTUH84ed889/PP+cmxP+d5FIbMJmNbpREu4WUkiTtCicKny0l1pIKmBzovF2S+hIJHX8iEu3hZJ5lNZGqyRrGSIQpq15AzF28jgpeY6yk6GVdrfFqdrD6Iw+QlB8g0YS2g7dyQmXM/IDhBhT0UCiRf59lfqmmDvzRt6kByV/m4JjtzuaujMUM2c5Z2d6JdKrRb3K2q6mA+oYVz8JnDdKPmmNthzkAk/lN63sYPgevrguc72aZX/L9C6x09GYyxBgCX4NlvyGUHOKELlm5rXeR1kchuChJt4SSwyddZRXgvwMGvYo4QSlk3/zkHD8UHxwVJA6zjZZqP8v8kK8OWLnIZtLyCAJagYC4rTGW/9Pqj92N/c+LUaAj27movwbi19tk/whRCIE7Q9vyI6yvRpftAKVTdUjOW40X3h5OXsKCdmFcx0xlLJoSuQngnrJe7Kcjm4OMq9FlC7CMmScQANuNvjfP3PjGXDBaUQmbp296S5L4DrpbrHN1T87ZVEZVCzg1FF0Ft+dKrlLukI+/c9ENo+TvlTDbYFvuKPtQ9+l052rXrgKoWkDAFnvh0wTOmYn8R5f4k/jN/fZiCM1tQx9jQQ4ANhqG4hiL0qIFTGViG9DKB7GYzgubnpofgYRwO+DFjh0Zin2m4b/97EDkXkc+f6xYAPX0KK2I/7fUQuwzuwo/L3AkcjugPNixC8cHf0FyPjWlItmLxWw4Ou9YsQCr5fijMGoD/zpdRy95HRysyXA74MWOnscpO4j2y3HAVisw85hX5+AFBRSHt4ShfLFkIMXTqyKFc46xdzQM6XbAi702a7sy04J0+feReMFKp5q9esYLCqAZYw/k14E/xcLLsFElaornTuJB0svMuJINy8xkIYuL+xPAlWRceH6+HX7THJ0djLUom46zREu7tTkxwmf/FdOZ/sh6Q8qvEAiHpm4PJ4a/doJe0gH1t+aHRgCzOvBvJedEK5OFE5jpm4AGP2a8Dxe3gGJ/pAutug9Gp6he92CsSsWBaEcxGx0FHytmIpuqGkOpldqNYQK8cSoXvd+xLxXADw0kf6UkJNFtdo5MOgaLjiQOQHcn+A6h5NuL2s0qsC2LOM75PcF3yr5STuBSAcGG+meA14K/CI21HcS4LBT6tv0QAh8Dr5l93AhZzG5ZJ4VxAqdZUEl9z7WJ4aN+svMvwHHL21UKTd1mqvChH7/Za5xzXBBKrUcB0TQ+Ulgkfbi/H/YT5EptrGzsEK7tR1B7ln9BBwckYfMiuSqklSznIuoIIOM42MQO+QnduCoFCI0bpkzjCjddHPN/F+2Yu+sd9bKNpVwHhbS3LluK/0zgfwD0xYI5dXuzlQAAAABJRU5ErkJggg==');
+  }
+
+  div.callout-warning.callout-style-default .callout-title {
+    background-color: #fcefdc
+  }
+
+  div.callout-tip {
+    border-left-color: #02b875 !important;
+  }
+
+  div.callout-tip .callout-icon::before {
+    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAERlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAA6ABAAMAAAABAAEAAKACAAQAAAABAAAAIKADAAQAAAABAAAAIAAAAACshmLzAAADr0lEQVRYCe1XTWgTQRj9ZjZV8a9SPIkKgj8I1bMHsUWrqYLVg4Ue6v9BwZOxSYsIerFao7UiUryIqJcqgtpimhbBXoSCVxUFe9CTiogUrUp2Pt+3aUI2u5vdNh4dmMzOzHvvezuz8xNFM0mjnbXaNu1MvFWRXkXEyE6aYOYJpdW4IXuA4r0fo8qqSMDBU0v1HJUgVieAXxzCsdE/YJTdFcVIZQNMyhruOMJKXYFoLfIfIvVIMWdsrd+Rpd86ZmyzzjJmLStqRn0v8lzkb4rVIXvnpScOJuAn2ACC65FkPzEdEy4TPWRLJ2h7z4cArXzzaOdKlbOvKKX25Wl00jSnrwVxAg3o4dRxhO13RBSdNvH0xSARv3adTXbBdTf64IWO2vH0LT+cv4GR1DJt+DUItaQogeBX/chhbTBxEiZ6gftlDNXTrvT7co4ub5A6gp9HIcHvzTa46OS5fBeP87Qm0fQkr4FsYgVQ7Qg+ZayaDg9jhg1GkWj8RG6lkeSacrrHgDaxdoBiZPg+NXV/KifMuB6//JmYH4CntVEHy/keA6x4h4CU5oFy8GzrBS18cLJMXcljAKB6INjWsRcuZBWVaS3GDrqB7rdapVIeA+isQ57Eev9eCqzqOa81CY05VLd6SamW2wA2H3SiTbnbSxmzfp7WtKZkqy4mdyAlGx7ennghYf8voqp9cLSgKdqNfa6RdRsAAkPwRuJZNbpByn+RrJi1RXTwdi8RQF6ymDwGMAtZ6TVE+4uoKh+MYkcLsT0Hk8eAienbiGdjJHZTpmNjlbFJNKDVAp2fJlYju6IreQxQ08UJDNYdoLSl6AadO+fFuCQqVMB1NJwPm69T04Wv5WhfcWyfXQB+wXRs1pt+nCknRa0LVzSA/2B+a9+zQJadb7IyyV24YAxKp2Jqs3emZTuNnKxsah+uabKbMk7CbTgJx/zIgQYErIeTKRQ9yD9wxVof5YolPHqaWo7TD6tJlh7jQnK5z2n3+fGdggIOx2kaa2YI9QWarc5Ce1ipNWMKeSG4DysFF52KBmTNMmn5HqCFkwy34rDg05gDwgH3bBi+sgFhN/e8QvRn8kbamCOhgrZ9GJhFDgfcMHzFb6BAtjKpFhzTjwv1KCVuxHvCbsSiEz4CANnj84cwHdFXAbAOJ4LTSAawGWFn5tDhLMYz6nWeU2wJfIhmIJBefcd/A5FWQWGgrWzyORZ3Q6HuV+Jf0Bj+BTX69fm1zWgK7By1YTXchFDORywnfQ7GpzOo6S+qECrsx2ifVQAAAABJRU5ErkJggg==');
+  }
+
+  div.callout-tip.callout-style-default .callout-title {
+    background-color: #ccf1e3
+  }
+
+  div.callout-caution {
+    border-left-color: #fd7e14 !important;
+  }
+
+  div.callout-caution .callout-icon::before {
+    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAERlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAA6ABAAMAAAABAAEAAKACAAQAAAABAAAAIKADAAQAAAABAAAAIAAAAACshmLzAAACV0lEQVRYCdVWzWoUQRCuqp2ICBLJXgITZL1EfQDBW/bkzUMUD7klD+ATSHBEfAIfQO+iXsWDxJsHL96EHAwhgzlkg8nBg25XWb0zIb0zs9muYYWkoKeru+vn664fBqElyZNuyh167NXJ8Ut8McjbmEraKHkd7uAnAFku+VWdb3reSmRV8PKSLfZ0Gjn3a6Xlcq9YGb6tADjn+lUfTXtVmaZ1KwBIvFI11rRXlWlatwIAAv2asaa9mlB9wwygiDX26qaw1yYPzFXg2N1GgG0FMF8Oj+VIx7E/03lHx8UhvYyNZLN7BwSPgekXXLribw7w5/c8EF+DBK5idvDVYtEEwMeYefjjLAdEyQ3M9nfOkgnPTEkYU+sxMq0BxNR6jExrAI31H1rzvLEfRIdgcv1XEdj6QTQAS2wtstEALLG1yEZ3QhH6oDX7ExBSFEkFINXH98NTrme5IOaaA7kIfiu2L8A3qhH9zRbukdCqdsA98TdElyeMe5BI8Rs2xHRIsoTSSVFfCFCWGPn9XHb4cdobRIWABNf0add9jakDjQJpJ1bTXOJXnnRXHRf+dNL1ZV1MBRCXhMbaHqGI1JkKIL7+i8uffuP6wVQAzO7+qVEbF6NbS0LJureYcWXUUhH66nLR5rYmva+2tjRFtojkM2aD76HEGAD3tPtKM309FJg5j/K682ywcWJ3PASCcycH/22u+Bh7Aa0ehM2Fu4z0SAE81HF9RkB21c5bEn4Dzw+/qNOyXr3DCTQDMBOdhi4nAgiFDGCinIa2owCEChUwD8qzd03PG+qdW/4fDzjUMcE1ZpIAAAAASUVORK5CYII=');
+  }
+
+  div.callout-caution.callout-style-default .callout-title {
+    background-color: #ffe5d0
+  }
+
+  </style>
+  <style type="text/css">
+    .reveal div.sourceCode {
+      margin: 0;
+      overflow: auto;
+    }
+    .reveal div.hanging-indent {
+      margin-left: 1em;
+      text-indent: -1em;
+    }
+    .reveal .slide:not(.center) {
+      height: 100%;
+      overflow-y: auto;
+    }
+    .reveal .slide.scrollable {
+      overflow-y: auto;
+    }
+    .reveal .footnotes {
+      height: 100%;
+      overflow-y: auto;
+    }
+    .reveal .slide .absolute {
+      position: absolute;
+      display: block;
+    }
+    .reveal .footnotes ol {
+      counter-reset: ol;
+      list-style-type: none; 
+      margin-left: 0;
+    }
+    .reveal .footnotes ol li:before {
+      counter-increment: ol;
+      content: counter(ol) ". "; 
+    }
+    .reveal .footnotes ol li > p:first-child {
+      display: inline-block;
+    }
+    .reveal .slide ul,
+    .reveal .slide ol {
+      margin-bottom: 0.5em;
+    }
+    .reveal .slide ul li,
+    .reveal .slide ol li {
+      margin-top: 0.4em;
+      margin-bottom: 0.2em;
+    }
+    .reveal .slide ul[role="tablist"] li {
+      margin-bottom: 0;
+    }
+    .reveal .slide ul li > *:first-child,
+    .reveal .slide ol li > *:first-child {
+      margin-block-start: 0;
+    }
+    .reveal .slide ul li > *:last-child,
+    .reveal .slide ol li > *:last-child {
+      margin-block-end: 0;
+    }
+    .reveal .slide .columns:nth-child(3) {
+      margin-block-start: 0.8em;
+    }
+    .reveal blockquote {
+      box-shadow: none;
+    }
+    .reveal .tippy-content>* {
+      margin-top: 0.2em;
+      margin-bottom: 0.7em;
+    }
+    .reveal .tippy-content>*:last-child {
+      margin-bottom: 0.2em;
+    }
+    .reveal .slide > img.stretch.quarto-figure-center,
+    .reveal .slide > img.r-stretch.quarto-figure-center {
+      display: block;
+      margin-left: auto;
+      margin-right: auto; 
+    }
+    .reveal .slide > img.stretch.quarto-figure-left,
+    .reveal .slide > img.r-stretch.quarto-figure-left  {
+      display: block;
+      margin-left: 0;
+      margin-right: auto; 
+    }
+    .reveal .slide > img.stretch.quarto-figure-right,
+    .reveal .slide > img.r-stretch.quarto-figure-right  {
+      display: block;
+      margin-left: auto;
+      margin-right: 0; 
+    }
+  </style>
+  <link href="../site_libs/htmltools-fill-0.5.8.1/fill.css" rel="stylesheet">
+  <script src="../site_libs/bslib-component-js-0.7.0/components.min.js"></script>
+  <script src="../site_libs/bslib-component-js-0.7.0/web-components.min.js" type="module"></script>
+  <link href="../site_libs/bslib-component-css-0.7.0/components.css" rel="stylesheet">
+  <script src="../site_libs/bslib-tag-require-0.7.0/tag-require.js"></script>
+  <script src="../site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+  <script src="../site_libs/bs3compat-0.7.0/transition.js"></script>
+  <script src="../site_libs/bs3compat-0.7.0/tabs.js"></script>
+  <script src="../site_libs/bs3compat-0.7.0/bs3compat.js"></script>
+  <script src="../site_libs/htmlwidgets-1.6.4/htmlwidgets.js"></script>
+  <script src="../site_libs/plotly-binding-4.10.4/plotly.js"></script>
+  <script src="../site_libs/typedarray-0.1/typedarray.min.js"></script>
+  <link href="../site_libs/crosstalk-1.2.1/css/crosstalk.min.css" rel="stylesheet">
+  <script src="../site_libs/crosstalk-1.2.1/js/crosstalk.min.js"></script>
+  <link href="../site_libs/plotly-htmlwidgets-css-2.11.1/plotly-htmlwidgets.css" rel="stylesheet">
+  <script src="../site_libs/plotly-main-2.11.1/plotly-latest.min.js"></script>
+  <link href="../site_libs/countdown-0.4.0/countdown.css" rel="stylesheet">
+  <script src="../site_libs/countdown-0.4.0/countdown.js"></script>
+</head>
+<body class="bslib-page-fill bslib-gap-spacing bslib-flow-mobile html-fill-container quarto-light">
+  <div class="reveal">
+    <div class="slides">
+
+<section id="title-slide" class="quarto-title-block center">
+  <h1 class="title">Part 1: UI Layout and Customizing</h1>
+
+<div class="quarto-title-authors">
+</div>
+
+</section>
+<section id="learning-objectives" class="slide level2">
+<h2>Learning Objectives</h2>
+<p>By the end of this session, you should be able to:</p>
+<ul>
+<li class="fragment"><strong>Layout</strong> your shiny app using <code>{bslib}</code></li>
+<li class="fragment"><strong>Style</strong> your shiny app using <code>bslib::bs_themer()</code></li>
+<li class="fragment"><strong>Style</strong> your shiny app using <code>{thematic}</code></li>
+</ul>
+</section>
+<section id="what-are-shiny-uis" class="slide level2">
+<h2>What are Shiny UIs?</h2>
+<ul>
+<li class="fragment">Underneath, it’s HTML + JavaScript</li>
+<li class="fragment">Built on a library called Bootstrap</li>
+<li class="fragment">JavaScript gives us the power to update parts of the HTML dynamically</li>
+</ul>
+</section>
+<section id="language-of-the-web" class="slide level2">
+<h2>Language of the Web</h2>
+<div class="columns">
+<div class="column">
+<h3 id="shiny">Shiny</h3>
+<div class="sourceCode" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a></a>dept_choices <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Ancient Near Easter Art"</span>, <span class="st">"American"</span>)</span>
+<span id="cb1-2"><a></a><span class="fu">selectInput</span>(</span>
+<span id="cb1-3"><a></a>  <span class="st">"dept"</span>,</span>
+<span id="cb1-4"><a></a>  <span class="st">"Select Department"</span>,</span>
+<span id="cb1-5"><a></a>  <span class="at">choices =</span> dept_choices</span>
+<span id="cb1-6"><a></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div><div class="column">
+<h3 id="html">HTML</h3>
+<div class="sourceCode" id="cb2"><pre class="sourceCode numberSource html number-lines code-with-copy"><code class="sourceCode html"><span id="cb2-1"><a></a><span class="dt">&lt;</span><span class="kw">div</span><span class="ot"> class</span><span class="op">=</span><span class="st">"form-group shiny-input-container"</span><span class="dt">&gt;</span></span>
+<span id="cb2-2"><a></a>  <span class="dt">&lt;</span><span class="kw">label</span><span class="ot"> class</span><span class="op">=</span><span class="st">"control-label"</span><span class="ot"> id</span><span class="op">=</span><span class="st">"dept-label"</span><span class="ot"> for</span><span class="op">=</span><span class="st">"dept"</span><span class="dt">&gt;</span></span>
+<span id="cb2-3"><a></a>    Select Department</span>
+<span id="cb2-4"><a></a>  <span class="dt">&lt;/</span><span class="kw">label</span><span class="dt">&gt;</span></span>
+<span id="cb2-5"><a></a>  <span class="dt">&lt;</span><span class="kw">div</span><span class="dt">&gt;</span></span>
+<span id="cb2-6"><a></a>    <span class="dt">&lt;</span><span class="kw">select</span><span class="ot"> id</span><span class="op">=</span><span class="st">"dept"</span><span class="ot"> class</span><span class="op">=</span><span class="st">"form-control"</span><span class="dt">&gt;</span></span>
+<span id="cb2-7"><a></a>      <span class="dt">&lt;</span><span class="kw">option</span><span class="ot"> value</span><span class="op">=</span><span class="st">"Ancient Near Easter Art"</span><span class="ot"> selected</span><span class="dt">&gt;</span>Ancient Near Easter Art<span class="dt">&lt;/</span><span class="kw">option</span><span class="dt">&gt;</span></span>
+<span id="cb2-8"><a></a>      <span class="dt">&lt;</span><span class="kw">option</span><span class="ot"> value</span><span class="op">=</span><span class="st">"American"</span><span class="dt">&gt;</span>American<span class="dt">&lt;/</span><span class="kw">option</span><span class="dt">&gt;</span></span>
+<span id="cb2-9"><a></a>    <span class="dt">&lt;/</span><span class="kw">select</span><span class="dt">&gt;</span></span>
+<span id="cb2-10"><a></a>  <span class="dt">&lt;/</span><span class="kw">div</span><span class="dt">&gt;</span></span>
+<span id="cb2-11"><a></a><span class="dt">&lt;/</span><span class="kw">div</span><span class="dt">&gt;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+</section>
+<section id="designhtml-is-all-about-containers" class="slide level2">
+<h2>Design/HTML is all about containers</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3" data-code-line-numbers="1,11|5,10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a></a><span class="sc">&lt;</span>div class<span class="ot">=</span><span class="st">"form-group shiny-input-container"</span><span class="sc">&gt;</span></span>
+<span id="cb3-2"><a></a>  <span class="er">&lt;</span>label class<span class="ot">=</span><span class="st">"control-label"</span> id<span class="ot">=</span><span class="st">"dept-label"</span> <span class="cf">for</span><span class="ot">=</span><span class="st">"dept"</span><span class="sc">&gt;</span></span>
+<span id="cb3-3"><a></a>    Select Department</span>
+<span id="cb3-4"><a></a>  <span class="sc">&lt;</span><span class="er">/</span>label<span class="sc">&gt;</span></span>
+<span id="cb3-5"><a></a>  <span class="er">&lt;</span>div<span class="sc">&gt;</span></span>
+<span id="cb3-6"><a></a>    <span class="er">&lt;</span>select id<span class="ot">=</span><span class="st">"dept"</span> class<span class="ot">=</span><span class="st">"form-control"</span><span class="sc">&gt;</span></span>
+<span id="cb3-7"><a></a>      <span class="er">&lt;</span>option value<span class="ot">=</span><span class="st">"Ancient Near Easter Art"</span> selected<span class="sc">&gt;</span>Ancient Near Easter Art<span class="sc">&lt;</span><span class="er">/</span>option<span class="sc">&gt;</span></span>
+<span id="cb3-8"><a></a>      <span class="er">&lt;</span>option value<span class="ot">=</span><span class="st">"American"</span><span class="sc">&gt;</span>American<span class="sc">&lt;</span><span class="er">/</span>option<span class="sc">&gt;</span></span>
+<span id="cb3-9"><a></a>    <span class="er">&lt;/</span>select<span class="sc">&gt;</span></span>
+<span id="cb3-10"><a></a>  <span class="er">&lt;/</span>div<span class="sc">&gt;</span></span>
+<span id="cb3-11"><a></a><span class="er">&lt;/</span>div<span class="sc">&gt;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section>
+<section id="layout-your-shiny-app-with-bslib" class="title-slide slide level1 center">
+<h1>Layout Your Shiny App with <code>{bslib}</code></h1>
+
+</section>
+<section id="what-is-bslib" class="slide level2">
+<h2>What is <code>{bslib}</code>?</h2>
+<ul>
+<li class="fragment">Short for <strong>B</strong>oot<strong>s</strong>trap<strong>Lib</strong>rary</li>
+<li class="fragment"></li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a></a><span class="fu">library</span>(bslib)</span>
+<span id="cb4-2"><a></a><span class="fu">library</span>(bsicons)</span>
+<span id="cb4-3"><a></a><span class="fu">library</span>(shiny)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="components-of-bslib" class="slide level2">
+<h2>Components of <code>{bslib}</code></h2>
+<ul>
+<li class="fragment">card</li>
+<li class="fragment">sidebars</li>
+<li class="fragment">value boxes</li>
+</ul>
+</section>
+<section id="layouts-pages" class="slide level2">
+<h2>Layouts / Pages</h2>
+<div class="columns">
+<div class="column">
+<h3 id="layouts">Layouts</h3>
+<ul>
+<li class="fragment"><code>layout_sidebar()</code></li>
+<li class="fragment"><code>layout_column_wrap()</code></li>
+<li class="fragment"><code>layout_columns()</code></li>
+</ul>
+</div><div class="column">
+<h3 id="pages">Pages</h3>
+<ul>
+<li class="fragment"><code>page_sidebar()</code>/<code>sidebar()</code></li>
+<li class="fragment"><code>page_navbar()</code>/<code>navbarPage()</code></li>
+<li class="fragment"><code>page_fillable()</code>/<code>layout_</code></li>
+</ul>
+</div>
+</div>
+</section>
+<section id="cards" class="slide level2" data-auto-animate="true">
+<h2 data-id="quarto-animate-title">Cards</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy" data-id="quarto-animate-code"><code class="sourceCode r hljs"><span id="cb5-1" class="hljs-ln-code"><a></a><span class="fu">library</span>(bslib)</span>
+<span id="cb5-2" class="hljs-ln-code"><a></a>ui <span class="ot">&lt;-</span> <span class="fu">page</span>(</span>
+<span id="cb5-3" class="hljs-ln-code"><a></a>  <span class="fu">card</span>({</span>
+<span id="cb5-4" class="hljs-ln-code"><a></a>    <span class="fu">plotOutput</span>(<span class="st">"penguins"</span>)</span>
+<span id="cb5-5" class="hljs-ln-code"><a></a>  })</span>
+<span id="cb5-6" class="hljs-ln-code"><a></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="page_sidebar" class="slide level2" data-auto-animate="true">
+<h2 data-id="quarto-animate-title"><code>page_sidebar()</code></h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy" data-id="quarto-animate-code"><code class="sourceCode r hljs"><span id="cb6-1" class="hljs-ln-code"><a></a><span class="fu">library</span>(bslib)</span>
+<span id="cb6-2" class="hljs-ln-code"><a></a>ui <span class="ot">&lt;-</span> <span class="fu">page_sidebar</span>(</span>
+<span id="cb6-3" class="hljs-ln-code"><a></a>  <span class="at">sidebar =</span> <span class="fu">sidebar</span>(</span>
+<span id="cb6-4" class="hljs-ln-code"><a></a>    <span class="fu">selectInput</span>(<span class="st">"var"</span>, <span class="st">"Select Island"</span>,</span>
+<span id="cb6-5" class="hljs-ln-code"><a></a>      choices,</span>
+<span id="cb6-6" class="hljs-ln-code"><a></a>      <span class="at">selected =</span> choices[<span class="dv">1</span>]</span>
+<span id="cb6-7" class="hljs-ln-code"><a></a>    )</span>
+<span id="cb6-8" class="hljs-ln-code"><a></a>  ),</span>
+<span id="cb6-9" class="hljs-ln-code"><a></a>  <span class="fu">card</span>({</span>
+<span id="cb6-10" class="hljs-ln-code"><a></a>    <span class="fu">plotOutput</span>(<span class="st">"penguins"</span>)</span>
+<span id="cb6-11" class="hljs-ln-code"><a></a>  })</span>
+<span id="cb6-12" class="hljs-ln-code"><a></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="layout_column_wrap" class="slide level2" data-auto-animate="true">
+<h2 data-id="quarto-animate-title"><code>layout_column_wrap()</code></h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy" data-id="quarto-animate-code"><code class="sourceCode r hljs"><span id="cb7-1" class="hljs-ln-code"><a></a>ui <span class="ot">&lt;-</span> <span class="fu">page_sidebar</span>(</span>
+<span id="cb7-2" class="hljs-ln-code"><a></a>  <span class="at">sidebar =</span> <span class="fu">sidebar</span>(</span>
+<span id="cb7-3" class="hljs-ln-code"><a></a>    <span class="fu">selectInput</span>(<span class="st">"var"</span>, <span class="st">"Select Island"</span>, choices, <span class="at">selected =</span> choices[<span class="dv">1</span>])</span>
+<span id="cb7-4" class="hljs-ln-code"><a></a>  ),</span>
+<span id="cb7-5" class="hljs-ln-code"><a></a>  <span class="fu">card</span>(</span>
+<span id="cb7-6" class="hljs-ln-code"><a></a>    <span class="fu">layout_column_wrap</span>(</span>
+<span id="cb7-7" class="hljs-ln-code"><a></a>      <span class="fu">plotOutput</span>(<span class="st">"penguins"</span>),</span>
+<span id="cb7-8" class="hljs-ln-code"><a></a>      <span class="fu">plotOutput</span>(<span class="st">"penguins2"</span>)</span>
+<span id="cb7-9" class="hljs-ln-code"><a></a>    )</span>
+<span id="cb7-10" class="hljs-ln-code"><a></a>  )</span>
+<span id="cb7-11" class="hljs-ln-code"><a></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="value-boxes" class="slide level2">
+<h2>Value Boxes</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a></a><span class="fu">value_box</span>(</span>
+<span id="cb8-2"><a></a>  <span class="at">title =</span> <span class="st">"I got"</span>,</span>
+<span id="cb8-3"><a></a>  <span class="at">value =</span> <span class="st">"99 problems"</span>,</span>
+<span id="cb8-4"><a></a>  <span class="at">showcase =</span> <span class="fu">bs_icon</span>(<span class="st">"music-note-beamed"</span>),</span>
+<span id="cb8-5"><a></a>  <span class="fu">p</span>(<span class="st">"bslib ain't one"</span>, <span class="fu">bs_icon</span>(<span class="st">"emoji-smile"</span>)),</span>
+<span id="cb8-6"><a></a>  <span class="fu">p</span>(<span class="st">"hit me"</span>, <span class="fu">bs_icon</span>(<span class="st">"suit-spade"</span>))</span>
+<span id="cb8-7"><a></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="card bslib-card bslib-mb-spacing html-fill-item html-fill-container bslib-value-box default showcase-left-center" data-bslib-card-init="" data-require-bs-caller="card() value_box()" data-require-bs-version="5 5">
+<div class="card-body bslib-gap-spacing html-fill-item html-fill-container" style="margin-top:auto;margin-bottom:auto;flex:1 1 auto; padding:0;">
+<div class="value-box-grid html-fill-item" style="--bslib-grid-height:auto;--bslib-grid-height-mobile:auto;---bslib-value-box-showcase-w:30%;---bslib-value-box-showcase-w-fs:1fr;---bslib-value-box-showcase-max-h:100px;---bslib-value-box-showcase-max-h-fs:67%;">
+<div class="value-box-showcase html-fill-item html-fill-container"><svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 16 16" class="bi bi-music-note-beamed " style="height:1em;width:1em;fill:currentColor;vertical-align:-0.125em;" aria-hidden="true" role="img"><path d="M6 13c0 1.105-1.12 2-2.5 2S1 14.105 1 13c0-1.104 1.12-2 2.5-2s2.5.896 2.5 2zm9-2c0 1.105-1.12 2-2.5 2s-2.5-.895-2.5-2 1.12-2 2.5-2 2.5.895 2.5 2z"></path>
+<path fill-rule="evenodd" d="M14 11V2h1v9h-1zM6 3v10H5V3h1z"></path>
+<path d="M5 2.905a1 1 0 0 1 .9-.995l8-.8a1 1 0 0 1 1.1.995V3L5 4V2.905z"></path></svg></div>
+<div class="value-box-area html-fill-item html-fill-container">
+<p class="value-box-title">I got</p>
+<p class="value-box-value">99 problems</p>
+<p>
+bslib ain't one
+<svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 16 16" class="bi bi-emoji-smile " style="height:1em;width:1em;fill:currentColor;vertical-align:-0.125em;" aria-hidden="true" role="img"><path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"></path>
+<path d="M4.285 9.567a.5.5 0 0 1 .683.183A3.498 3.498 0 0 0 8 11.5a3.498 3.498 0 0 0 3.032-1.75.5.5 0 1 1 .866.5A4.498 4.498 0 0 1 8 12.5a4.498 4.498 0 0 1-3.898-2.25.5.5 0 0 1 .183-.683zM7 6.5C7 7.328 6.552 8 6 8s-1-.672-1-1.5S5.448 5 6 5s1 .672 1 1.5zm4 0c0 .828-.448 1.5-1 1.5s-1-.672-1-1.5S9.448 5 10 5s1 .672 1 1.5z"></path></svg>
+</p>
+<p>
+hit me
+<svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 16 16" class="bi bi-suit-spade " style="height:1em;width:1em;fill:currentColor;vertical-align:-0.125em;" aria-hidden="true" role="img"><path d="M8 0a.5.5 0 0 1 .429.243c1.359 2.265 2.925 3.682 4.25 4.882.096.086.19.17.282.255C14.308 6.604 15.5 7.747 15.5 9.5a4 4 0 0 1-5.406 3.746c.235.39.491.782.722 1.131.434.659-.01 1.623-.856 1.623H6.04c-.845 0-1.29-.964-.856-1.623.263-.397.51-.777.728-1.134A4 4 0 0 1 .5 9.5c0-1.753 1.192-2.896 2.539-4.12l.281-.255c1.326-1.2 2.892-2.617 4.251-4.882A.5.5 0 0 1 8 0zM3.711 6.12C2.308 7.396 1.5 8.253 1.5 9.5a3 3 0 0 0 5.275 1.956.5.5 0 0 1 .868.43c-.094.438-.33.932-.611 1.428a29.247 29.247 0 0 1-1.013 1.614.03.03 0 0 0-.005.018.074.074 0 0 0 .024.054h3.924a.074.074 0 0 0 .024-.054.03.03 0 0 0-.005-.018c-.3-.455-.658-1.005-.96-1.535-.294-.514-.57-1.064-.664-1.507a.5.5 0 0 1 .868-.43A3 3 0 0 0 14.5 9.5c0-1.247-.808-2.104-2.211-3.38L12 5.86c-1.196-1.084-2.668-2.416-4-4.424-1.332 2.008-2.804 3.34-4 4.422l-.289.261z"></path></svg>
+</p>
+</div>
+</div>
+</div>
+<script data-bslib-card-init="">bslib.Card.initializeAllCards();</script>
+</div>
+</div>
+</div>
+</section>
+<section id="dynamic-value-box" class="slide level2">
+<h2>Dynamic Value Box</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a></a><span class="fu">library</span>(bsicons)</span>
+<span id="cb9-2"><a></a>ui <span class="ot">&lt;-</span> <span class="fu">page_fixed</span>(</span>
+<span id="cb9-3"><a></a>  <span class="fu">value_box</span>(</span>
+<span id="cb9-4"><a></a>    <span class="at">title =</span> <span class="st">"The current time"</span>,</span>
+<span id="cb9-5"><a></a>    <span class="at">value =</span> <span class="fu">textOutput</span>(<span class="st">"time"</span>),</span>
+<span id="cb9-6"><a></a>    <span class="at">showcase =</span> <span class="fu">bs_icon</span>(<span class="st">"clock"</span>)</span>
+<span id="cb9-7"><a></a>  )</span>
+<span id="cb9-8"><a></a>)</span>
+<span id="cb9-9"><a></a></span>
+<span id="cb9-10"><a></a>server <span class="ot">&lt;-</span> <span class="cf">function</span>(input, output) {</span>
+<span id="cb9-11"><a></a>  output<span class="sc">$</span>time <span class="ot">&lt;-</span> <span class="fu">renderText</span>({</span>
+<span id="cb9-12"><a></a>    <span class="fu">invalidateLater</span>(<span class="dv">1000</span>)</span>
+<span id="cb9-13"><a></a>    <span class="fu">format</span>(<span class="fu">Sys.time</span>())</span>
+<span id="cb9-14"><a></a>  })</span>
+<span id="cb9-15"><a></a>}</span>
+<span id="cb9-16"><a></a></span>
+<span id="cb9-17"><a></a><span class="fu">shinyApp</span>(ui, server)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p></p><div style="width: 100% ; height: 400px ; text-align: center; box-sizing: border-box; -moz-box-sizing: border-box; -webkit-box-sizing: border-box;" class="muted well">Shiny applications not supported in static R Markdown documents</div><p></p>
+</div>
+</div>
+</section>
+<section id="laying-out-value-boxes" class="slide level2">
+<h2>Laying out value boxes</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a></a><span class="fu">page_fillable</span>(</span>
+<span id="cb10-2"><a></a>  <span class="fu">layout_column_wrap</span>(</span>
+<span id="cb10-3"><a></a>    <span class="at">width =</span> <span class="st">"250px"</span>,</span>
+<span id="cb10-4"><a></a>    <span class="at">fill =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb10-5"><a></a>    vbs[[<span class="dv">1</span>]], vbs[[<span class="dv">2</span>]]</span>
+<span id="cb10-6"><a></a>  ),</span>
+<span id="cb10-7"><a></a>  <span class="fu">card</span>(</span>
+<span id="cb10-8"><a></a>    <span class="at">min_height =</span> <span class="dv">200</span>,</span>
+<span id="cb10-9"><a></a>    plotly<span class="sc">::</span><span class="fu">plot_ly</span>(<span class="at">x =</span> <span class="fu">rnorm</span>(<span class="dv">100</span>))</span>
+<span id="cb10-10"><a></a>  )</span>
+<span id="cb10-11"><a></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+
+<div class="bslib-grid bslib-mb-spacing" style="grid-template-columns:repeat(auto-fit, minmax(min(250px, 100%), 1fr));grid-auto-rows:1fr;--bslib-grid-height:auto;--bslib-grid-height-mobile:auto;" data-require-bs-version="5" data-require-bs-caller="layout_column_wrap()">
+<div class="bslib-grid-item bslib-gap-spacing html-fill-container">
+<div class="card bslib-card bslib-mb-spacing html-fill-item html-fill-container bslib-value-box bg-purple showcase-left-center" data-bslib-card-init="" data-require-bs-caller="card() value_box()" data-require-bs-version="5 5">
+<div class="card-body bslib-gap-spacing html-fill-item html-fill-container" style="margin-top:auto;margin-bottom:auto;flex:1 1 auto; padding:0;">
+<div class="value-box-grid html-fill-item" style="--bslib-grid-height:auto;--bslib-grid-height-mobile:auto;---bslib-value-box-showcase-w:30%;---bslib-value-box-showcase-w-fs:1fr;---bslib-value-box-showcase-max-h:100px;---bslib-value-box-showcase-max-h-fs:67%;">
+<div class="value-box-showcase html-fill-item html-fill-container"><svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 16 16" class="bi bi-bar-chart " style="height:1em;width:1em;fill:currentColor;vertical-align:-0.125em;" aria-hidden="true" role="img"><path d="M4 11H2v3h2v-3zm5-4H7v7h2V7zm5-5v12h-2V2h2zm-2-1a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h2a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1h-2zM6 7a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v7a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V7zm-5 4a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1v-3z"></path></svg></div>
+<div class="value-box-area html-fill-item html-fill-container">
+<p class="value-box-title">1st value</p>
+<p class="value-box-value">123</p>
+<p>The 1st detail</p>
+</div>
+</div>
+</div>
+<script data-bslib-card-init="">bslib.Card.initializeAllCards();</script>
+</div>
+</div>
+<div class="bslib-grid-item bslib-gap-spacing html-fill-container">
+<div class="card bslib-card bslib-mb-spacing html-fill-item html-fill-container bslib-value-box bg-teal showcase-left-center" data-bslib-card-init="" data-require-bs-caller="card() value_box()" data-require-bs-version="5 5">
+<div class="card-body bslib-gap-spacing html-fill-item html-fill-container" style="margin-top:auto;margin-bottom:auto;flex:1 1 auto; padding:0;">
+<div class="value-box-grid html-fill-item" style="--bslib-grid-height:auto;--bslib-grid-height-mobile:auto;---bslib-value-box-showcase-w:30%;---bslib-value-box-showcase-w-fs:1fr;---bslib-value-box-showcase-max-h:100px;---bslib-value-box-showcase-max-h-fs:67%;">
+<div class="value-box-showcase html-fill-item html-fill-container"><svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 16 16" class="bi bi-graph-up " style="height:1em;width:1em;fill:currentColor;vertical-align:-0.125em;" aria-hidden="true" role="img"><path fill-rule="evenodd" d="M0 0h1v15h15v1H0V0Zm14.817 3.113a.5.5 0 0 1 .07.704l-4.5 5.5a.5.5 0 0 1-.74.037L7.06 6.767l-3.656 5.027a.5.5 0 0 1-.808-.588l4-5.5a.5.5 0 0 1 .758-.06l2.609 2.61 4.15-5.073a.5.5 0 0 1 .704-.07Z"></path></svg></div>
+<div class="value-box-area html-fill-item html-fill-container">
+<p class="value-box-title">2nd value</p>
+<p class="value-box-value">456</p>
+<p>The 2nd detail</p>
+<p>The 3rd detail</p>
+</div>
+</div>
+</div>
+<script data-bslib-card-init="">bslib.Card.initializeAllCards();</script>
+</div>
+</div>
+</div>
+<div class="card bslib-card bslib-mb-spacing html-fill-item html-fill-container" data-bslib-card-init="" data-require-bs-caller="card()" data-require-bs-version="5" style="min-height:200px;">
+<div class="card-body bslib-gap-spacing html-fill-item html-fill-container" style="margin-top:auto;margin-bottom:auto;flex:1 1 auto;">
+<div class="plotly html-widget html-fill-item" id="htmlwidget-584067c66093d1130c2b" style="width:100%;height:400px;"></div>
+<script type="application/json" data-for="htmlwidget-584067c66093d1130c2b">{"x":{"visdat":{"f6757b3889c":["function () ","plotlyVisDat"]},"cur_data":"f6757b3889c","attrs":{"f6757b3889c":{"x":[-1.4693570269874772,-0.72218864328621846,1.3551727319912039,-0.3647239605670835,-0.30278996788720342,-1.7459841878732696,2.0266200939519114,-2.8493981698649478,-0.48115879906030723,0.44348765655636302,0.096873498894783999,-0.95028581846219573,-0.40767370301396777,-1.2813814658245255,0.38317609981669076,-0.88296780089907734,-0.35450900064642193,1.0233476978585145,0.28659189556072728,-0.069987783169756512,-0.72133132238859565,0.43814900672619317,1.5386459764207734,-0.28704382900547648,0.95694275911813054,-0.175161219631429,-0.43161775235427957,-0.69378724857541851,-0.88351165990347336,-0.039499909979342947,0.9841503178036114,1.2407636858748479,0.79020328318040489,-0.95481249164340742,0.2092452118799667,-0.45946928243970453,-0.058779193589693017,0.31185616554170753,-1.591439913770756,-0.2765403230993641,-0.73156166795829836,-1.2521847293133022,0.17412441667460946,-1.3557646717914862,1.6983784827405015,-0.59719744010217202,-0.91431438838062451,-0.3752291768857996,1.2688285175305132,-0.063826803880031285,0.93235587129643616,0.15935637629769869,-0.53794016751049378,-0.13856915333372247,-1.9961811802174685,0.71638859938802857,0.2063473801875656,-0.63785734559654061,1.1583145670820227,-0.46527340958900726,1.1948776746107999,0.21256546305489407,0.08060493647485438,0.4006546957681546,-0.2971463694548005,-2.110497214199385,0.71452683815803664,-0.36882827186908501,0.051470589687552283,-0.10309693883037215,-1.6126874515509848,1.1384717877094499,0.38653241658502085,0.5490044462059398,-0.25144274139285377,1.6105053271123535,0.71253239017801662,-0.26164419551182094,0.38247010809019882,-0.92064722558010459,0.63317149736659972,-0.50955656165201224,-0.65419375193278306,-1.1334032964548217,1.4114624409743555,-0.72708440734867819,-1.6444561158303688,1.7804540173046985,1.0265114777458264,1.1847369288084282,0.4663805095358125,-0.74233899921402913,-0.52813610583815185,0.31025231494673705,-1.1732679138286082,-1.681904122113834,1.5650164622380254,-0.51693466593246984,0.57207269781227288,2.3728723886279903],"alpha_stroke":1,"sizes":[10,100],"spans":[1,20]}},"layout":{"margin":{"b":40,"l":60,"t":25,"r":10},"xaxis":{"domain":[0,1],"automargin":true,"title":[]},"yaxis":{"domain":[0,1],"automargin":true},"hovermode":"closest","showlegend":false},"source":"A","config":{"modeBarButtonsToAdd":["hoverclosest","hovercompare"],"showSendToCloud":false},"data":[{"x":[-1.4693570269874772,-0.72218864328621846,1.3551727319912039,-0.3647239605670835,-0.30278996788720342,-1.7459841878732696,2.0266200939519114,-2.8493981698649478,-0.48115879906030723,0.44348765655636302,0.096873498894783999,-0.95028581846219573,-0.40767370301396777,-1.2813814658245255,0.38317609981669076,-0.88296780089907734,-0.35450900064642193,1.0233476978585145,0.28659189556072728,-0.069987783169756512,-0.72133132238859565,0.43814900672619317,1.5386459764207734,-0.28704382900547648,0.95694275911813054,-0.175161219631429,-0.43161775235427957,-0.69378724857541851,-0.88351165990347336,-0.039499909979342947,0.9841503178036114,1.2407636858748479,0.79020328318040489,-0.95481249164340742,0.2092452118799667,-0.45946928243970453,-0.058779193589693017,0.31185616554170753,-1.591439913770756,-0.2765403230993641,-0.73156166795829836,-1.2521847293133022,0.17412441667460946,-1.3557646717914862,1.6983784827405015,-0.59719744010217202,-0.91431438838062451,-0.3752291768857996,1.2688285175305132,-0.063826803880031285,0.93235587129643616,0.15935637629769869,-0.53794016751049378,-0.13856915333372247,-1.9961811802174685,0.71638859938802857,0.2063473801875656,-0.63785734559654061,1.1583145670820227,-0.46527340958900726,1.1948776746107999,0.21256546305489407,0.08060493647485438,0.4006546957681546,-0.2971463694548005,-2.110497214199385,0.71452683815803664,-0.36882827186908501,0.051470589687552283,-0.10309693883037215,-1.6126874515509848,1.1384717877094499,0.38653241658502085,0.5490044462059398,-0.25144274139285377,1.6105053271123535,0.71253239017801662,-0.26164419551182094,0.38247010809019882,-0.92064722558010459,0.63317149736659972,-0.50955656165201224,-0.65419375193278306,-1.1334032964548217,1.4114624409743555,-0.72708440734867819,-1.6444561158303688,1.7804540173046985,1.0265114777458264,1.1847369288084282,0.4663805095358125,-0.74233899921402913,-0.52813610583815185,0.31025231494673705,-1.1732679138286082,-1.681904122113834,1.5650164622380254,-0.51693466593246984,0.57207269781227288,2.3728723886279903],"type":"histogram","marker":{"color":"rgba(31,119,180,1)","line":{"color":"rgba(31,119,180,1)"}},"error_y":{"color":"rgba(31,119,180,1)"},"error_x":{"color":"rgba(31,119,180,1)"},"xaxis":"x","yaxis":"y","frame":null}],"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.20000000000000001,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
+</div>
+<script data-bslib-card-init="">bslib.Card.initializeAllCards();</script>
+</div>
+
+</div>
+</div>
+</section>
+<section id="navbars" class="slide level2">
+<h2>navbars</h2>
+</section></section>
+<section>
+<section id="styling-your-app" class="title-slide slide level1 center">
+<h1>Styling Your App</h1>
+
+</section>
+<section id="style-your-app-with-bslib-and-thematic" class="slide level2">
+<h2>Style your App with <code>{bslib}</code> and <code>{thematic}</code></h2>
+<ul>
+<li class="fragment"><code>bslib::bs_themer()</code></li>
+<li class="fragment"><code>bslib::run_with_themer()</code></li>
+<li class="fragment"><code>thematic::</code></li>
+</ul>
+</section>
+<section id="exercise" class="slide level2">
+<h2>Exercise</h2>
+<p>Try running</p>
+<pre><code>library(bslib)
+run_with_themer("app_bs_themer.R")</code></pre>
+</section></section>
+<section>
+<section id="boosting-user-experience-ux" class="title-slide slide level1 center">
+<h1>Boosting User Experience (UX)</h1>
+
+</section>
+<section id="accessibility" class="slide level2">
+<h2>Accessibility</h2>
+<p>Prioritizing accessibility leads to better UX!</p>
+<div>
+<ul>
+<li>Keyboard navigation (without mouse)</li>
+<li>Visualization color palettes accounting for vision deficiencies</li>
+<li>Metadata for HTML tag attributes</li>
+</ul>
+</div>
+</section>
+<section id="guides-with-cicerone" class="slide level2">
+<h2>Guides with <a href="https://cicerone.john-coene.com/index.html"><code>{cicerone}</code></a></h2>
+<blockquote>
+<p>A convienent API to create guided tours of Shiny applications using <code>driver.js</code></p>
+</blockquote>
+
+<img data-src="https://cicerone.john-coene.com/img/home-cicerone.gif" class="r-stretch"></section>
+<section id="the-cicerone-workflow" class="slide level2 scrollable">
+<h2>The <code>{cicerone}</code> Workflow</h2>
+<div>
+<ol type="1">
+<li>Note the input IDs of elements for guide</li>
+<li>Use the <code>Cicerone</code> R6 class and <code>step()</code> methods to define steps</li>
+<li>Import dependencies by declaring <code>use_cicerone()</code> in app UI</li>
+<li>Define triggers to start guide in app server</li>
+</ol>
+</div>
+</section></section>
+<section>
+<section id="resources" class="title-slide slide level1 center">
+<h1>Resources</h1>
+
+</section>
+<section id="section" class="slide level2">
+<h2></h2>
+<p><a href="https://unleash-shiny.rinterface.com/beautify-with-bootstraplib">Beautify with Bootstrap</a></p>
+</section>
+<section id="but-im-not-a-web-designer" class="slide level2">
+<h2>But … I’m not a Web Designer?</h2>
+<div>
+<ul>
+<li>Wealth of packages available in the Shiny ecosystem</li>
+<li>Plug-in favorite theme styles</li>
+<li>Ability to go as low-level as desired with CSS and JavaScript</li>
+</ul>
+</div>
+<h3 id="its-not-all-about-you-thats-good">💡 It’s not all about you! (That’s good)</h3>
+</section>
+<section id="language-of-the-web-1" class="slide level2">
+<h2>Language of the Web</h2>
+</section>
+<section id="multiple-levels-of-abstraction" class="slide level2">
+<h2>Multiple Levels of Abstraction</h2>
+<p><br></p>
+<div class="columns">
+<div class="column" style="width:26%;">
+<p><code>{shiny}</code></p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a></a><span class="fu">fluidRow</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div><div class="column" style="width:35%;">
+<p><code>{htmltools}</code></p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a></a><span class="fu">div</span>(<span class="at">class=</span><span class="st">"row"</span>, ...)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div><div class="column" style="width:36%;">
+<p>Raw HTML</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode numberSource html number-lines code-with-copy"><code class="sourceCode html"><span id="cb14-1"><a></a><span class="dt">&lt;</span><span class="kw">div</span><span class="ot"> class</span><span class="op">=</span><span class="st">"row"</span><span class="dt">&gt;</span>...<span class="dt">&lt;/</span><span class="kw">div</span><span class="dt">&gt;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+<p><br></p>
+<p>Empowers users across spectrum of design experience</p>
+</section>
+<section id="cascading-style-sheets-css" class="slide level2">
+<h2>Cascading Style Sheets (CSS)</h2>
+<p>Set of <strong>rules</strong> that define how HTML content is <strong>presented</strong> in the browser</p>
+<p><br></p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode numberSource html number-lines code-with-copy"><code class="sourceCode html"><span id="cb15-1"><a></a>selector {</span>
+<span id="cb15-2"><a></a>  property1: value;</span>
+<span id="cb15-3"><a></a>  property2: value;</span>
+<span id="cb15-4"><a></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><br></p>
+<ul>
+<li class="fragment"><strong>selector</strong> defines which elements on page to apply rule</li>
+<li class="fragment"><strong>property list</strong> set properties of elements to specific values</li>
+</ul>
+</section>
+<section id="customizing-css-in-shiny-1" class="slide level2">
+<h2>Customizing CSS in Shiny (1)</h2>
+<div class="columns">
+<div class="column" style="width:55%;">
+<div class="sourceCode" id="cb16"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a></a>ui <span class="ot">&lt;-</span> <span class="fu">fluidPage</span>(</span>
+<span id="cb16-2"><a></a>  tags<span class="sc">$</span><span class="fu">head</span>(</span>
+<span id="cb16-3"><a></a>    tags<span class="sc">$</span><span class="fu">style</span>(</span>
+<span id="cb16-4"><a></a>      <span class="fu">HTML</span>(<span class="st">"</span></span>
+<span id="cb16-5"><a></a><span class="st">      body {</span></span>
+<span id="cb16-6"><a></a><span class="st">        background-color: blue;</span></span>
+<span id="cb16-7"><a></a><span class="st">        color: white;</span></span>
+<span id="cb16-8"><a></a><span class="st">      }"</span>)</span>
+<span id="cb16-9"><a></a>    )</span>
+<span id="cb16-10"><a></a>  ),</span>
+<span id="cb16-11"><a></a>  <span class="co"># application UI</span></span>
+<span id="cb16-12"><a></a>  ...</span>
+<span id="cb16-13"><a></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div><div class="column" style="width:45%;">
+<ul>
+<li class="fragment"><code>tags</code> originates from <code>{htmltools}</code>, but imported with <code>{shiny}</code></li>
+</ul>
+</div>
+</div>
+</section>
+<section id="customizing-css-in-shiny-2" class="slide level2">
+<h2>Customizing CSS in Shiny (2)</h2>
+<div class="columns">
+<div class="column" style="width:50%;">
+<div class="sourceCode" id="cb17"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a></a><span class="co"># app.R</span></span>
+<span id="cb17-2"><a></a></span>
+<span id="cb17-3"><a></a>ui <span class="ot">&lt;-</span> <span class="fu">fluidPage</span>(</span>
+<span id="cb17-4"><a></a>  tags<span class="sc">$</span><span class="fu">head</span>(</span>
+<span id="cb17-5"><a></a>    tags<span class="sc">$</span><span class="fu">link</span>(</span>
+<span id="cb17-6"><a></a>      <span class="at">rel =</span> <span class="st">"stylesheet"</span>, </span>
+<span id="cb17-7"><a></a>      <span class="at">type =</span> <span class="st">"text/css"</span>, </span>
+<span id="cb17-8"><a></a>      <span class="at">href =</span> <span class="st">"custom.css"</span></span>
+<span id="cb17-9"><a></a>    )</span>
+<span id="cb17-10"><a></a>  )</span>
+<span id="cb17-11"><a></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div><div class="column" style="width:50%;">
+<div class="sourceCode" id="cb18"><pre class="sourceCode numberSource html number-lines code-with-copy"><code class="sourceCode html"><span id="cb18-1"><a></a>/* www/custom.css */</span>
+<span id="cb18-2"><a></a></span>
+<span id="cb18-3"><a></a>body {</span>
+<span id="cb18-4"><a></a>  background-color: blue;</span>
+<span id="cb18-5"><a></a>  color: white;</span>
+<span id="cb18-6"><a></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+</section>
+<section id="customizing-css-in-shiny-3" class="slide level2">
+<h2>Customizing CSS in Shiny (3)</h2>
+<div class="sourceCode" id="cb19"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a></a>ui <span class="ot">&lt;-</span> <span class="fu">fluidPage</span>(</span>
+<span id="cb19-2"><a></a>  <span class="fu">h2</span>(</span>
+<span id="cb19-3"><a></a>  <span class="st">"Art Viewer Application"</span>, </span>
+<span id="cb19-4"><a></a>  <span class="at">style =</span> <span class="st">"font-family: monospace;"</span></span>
+<span id="cb19-5"><a></a>  ),</span>
+<span id="cb19-6"><a></a>  ...</span>
+<span id="cb19-7"><a></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="your-turn-exercise-1" class="slide level2">
+<h2>Your Turn: <a href="ex-1.html" target="_blank">Exercise 1</a></h2>
+<p>In the application <code>ex-1/app.R</code>, give the image display a bit of style! Visit the <a href="ex-1.html">exercise page</a> for more details.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a></a><span class="fu">library</span>(countdown)</span>
+<span id="cb20-2"><a></a><span class="fu">countdown</span>(<span class="at">minutes =</span> <span class="dv">5</span>, <span class="at">seconds =</span> <span class="dv">0</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="countdown" id="timer_84135778" data-update-every="1" tabindex="0" style="right:0;bottom:0;">
+<div class="countdown-controls"><button class="countdown-bump-down">−</button><button class="countdown-bump-up">+</button></div>
+<code class="countdown-time"><span class="countdown-digits minutes">05</span><span class="countdown-digits colon">:</span><span class="countdown-digits seconds">00</span></code>
+</div>
+</div>
+</div>
+</section>
+<section id="almost-endless-possibilities" class="slide level2">
+<h2>(Almost) Endless Possibilities</h2>
+<div>
+<ul>
+<li>Shiny UI powered by Bootstrap</li>
+<li>Defaults are clean and simple</li>
+<li>Revising the style for every element …</li>
+</ul>
+</div>
+<div class="r-stack">
+<p><img data-src="https://media.giphy.com/media/ebITvSXYKNvRm/giphy.gif" class="fragment" style="width:80.0%"></p>
+</div>
+</section>
+<section id="enter-bslib" class="slide level2">
+<h2>Enter <a href="https://rstudio.github.io/bslib/"><code>{bslib}</code></a></h2>
+<blockquote>
+<p>Provides tools for customizing Bootstrap themes directly in R</p>
+</blockquote>
+<ul>
+<li class="fragment">Easy to explore theme options <strong>interactively</strong></li>
+<li class="fragment">Logical parameters to most common elements for color, font, and more</li>
+<li class="fragment">Built upon the <a href="https://sass-lang.com/documentation/variables#default-values">Sass</a> stylesheet language to extend traditional CSS with modern features</li>
+</ul>
+</section>
+<section id="your-turn-exercise-2" class="slide level2">
+<h2>Your Turn: <a href="ex-2.html" target="_blank">Exercise 2</a></h2>
+<p>Building upon the app from exercise 1, use <code>{bslib}</code> to customize font and other theme elements!</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a></a><span class="fu">library</span>(countdown)</span>
+<span id="cb21-2"><a></a><span class="fu">countdown</span>(<span class="at">minutes =</span> <span class="dv">5</span>, <span class="at">seconds =</span> <span class="dv">0</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="countdown" id="timer_cdcdb13f" data-update-every="1" tabindex="0" style="right:0;bottom:0;">
+<div class="countdown-controls"><button class="countdown-bump-down">−</button><button class="countdown-bump-up">+</button></div>
+<code class="countdown-time"><span class="countdown-digits minutes">05</span><span class="countdown-digits colon">:</span><span class="countdown-digits seconds">00</span></code>
+</div>
+</div>
+</div>
+</section></section>
+<section>
+<section id="boosting-user-experience-ux-1" class="title-slide slide level1 center">
+<h1>Boosting User Experience (UX)</h1>
+
+</section>
+<section id="accessibility-1" class="slide level2">
+<h2>Accessibility</h2>
+<p>Prioritizing accessibility leads to better UX!</p>
+<div>
+<ul>
+<li>Keyboard navigation (without mouse)</li>
+<li>Visualization color palettes accounting for vision deficiencies</li>
+<li>Metadata for HTML tag attributes</li>
+</ul>
+</div>
+</section>
+<section id="guides-with-cicerone-1" class="slide level2">
+<h2>Guides with <a href="https://cicerone.john-coene.com/index.html"><code>{cicerone}</code></a></h2>
+<blockquote>
+<p>A convienent API to create guided tours of Shiny applications using <code>driver.js</code></p>
+</blockquote>
+
+<img data-src="https://cicerone.john-coene.com/img/home-cicerone.gif" class="r-stretch"></section>
+<section id="the-cicerone-workflow-1" class="slide level2 scrollable">
+<h2>The <code>{cicerone}</code> Workflow</h2>
+<div>
+<ol type="1">
+<li>Note the input IDs of elements for guide</li>
+<li>Use the <code>Cicerone</code> R6 class and <code>step()</code> methods to define steps</li>
+<li>Import dependencies by declaring <code>use_cicerone()</code> in app UI</li>
+<li>Define triggers to start guide in app server</li>
+</ol>
+</div>
+</section>
+<section id="shinywidgets" class="slide level2">
+<h2><code>{shinyWidgets}</code></h2>
+<blockquote>
+<p>Custom widgets and other components to enhance your Shiny application</p>
+</blockquote>
+<div>
+<ul>
+<li>Alternatives to many classic Shiny inputs wrapping specialized frameworks within Bootstrap, Material Design, and more</li>
+<li>Fantastic demonstration app: <a href="http://shinyapps.dreamrs.fr/shinyWidgets/">shinyapps.dreamrs.fr/shinyWidgets</a></li>
+</ul>
+</div>
+
+<img data-src="https://dreamrs.github.io/shinyWidgets/reference/figures/checkboxGroupButtons.png" class="r-stretch"></section>
+<section id="the-shiny-ui-ecosystem" class="slide level2">
+<h2>The Shiny UI Ecosystem</h2>
+
+<img data-src="https://analytichealth.co.uk/wp-content/uploads/2021/10/PA-bs4Dash.gif" class="r-stretch quarto-figure-center"><p class="caption"><a href="https://bs4dash.rinterface.com/">bs4dash.rinterface.com</a></p></section>
+<section id="choose-your-widget" class="slide level2">
+<h2>Choose your Widget</h2>
+<div class="columns">
+<div class="column" style="width:45%;">
+<p><a href="https://rstudio.github.io/shinydashboard/index.html"><code>{shinydashboard}</code></a></p>
+<p><img data-src="assets/img/valuebox.png" style="width:120.0%"></p>
+</div><div class="column" style="width:55%;">
+<p>😀 Easy, right?</p>
+<p><br></p>
+<div class="sourceCode" id="cb22"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a></a><span class="fu">library</span>(shiny)</span>
+<span id="cb22-2"><a></a><span class="fu">library</span>(shinydashboard)</span>
+<span id="cb22-3"><a></a>ui <span class="ot">&lt;-</span> <span class="fu">fluidPage</span>(</span>
+<span id="cb22-4"><a></a>  <span class="fu">h2</span>(<span class="st">"My Title"</span>)</span>
+<span id="cb22-5"><a></a>  <span class="fu">valueBox</span>(<span class="dv">4024</span>, <span class="st">"Total downloads"</span>)</span>
+<span id="cb22-6"><a></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+<div class="fragment">
+<p>😐 Not quite: <code>{shiny}</code> and <code>{shinydashboard}</code> use different styling toolkits under the hood</p>
+</div>
+</section>
+<section id="htmltools-to-the-rescue" class="slide level2">
+<h2>💪 <code>{htmltools}</code> to the Rescue</h2>
+<div class="panel-tabset">
+<ul id="tabset-1" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-1-1">Define Widget</a></li><li><a href="#tabset-1-2">App Usage</a></li></ul>
+<div class="tab-content">
+<div id="tabset-1-1">
+<div class="sourceCode" id="cb23"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a></a>useValueBox <span class="ot">&lt;-</span> <span class="cf">function</span>() {</span>
+<span id="cb23-2"><a></a>  <span class="cf">if</span> (<span class="sc">!</span><span class="fu">requireNamespace</span>(<span class="at">package =</span> <span class="st">"shinydashboard"</span>)) {</span>
+<span id="cb23-3"><a></a>    <span class="fu">message</span>(<span class="st">"package 'shinydashboard' is required to run this function"</span>)</span>
+<span id="cb23-4"><a></a>  }</span>
+<span id="cb23-5"><a></a>  </span>
+<span id="cb23-6"><a></a>  deps <span class="ot">&lt;-</span> htmltools<span class="sc">::</span><span class="fu">findDependencies</span>(</span>
+<span id="cb23-7"><a></a>      shinydashboard<span class="sc">::</span><span class="fu">dashboardPage</span>(</span>
+<span id="cb23-8"><a></a>        <span class="at">header =</span> shinydashboard<span class="sc">::</span><span class="fu">dashboardHeader</span>(),</span>
+<span id="cb23-9"><a></a>        <span class="at">sidebar =</span> shinydashboard<span class="sc">::</span><span class="fu">dashboardSidebar</span>(),</span>
+<span id="cb23-10"><a></a>        <span class="at">body =</span> shinydashboard<span class="sc">::</span><span class="fu">dashboardBody</span>()</span>
+<span id="cb23-11"><a></a>      )</span>
+<span id="cb23-12"><a></a>  )</span>
+<span id="cb23-13"><a></a>  htmltools<span class="sc">::</span><span class="fu">attachDependencies</span>(tags<span class="sc">$</span><span class="fu">div</span>(), <span class="at">value =</span> deps)</span>
+<span id="cb23-14"><a></a>}</span>
+<span id="cb23-15"><a></a></span>
+<span id="cb23-16"><a></a>value_box <span class="ot">&lt;-</span> <span class="cf">function</span>(...) shinydashboard<span class="sc">::</span><span class="fu">valueBox</span>(...)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="tabset-1-2">
+<div class="sourceCode" id="cb24"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a></a><span class="fu">library</span>(shiny)</span>
+<span id="cb24-2"><a></a><span class="fu">library</span>(shinydashboard)</span>
+<span id="cb24-3"><a></a></span>
+<span id="cb24-4"><a></a>ui <span class="ot">&lt;-</span> <span class="fu">fluidPage</span>(</span>
+<span id="cb24-5"><a></a>  <span class="fu">useValueBox</span>()</span>
+<span id="cb24-6"><a></a>  <span class="fu">h2</span>(<span class="st">"My Title"</span>)</span>
+<span id="cb24-7"><a></a>  <span class="fu">value_box</span>(<span class="dv">4024</span>, <span class="st">"Total downloads"</span>)</span>
+<span id="cb24-8"><a></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="back-to-shinywidgets" class="slide level2">
+<h2>Back to <code>{shinyWidgets}</code></h2>
+<p>Usage of this powerful technique in <code>{shinyWidgets}</code>:</p>
+<div>
+<ul>
+<li><a href="https://dreamrs.github.io/shinyWidgets/reference/useArgonDash.html"><code>useArgonDash()</code></a></li>
+<li><a href="https://dreamrs.github.io/shinyWidgets/reference/useBs4Dash.html"><code>usebs4Dash()</code></a></li>
+<li><a href="https://dreamrs.github.io/shinyWidgets/reference/useShinydashboard.html"><code>useShinyDashboard()</code></a></li>
+<li><a href="https://dreamrs.github.io/shinyWidgets/reference/useShinydashboardPlus.html"><code>useShinyDashboardPlus()</code></a></li>
+<li><a href="https://dreamrs.github.io/shinyWidgets/reference/useTablerDash.html"><code>useTablerDash()</code></a></li>
+</ul>
+</div>
+</section></section>
+<section>
+<section id="extend-with-javascript" class="title-slide slide level1 center">
+<h1>Extend with JavaScript</h1>
+
+</section>
+<section id="not-just-styling" class="slide level2">
+<h2>Not Just Styling</h2>
+<p>All of Shiny’s interactivity is powered by JavaScript</p>
+<div>
+<ul>
+<li>Direct pipe to &amp; from R process to client (browser)</li>
+<li>Normal use: Everything set up for you</li>
+</ul>
+</div>
+<h3 id="foundations-in-place-to-extend-shinys-power-when-desired">Foundations in place to extend Shiny’s power when desired</h3>
+</section>
+<section class="slide level2">
+
+<div class="columns">
+<div class="column" style="width:50%;">
+<h3 id="shiny-to-js">Shiny to JS</h3>
+<div class="sourceCode" id="cb25"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a></a>session<span class="sc">$</span><span class="fu">sendCustomMessage</span>(</span>
+<span id="cb25-2"><a></a>  <span class="at">type =</span> <span class="st">"say-hi"</span>, </span>
+<span id="cb25-3"><a></a>  <span class="at">message =</span> <span class="st">"Shiny is Fun!"</span></span>
+<span id="cb25-4"><a></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div><div class="column" style="width:50%;">
+<h3 id="js-to-shiny">JS to Shiny</h3>
+<div class="sourceCode" id="cb26"><pre class="sourceCode numberSource javasript number-lines code-with-copy"><code class="sourceCode"><span id="cb26-1"><a></a>Shiny.addCustomMessageHandler(</span>
+<span id="cb26-2"><a></a>  'say-hi', </span>
+<span id="cb26-3"><a></a>  function(msg) {</span>
+<span id="cb26-4"><a></a>    alert('Hello user! ' + msg)</span>
+<span id="cb26-5"><a></a>  }</span>
+<span id="cb26-6"><a></a>);</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+<p>Varations underpin many community packages</p>
+</section>
+<section id="shinyjs" class="slide level2">
+<h2><a href="https://deanattali.com/shinyjs/"><code>{shinyjs}</code></a></h2>
+<blockquote>
+<p>Easily improve the user experience of your Shiny apps in seconds, without having to know JS</p>
+</blockquote>
+<div>
+<ul>
+<li>Enable &amp; disable buttons</li>
+<li>Show &amp; hide elements</li>
+<li>Dynamically adding and removing CSS classes</li>
+<li>Click a shiny button from server side</li>
+<li>Run JS scripts easily if desired</li>
+</ul>
+</div>
+</section>
+<section id="your-turn-exercise-3" class="slide level2">
+<h2>Your Turn: <a href="ex-3.html" target="_blank">Exercise 3</a></h2>
+<p>Harness the power of custom JavaScript in the Art Viewer App!</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a></a><span class="fu">library</span>(countdown)</span>
+<span id="cb27-2"><a></a><span class="fu">countdown</span>(<span class="at">minutes =</span> <span class="dv">10</span>, <span class="at">seconds =</span> <span class="dv">0</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="countdown" id="timer_17233d44" data-update-every="1" tabindex="0" style="right:0;bottom:0;">
+<div class="countdown-controls"><button class="countdown-bump-down">−</button><button class="countdown-bump-up">+</button></div>
+<code class="countdown-time"><span class="countdown-digits minutes">10</span><span class="countdown-digits colon">:</span><span class="countdown-digits seconds">00</span></code>
+</div>
+</div>
+</div>
+
+<div class="quarto-auto-generated-content">
+<div class="footer footer-default">
+<p>https;//shinyowl.netlify.com/layouts/</p>
+</div>
+</div>
+</section></section>
+    </div>
+  </div>
+
+  <script>window.backupDefine = window.define; window.define = undefined;</script>
+  <script src="../site_libs/revealjs/dist/reveal.js"></script>
+  <!-- reveal.js plugins -->
+  <script src="../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.js"></script>
+  <script src="../site_libs/revealjs/plugin/pdf-export/pdfexport.js"></script>
+  <script src="../site_libs/revealjs/plugin/reveal-menu/menu.js"></script>
+  <script src="../site_libs/revealjs/plugin/reveal-menu/quarto-menu.js"></script>
+  <script src="../site_libs/revealjs/plugin/quarto-support/support.js"></script>
+  
+
+  <script src="../site_libs/revealjs/plugin/notes/notes.js"></script>
+  <script src="../site_libs/revealjs/plugin/search/search.js"></script>
+  <script src="../site_libs/revealjs/plugin/zoom/zoom.js"></script>
+  <script src="../site_libs/revealjs/plugin/math/math.js"></script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script>
+
+  <script>
+
+      // Full list of configuration options available at:
+      // https://revealjs.com/config/
+      Reveal.initialize({
+'controlsAuto': true,
+'previewLinksAuto': false,
+'pdfSeparateFragments': false,
+'autoAnimateEasing': "ease",
+'autoAnimateDuration': 1,
+'autoAnimateUnmatched': true,
+'menu': {"side":"left","useTextContentForMissingTitles":true,"markers":false,"loadIcons":false,"custom":[{"title":"Tools","icon":"<i class=\"fas fa-gear\"></i>","content":"<ul class=\"slide-menu-items\">\n<li class=\"slide-tool-item active\" data-item=\"0\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.fullscreen(event)\"><kbd>f</kbd> Fullscreen</a></li>\n<li class=\"slide-tool-item\" data-item=\"1\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.speakerMode(event)\"><kbd>s</kbd> Speaker View</a></li>\n<li class=\"slide-tool-item\" data-item=\"2\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.overview(event)\"><kbd>o</kbd> Slide Overview</a></li>\n<li class=\"slide-tool-item\" data-item=\"3\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.togglePdfExport(event)\"><kbd>e</kbd> PDF Export Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"4\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.keyboardHelp(event)\"><kbd>?</kbd> Keyboard Help</a></li>\n</ul>"}],"openButton":true},
+'smaller': false,
+ 
+        // Display controls in the bottom right corner
+        controls: false,
+
+        // Help the user learn the controls by providing hints, for example by
+        // bouncing the down arrow when they first encounter a vertical slide
+        controlsTutorial: false,
+
+        // Determines where controls appear, "edges" or "bottom-right"
+        controlsLayout: 'edges',
+
+        // Visibility rule for backwards navigation arrows; "faded", "hidden"
+        // or "visible"
+        controlsBackArrows: 'faded',
+
+        // Display a presentation progress bar
+        progress: true,
+
+        // Display the page number of the current slide
+        slideNumber: 'c/t',
+
+        // 'all', 'print', or 'speaker'
+        showSlideNumber: 'all',
+
+        // Add the current slide number to the URL hash so that reloading the
+        // page/copying the URL will return you to the same slide
+        hash: true,
+
+        // Start with 1 for the hash rather than 0
+        hashOneBasedIndex: false,
+
+        // Flags if we should monitor the hash and change slides accordingly
+        respondToHashChanges: true,
+
+        // Push each slide change to the browser history
+        history: true,
+
+        // Enable keyboard shortcuts for navigation
+        keyboard: true,
+
+        // Enable the slide overview mode
+        overview: true,
+
+        // Disables the default reveal.js slide layout (scaling and centering)
+        // so that you can use custom CSS layout
+        disableLayout: false,
+
+        // Vertical centering of slides
+        center: false,
+
+        // Enables touch navigation on devices with touch input
+        touch: true,
+
+        // Loop the presentation
+        loop: false,
+
+        // Change the presentation direction to be RTL
+        rtl: false,
+
+        // see https://revealjs.com/vertical-slides/#navigation-mode
+        navigationMode: 'linear',
+
+        // Randomizes the order of slides each time the presentation loads
+        shuffle: false,
+
+        // Turns fragments on and off globally
+        fragments: true,
+
+        // Flags whether to include the current fragment in the URL,
+        // so that reloading brings you to the same fragment position
+        fragmentInURL: false,
+
+        // Flags if the presentation is running in an embedded mode,
+        // i.e. contained within a limited portion of the screen
+        embedded: false,
+
+        // Flags if we should show a help overlay when the questionmark
+        // key is pressed
+        help: true,
+
+        // Flags if it should be possible to pause the presentation (blackout)
+        pause: true,
+
+        // Flags if speaker notes should be visible to all viewers
+        showNotes: false,
+
+        // Global override for autoplaying embedded media (null/true/false)
+        autoPlayMedia: null,
+
+        // Global override for preloading lazy-loaded iframes (null/true/false)
+        preloadIframes: null,
+
+        // Number of milliseconds between automatically proceeding to the
+        // next slide, disabled when set to 0, this value can be overwritten
+        // by using a data-autoslide attribute on your slides
+        autoSlide: 0,
+
+        // Stop auto-sliding after user input
+        autoSlideStoppable: true,
+
+        // Use this method for navigation when auto-sliding
+        autoSlideMethod: null,
+
+        // Specify the average time in seconds that you think you will spend
+        // presenting each slide. This is used to show a pacing timer in the
+        // speaker view
+        defaultTiming: null,
+
+        // Enable slide navigation via mouse wheel
+        mouseWheel: false,
+
+        // The display mode that will be used to show slides
+        display: 'block',
+
+        // Hide cursor if inactive
+        hideInactiveCursor: true,
+
+        // Time before the cursor is hidden (in ms)
+        hideCursorTime: 5000,
+
+        // Opens links in an iframe preview overlay
+        previewLinks: false,
+
+        // Transition style (none/fade/slide/convex/concave/zoom)
+        transition: 'none',
+
+        // Transition speed (default/fast/slow)
+        transitionSpeed: 'default',
+
+        // Transition style for full page slide backgrounds
+        // (none/fade/slide/convex/concave/zoom)
+        backgroundTransition: 'none',
+
+        // Number of slides away from the current that are visible
+        viewDistance: 3,
+
+        // Number of slides away from the current that are visible on mobile
+        // devices. It is advisable to set this to a lower number than
+        // viewDistance in order to save resources.
+        mobileViewDistance: 2,
+
+        // The "normal" size of the presentation, aspect ratio will be preserved
+        // when the presentation is scaled to fit different resolutions. Can be
+        // specified using percentage units.
+        width: 1050,
+
+        height: 700,
+
+        // Factor of the display size that should remain empty around the content
+        margin: 0.1,
+
+        math: {
+          mathjax: 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js',
+          config: 'TeX-AMS_HTML-full',
+          tex2jax: {
+            inlineMath: [['\\(','\\)']],
+            displayMath: [['\\[','\\]']],
+            balanceBraces: true,
+            processEscapes: false,
+            processRefs: true,
+            processEnvironments: true,
+            preview: 'TeX',
+            skipTags: ['script','noscript','style','textarea','pre','code'],
+            ignoreClass: 'tex2jax_ignore',
+            processClass: 'tex2jax_process'
+          },
+        },
+
+        // reveal.js plugins
+        plugins: [QuartoLineHighlight, PdfExport, RevealMenu, QuartoSupport,
+
+          RevealMath,
+          RevealNotes,
+          RevealSearch,
+          RevealZoom
+        ]
+      });
+    </script>
+    
+    <script>
+      // htmlwidgets need to know to resize themselves when slides are shown/hidden.
+      // Fire the "slideenter" event (handled by htmlwidgets.js) when the current
+      // slide changes (different for each slide format).
+      (function () {
+        // dispatch for htmlwidgets
+        function fireSlideEnter() {
+          const event = window.document.createEvent("Event");
+          event.initEvent("slideenter", true, true);
+          window.document.dispatchEvent(event);
+        }
+
+        function fireSlideChanged(previousSlide, currentSlide) {
+          fireSlideEnter();
+
+          // dispatch for shiny
+          if (window.jQuery) {
+            if (previousSlide) {
+              window.jQuery(previousSlide).trigger("hidden");
+            }
+            if (currentSlide) {
+              window.jQuery(currentSlide).trigger("shown");
+            }
+          }
+        }
+
+        // hookup for slidy
+        if (window.w3c_slidy) {
+          window.w3c_slidy.add_observer(function (slide_num) {
+            // slide_num starts at position 1
+            fireSlideChanged(null, w3c_slidy.slides[slide_num - 1]);
+          });
+        }
+
+      })();
+    </script>
+
+    <script id="quarto-html-after-body" type="application/javascript">
+    window.document.addEventListener("DOMContentLoaded", function (event) {
+      const toggleBodyColorMode = (bsSheetEl) => {
+        const mode = bsSheetEl.getAttribute("data-mode");
+        const bodyEl = window.document.querySelector("body");
+        if (mode === "dark") {
+          bodyEl.classList.add("quarto-dark");
+          bodyEl.classList.remove("quarto-light");
+        } else {
+          bodyEl.classList.add("quarto-light");
+          bodyEl.classList.remove("quarto-dark");
+        }
+      }
+      const toggleBodyColorPrimary = () => {
+        const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+        if (bsSheetEl) {
+          toggleBodyColorMode(bsSheetEl);
+        }
+      }
+      toggleBodyColorPrimary();  
+      const tabsets =  window.document.querySelectorAll(".panel-tabset-tabby")
+      tabsets.forEach(function(tabset) {
+        const tabby = new Tabby('#' + tabset.id);
+      });
+      const isCodeAnnotation = (el) => {
+        for (const clz of el.classList) {
+          if (clz.startsWith('code-annotation-')) {                     
+            return true;
+          }
+        }
+        return false;
+      }
+      const onCopySuccess = function(e) {
+        // button target
+        const button = e.trigger;
+        // don't keep focus
+        button.blur();
+        // flash "checked"
+        button.classList.add('code-copy-button-checked');
+        var currentTitle = button.getAttribute("title");
+        button.setAttribute("title", "Copied!");
+        let tooltip;
+        if (window.bootstrap) {
+          button.setAttribute("data-bs-toggle", "tooltip");
+          button.setAttribute("data-bs-placement", "left");
+          button.setAttribute("data-bs-title", "Copied!");
+          tooltip = new bootstrap.Tooltip(button, 
+            { trigger: "manual", 
+              customClass: "code-copy-button-tooltip",
+              offset: [0, -8]});
+          tooltip.show();    
+        }
+        setTimeout(function() {
+          if (tooltip) {
+            tooltip.hide();
+            button.removeAttribute("data-bs-title");
+            button.removeAttribute("data-bs-toggle");
+            button.removeAttribute("data-bs-placement");
+          }
+          button.setAttribute("title", currentTitle);
+          button.classList.remove('code-copy-button-checked');
+        }, 1000);
+        // clear code selection
+        e.clearSelection();
+      }
+      const getTextToCopy = function(trigger) {
+          const codeEl = trigger.previousElementSibling.cloneNode(true);
+          for (const childEl of codeEl.children) {
+            if (isCodeAnnotation(childEl)) {
+              childEl.remove();
+            }
+          }
+          return codeEl.innerText;
+      }
+      const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+        text: getTextToCopy
+      });
+      clipboard.on('success', onCopySuccess);
+      if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+        // For code content inside modals, clipBoardJS needs to be initialized with a container option
+        // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+        const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+          text: getTextToCopy,
+          container: window.document.getElementById('quarto-embedded-source-code-modal')
+        });
+        clipboardModal.on('success', onCopySuccess);
+      }
+        var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+        var mailtoRegex = new RegExp(/^mailto:/);
+          var filterRegex = new RegExp('/' + window.location.host + '/');
+        var isInternal = (href) => {
+            return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+        }
+        // Inspect non-navigation links and adorn them if external
+     	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+        for (var i=0; i<links.length; i++) {
+          const link = links[i];
+          if (!isInternal(link.href)) {
+            // undo the damage that might have been done by quarto-nav.js in the case of
+            // links that we want to consider external
+            if (link.dataset.originalHref !== undefined) {
+              link.href = link.dataset.originalHref;
+            }
+          }
+        }
+      function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+        const config = {
+          allowHTML: true,
+          maxWidth: 500,
+          delay: 100,
+          arrow: false,
+          appendTo: function(el) {
+              return el.closest('section.slide') || el.parentElement;
+          },
+          interactive: true,
+          interactiveBorder: 10,
+          theme: 'light-border',
+          placement: 'bottom-start',
+        };
+        if (contentFn) {
+          config.content = contentFn;
+        }
+        if (onTriggerFn) {
+          config.onTrigger = onTriggerFn;
+        }
+        if (onUntriggerFn) {
+          config.onUntrigger = onUntriggerFn;
+        }
+          config['offset'] = [0,0];
+          config['maxWidth'] = 700;
+        window.tippy(el, config); 
+      }
+      const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+      for (var i=0; i<noterefs.length; i++) {
+        const ref = noterefs[i];
+        tippyHover(ref, function() {
+          // use id or data attribute instead here
+          let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+          try { href = new URL(href).hash; } catch {}
+          const id = href.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note) {
+            return note.innerHTML;
+          } else {
+            return "";
+          }
+        });
+      }
+      const findCites = (el) => {
+        const parentEl = el.parentElement;
+        if (parentEl) {
+          const cites = parentEl.dataset.cites;
+          if (cites) {
+            return {
+              el,
+              cites: cites.split(' ')
+            };
+          } else {
+            return findCites(el.parentElement)
+          }
+        } else {
+          return undefined;
+        }
+      };
+      var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+      for (var i=0; i<bibliorefs.length; i++) {
+        const ref = bibliorefs[i];
+        const citeInfo = findCites(ref);
+        if (citeInfo) {
+          tippyHover(citeInfo.el, function() {
+            var popup = window.document.createElement('div');
+            citeInfo.cites.forEach(function(cite) {
+              var citeDiv = window.document.createElement('div');
+              citeDiv.classList.add('hanging-indent');
+              citeDiv.classList.add('csl-entry');
+              var biblioDiv = window.document.getElementById('ref-' + cite);
+              if (biblioDiv) {
+                citeDiv.innerHTML = biblioDiv.innerHTML;
+              }
+              popup.appendChild(citeDiv);
+            });
+            return popup.innerHTML;
+          });
+        }
+      }
+    });
+    </script>
+    
+
+</body></html>
