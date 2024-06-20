@@ -1,11 +1,14 @@
 project:
   type: website
   render: 
+    - "index.qmd"
     - "!duckdb/"
     - "layouts/"
-    - "reactivity/"
+    - "reactives/"
     - "modules/"
   output-dir: docs
+  post-render:
+    - "cp -rnv reactives/reactivity.pdf docs/"
 
 website:
   title: "shinyowl"
