@@ -4,9 +4,9 @@ title: "Exploring Reactivity"
 
 # Slides
 
-{{< pdf reactivity.pdf height=600 >}}
-
 ### Exercise 1
+
+Compare the two apps with a partner. Look at the reactive graph. Are they any different?
 
 ```r
 runApp("reactives/app_reactive.R")

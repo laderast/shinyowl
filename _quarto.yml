@@ -2,7 +2,10 @@ project:
   type: website
   render: 
     - "!duckdb/"
-    - "!reactives/reactive_programming.qmd"
+    - "layouts/"
+    - "reactivity/"
+    - "modules/"
+  output-dir: docs
 
 website:
   title: "shinyowl"
@@ -22,6 +25,4 @@ format:
     theme: cosmo
     css: styles.css
     toc: true
-
-editor: visual
 
