@@ -1,0 +1,41 @@
+---
+title: "Untitled"
+server: shiny
+format: dashboard
+---
+
+```{r}
+#| context: setup
+library(ggplot2)
+library(palmerpenguins)
+library(bslib)
+
+choices <- c("species", "island") 
+theme <- bs_theme()
+```
+
+
+```{r}
+ page_sidebar(sidebar=
+  sidebar(selectInput("variable", "Select Variable to color by", choices)),
+  plotOutput("my_plot"), theme = theme
+)
+```
+
+```{r}
+#| context: server
+#| include: false
+ # bslib::bs_themer()
+  
+output$my_plot <- renderPlot({
+  req(input$variable)
+  bslib::bs_themer()
+  ggplot(penguins) +
+    aes(x=bill_length_mm, 
+        y=bill_depth_mm, 
+        color= .data[[input$variable]] ) +
+    geom_point()
+})
+
+```
+

@@ -1,0 +1,41 @@
+---
+title: "Dashboards with Quarto"
+server: shiny
+format: dashboard
+---
+
+```{r}
+library(bslib)
+library(sass)
+theme_shiny <- bs_theme(preset = "flatly")
+theme_shiny <- bs_theme_update(theme_shiny, bg = "rgb(27, 49, 73)", fg = "rgb(179, 185, 210)", 
+                primary = "#373E7F", secondary = "#507372", base_font = 
+                  font_collection(font_google("Lato"),  "-apple-system", "BlinkMacSystemFont", 
+                                  "Segoe UI", font_google("Roboto"), "Helvetica Neue", "Arial", 
+                                  "sans-serif", "Apple Color Emoji", "Segoe UI Emoji", 
+                                  "Segoe UI Symbol"), font_scale = 1.5, `enable-gradients` = TRUE)
+sass(theme_shiny)
+```
+
+```{r}
+choices <- c("species", "island")   
+selectInput("variable", "Select Variable to color by", choices)
+plotOutput("my_plot")
+```
+
+```{r}
+#| context: server
+thematic::thematic_shiny(bg = "#1B3149", fg = "#B3B9D2", accent="#FFFFFF")
+
+library(ggplot2)
+library(palmerpenguins)
+output$my_plot <- renderPlot({
+  req(input$variable)
+  
+  ggplot(penguins) +
+    aes(x=bill_length_mm, 
+        y=bill_depth_mm, 
+        color= .data[[input$variable]] ) +
+      geom_point()
+})
+```
