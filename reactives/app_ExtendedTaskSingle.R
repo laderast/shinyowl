@@ -6,13 +6,8 @@ library(promises)
 library(palmerpenguins)
 library(reactlog)
 library(ggplot2)
-library(shiny)
-library(bslib)
-library(dplyr)
 
 future::plan(multisession)
-
-library(reactlog)
 reactlog_enable()
 
 ui <- page_fluid(
