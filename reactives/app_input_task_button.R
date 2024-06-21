@@ -1,5 +1,6 @@
 library(shiny)
 library(reactlog)
+library(bslib)
 
 reactlog_enable()
 

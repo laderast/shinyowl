@@ -1,10 +1,7 @@
-## Observe update UI example
-## https://www.appsilon.com/post/observe-function-r-shiny
+## updateUI example with observe |> bindEvent()
+## modified from the shiny documentation
 library(shiny)
 library(dplyr)
-library(palmerpenguins)
-
-dummy_data <- penguins
 
 ui <- fluidPage(
   p("The checkbox group controls the select input"),

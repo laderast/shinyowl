@@ -1,5 +1,9 @@
 library(palmerpenguins)
 library(reactlog)
+library(ggplot2)
+library(shiny)
+library(dplyr)
+library(bslib)
 
 reactlog_enable()
 choices <- unique(penguins$species)
@@ -19,7 +23,7 @@ server <- function(input, output){
                             { penguins |> dplyr::filter(species == input$radio)}) 
   
   output$species_plot <- renderPlot({
-    ggplot(my_data(), aes(x=bill_depth_mm, y=bill_length_mm, color=island)) +
+    ggplot(my_data(), aes(x=bill_depth_mm, y=bill_length_mm, color=species)) +
       geom_point()
   })
 }
