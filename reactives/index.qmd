@@ -4,6 +4,8 @@ title: "Exploring Reactivity"
 
 # Slides
 
+{{< pdf file="reactivity.pdf"  height="500px" download-link="true">}}
+
 ### Exercise 1
 
 Compare the two apps with a partner. Look at the reactive graph. Are they any different?
@@ -14,6 +16,9 @@ runApp("reactives/app_isolate.R")
 ```
 
 ### Exercise 2
+
+Compare the two apps with a partner. Look at the reactive graph. Are they any different?
+
 
 ```r
 runApp("reactives/app_eventReactive.R")
