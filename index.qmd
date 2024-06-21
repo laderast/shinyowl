@@ -8,6 +8,7 @@ format: html
 
 ![](bit.ly_45BDX9k.png){width=400}
 
+
 # Learning Objectives
 
 This workshop aims to get you over the hill to faster, better looking, and dynamic Shiny Apps.
@@ -16,23 +17,27 @@ This workshop aims to get you over the hill to faster, better looking, and dynam
 1. **Explain** fundamentals of Reactive Programming
 1. **Utilize** Shiny modules in your projects
 
+In other words, we're learning how to Draw the Owl:
+
+![](owl.png)
+
 ## Agenda (roughly)
 
 |Section|Begin|End|
 |-------|----|---|
 |Welcome/Get Started|9:00|9:10|
 |Dashboards|9:10|9:55|
-|Break|9:55|10|
-|Reactivity|10|10:55|
-|Break|10:55|11|
-|Modules/Wrap-up|11|12|
+|Break|9:55|10:00|
+|Reactivity|10:00|10:55|
+|Break|10:55|11:00|
+|Modules/Wrap-up|11:00|12:00|
 
 # Posit.cloud project 
 
 1. Please create a free user account at posit.cloud 
 1. Invite yourself to the workspace [here](https://posit.cloud/spaces/525494/join?access_code=N0vloDrDMCVvlXLIhXHISNdrWjHe4SOlhPm_9abK)
-1. 
+1. Create new project with "ShinyOwl" Template
 
 # Reminders
 
-This workshop 
+This workshop adheres to the [Cascadia-R Code of Conduct](https://cascadiarconf.com/policies/). Please be respectful of others and how they learn.
