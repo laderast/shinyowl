@@ -8,7 +8,8 @@ project:
     - "modules/"
   output-dir: docs
   post-render:
-    - "cp -rnv reactives/reactivity.pdf docs/"
+    - "rm docs/reactives/reactivity.pdf"
+    - "cp -rnv reactives/reactivity.pdf docs/reactives/"
 
 website:
   title: "shinyowl"
