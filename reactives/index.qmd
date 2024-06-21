@@ -27,7 +27,7 @@ runApp("reactives/app_observeEvent.R")
 
 ### Exercise 3
 
-Try and understand this app using `{reactlog}`
+Try and understand this app using `{reactlog}`.
 
 ```r
 runApp("reactives/app_ExtendedTaskSingle.R")

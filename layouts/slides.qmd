@@ -97,25 +97,17 @@ library(shiny)
 - sidebars
 - value boxes
 
-## Layouts / Pages
-
-:::: {.columns}
-:::{.column}
-### Layouts
+## Layouts
 
 - `layout_sidebar()`
 - `layout_column_wrap()`
 - `layout_columns()`
-:::
 
-::: {.column}
-### Pages
+## Pages
 
 - `page_sidebar()`/`sidebar()`
 - `page_navbar()`/`navbarPage()`
 - `page_fillable()`/`layout_`
-:::
-::::
 
 
 ## Cards {auto-animate=true}
@@ -154,7 +146,9 @@ ui <- page_sidebar(
 #| eval: false
 ui <- page_sidebar(
   sidebar = sidebar(
-    selectInput("var", "Select Island", choices, selected = choices[1])
+    selectInput("var", "Select Island", 
+                choices, 
+                selected = choices[1])
   ),
   card(
     layout_column_wrap(
@@ -180,6 +174,7 @@ value_box(
 
 ## Dynamic Value Box
 
+See `runApp("layouts/app_bslib_box_dynamic.R")`
 
 ## Laying out value boxes
 
@@ -218,117 +213,20 @@ page_fillable(
 )
 ```
 
+## Exercise
+
+Try modifying the `layouts/app_bslib_box_layout.R` code to modify the value boxes. Try out a different icon, different colors.
+
+```{r}
+countdown::countdown(minutes = 5)
+```
+
+
 ## navbars
 
 
 
 # Styling Your App
-
-## Style your App with `{bslib}` and `{thematic}`
-
-- `bslib::bs_themer()` 
-- `bslib::run_with_themer()`
-- `thematic::`
-
-
-## Exercise
-
-Try running
-
-```
-library(bslib)
-run_with_themer("app_bs_themer.R")
-```
-
-# Boosting User Experience (UX)
-
-## Accessibility
-
-Prioritizing accessibility leads to better UX!
-
-::: {.nonincremental}
-* Keyboard navigation (without mouse)
-* Visualization color palettes accounting for vision deficiencies
-* Metadata for HTML tag attributes 
-:::
-
-## Guides with [`{cicerone}`](https://cicerone.john-coene.com/index.html)
-
-> A convienent API to create guided tours of Shiny applications using `driver.js`
-
-![](https://cicerone.john-coene.com/img/home-cicerone.gif)
-
-
-## The `{cicerone}` Workflow
-
-::: {.nonincremental}
-1. Note the input IDs of elements for guide
-2. Use the `Cicerone` R6 class and `step()` methods to define steps
-3. Import dependencies by declaring `use_cicerone()` in app UI
-4. Define triggers to start guide in app server
-:::
-
-
-# Resources
-
-## 
-
-[Beautify with Bootstrap](https://unleash-shiny.rinterface.com/beautify-with-bootstraplib)
-
-## But ... I'm not a Web Designer?
-
-::: {.nonincremental}
-* Wealth of packages available in the Shiny ecosystem
-* Plug-in favorite theme styles
-* Ability to go as low-level as desired with CSS and JavaScript
-:::
-
-### 💡 It's not all about you! (That's good)
-
-## Language of the Web
-
-
-## Multiple Levels of Abstraction
-
-<br>
-
-:::: {.columns}
-
-::: {.column width="26%"}
-
-`{shiny}`
-
-````r
-fluidRow()
-````
-
-:::
-
-::: {.column width="35%"}
-
-`{htmltools}`
-
-```r
-div(class="row", ...)
-```
-
-:::
-
-::: {.column width="36%"}
-
-Raw HTML
-
-```html
-<div class="row">...</div>
-```
-
-:::
-
-::::
-
-<br>
-
-Empowers users across spectrum of design experience
 
 ## Cascading Style Sheets (CSS)
 
@@ -380,59 +278,73 @@ ui <- fluidPage(
 
 ::::
 
-## Customizing CSS in Shiny (2)
+# The good news: you don't have to learn CSS
 
-:::: {.columns}
+## Style your App with `{bslib}` and `{thematic}`
 
-::: {.column width="50%"}
+- `bslib::bs_themer()` 
+- `bslib::run_with_themer()`
+- `thematic::thematic_theme()`
 
-```r
-# app.R
 
-ui <- fluidPage(
-  tags$head(
-    tags$link(
-      rel = "stylesheet", 
-      type = "text/css", 
-      href = "custom.css"
-    )
-  )
-)
+## Exercise
+
+Try running the following code below and change the `bg` and `fg` variables, as well as `primary` and maybe even the font. Cut and paste your `bs_theme_update()` code into the Slack to share your creation.
+
+```
+library(bslib)
+run_with_themer("app_bs_themer.R")
 ```
 
+```{r}
+countdown::countdown(minutes = 5)
+```
+
+
+# Boosting User Experience (UX)
+
+## Accessibility
+
+Prioritizing accessibility leads to better UX!
+
+::: {.nonincremental}
+* Keyboard navigation (without mouse)
+* Visualization color palettes accounting for vision deficiencies
+* Metadata for HTML tag attributes 
 :::
 
-::: {.column width="50%"}
+## Guides with [`{cicerone}`](https://cicerone.john-coene.com/index.html)
 
-```html
-/* www/custom.css */
+> A convienent API to create guided tours of Shiny applications using `driver.js`
 
-body {
-  background-color: blue;
-  color: white;
-}
-```
+![](https://cicerone.john-coene.com/img/home-cicerone.gif)
 
+
+## The `{cicerone}` Workflow
+
+::: {.nonincremental}
+1. Note the input IDs of elements for guide
+2. Use the `Cicerone` R6 class and `step()` methods to define steps
+3. Import dependencies by declaring `use_cicerone()` in app UI
+4. Define triggers to start guide in app server
 :::
 
-::::
 
-## Customizing CSS in Shiny (3)
+# Resources
 
-```r
-ui <- fluidPage(
-  h2(
-  "Art Viewer Application", 
-  style = "font-family: monospace;"
-  ),
-  ...
-)
-```
+## 
+
+[Beautify with Bootstrap](https://unleash-shiny.rinterface.com/beautify-with-bootstraplib)
+
+## But ... I'm not a Web Designer?
+
+::: {.nonincremental}
+* Wealth of packages available in the Shiny ecosystem
+* Plug-in favorite theme styles
+* Ability to go as low-level as desired with CSS and JavaScript
+:::
 
 
-## Your Turn: [Exercise 1](ex-1.html){target="_blank"}
-
-In the application `ex-1/app.R`, give the image display a bit of style! Visit the [exercise page](ex-1.html) for more details.
 
 ```{r}
 #| label: ex-1-timer
@@ -440,18 +352,6 @@ library(countdown)
 countdown(minutes = 5, seconds = 0)
 ```
 
-## (Almost) Endless Possibilities
-
-::: {.nonincremental}
-* Shiny UI powered by Bootstrap
-* Defaults are clean and simple
-* Revising the style for every element ...
-:::
-
-::: {.r-stack}
-![](https://media.giphy.com/media/ebITvSXYKNvRm/giphy.gif){.fragment width="80%"}
-
-:::
 
 ## Enter [`{bslib}`](https://rstudio.github.io/bslib/)
 

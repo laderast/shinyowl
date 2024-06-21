@@ -53,7 +53,7 @@
     "href": "reactives/index.html",
     "title": "Exploring Reactivity",
     "section": "",
-    "text": "Slides\n  Download PDF File\n   \n    Unable to display PDF file. Download instead.\n  \n  \n\nExercise 1\nCompare the two apps with a partner. Look at the reactive graph. Are they any different?\nrunApp(\"reactives/app_reactive.R\")\nrunApp(\"reactives/app_isolate.R\")\n\n\nExercise 2\nCompare the two apps with a partner. Look at the reactive graph. Are they any different?\nrunApp(\"reactives/app_eventReactive.R\")\nrunApp(\"reactives/app_observeEvent.R\")\n\n\nExercise 3\nTry and understand this app using {reactlog}\nrunApp(\"reactives/app_ExtendedTaskSingle.R\")"
+    "text": "Slides\n  Download PDF File\n   \n    Unable to display PDF file. Download instead.\n  \n  \n\nExercise 1\nCompare the two apps with a partner. Look at the reactive graph. Are they any different?\nrunApp(\"reactives/app_reactive.R\")\nrunApp(\"reactives/app_isolate.R\")\n\n\nExercise 2\nCompare the two apps with a partner. Look at the reactive graph. Are they any different?\nrunApp(\"reactives/app_eventReactive.R\")\nrunApp(\"reactives/app_observeEvent.R\")\n\n\nExercise 3\nTry and understand this app using {reactlog}.\nrunApp(\"reactives/app_ExtendedTaskSingle.R\")"
   },
   {
     "objectID": "index.html",
@@ -137,7 +137,7 @@
     "href": "layouts/slides.html#layout_column_wrap",
     "title": "Part 1: UI Layout and Customizing",
     "section": "layout_column_wrap()",
-    "text": "layout_column_wrap()\n\nui &lt;- page_sidebar(\n  sidebar = sidebar(\n    selectInput(\"var\", \"Select Island\", choices, selected = choices[1])\n  ),\n  card(\n    layout_column_wrap(\n      plotOutput(\"penguins\"),\n      plotOutput(\"penguins2\")\n    )\n  )\n)"
+    "text": "layout_column_wrap()\n\nui &lt;- page_sidebar(\n  sidebar = sidebar(\n    selectInput(\"var\", \"Select Island\", \n                choices, \n                selected = choices[1])\n  ),\n  card(\n    layout_column_wrap(\n      plotOutput(\"penguins\"),\n      plotOutput(\"penguins2\")\n    )\n  )\n)"
   },
   {
     "objectID": "layouts/slides.html#value-boxes",
@@ -151,7 +151,7 @@
     "href": "layouts/slides.html#dynamic-value-box",
     "title": "Part 1: UI Layout and Customizing",
     "section": "Dynamic Value Box",
-    "text": "Dynamic Value Box"
+    "text": "Dynamic Value Box\nSee runApp(\"layouts/app_bslib_box_dynamic.R\")"
   },
   {
     "objectID": "layouts/slides.html#laying-out-value-boxes",
@@ -172,14 +172,14 @@
     "href": "layouts/slides.html#style-your-app-with-bslib-and-thematic",
     "title": "Part 1: UI Layout and Customizing",
     "section": "Style your App with {bslib} and {thematic}",
-    "text": "Style your App with {bslib} and {thematic}\n\nbslib::bs_themer()\nbslib::run_with_themer()\nthematic::"
+    "text": "Style your App with {bslib} and {thematic}\n\nbslib::bs_themer()\nbslib::run_with_themer()\nthematic::thematic_theme()"
   },
   {
     "objectID": "layouts/slides.html#exercise",
     "href": "layouts/slides.html#exercise",
     "title": "Part 1: UI Layout and Customizing",
     "section": "Exercise",
-    "text": "Exercise\nTry running\nlibrary(bslib)\nrun_with_themer(\"app_bs_themer.R\")"
+    "text": "Exercise\nTry modifying the layouts/app_bslib_box_layout.R code to modify the value boxes. Try out a different icon, different colors.\n\ncountdown::countdown(minutes = 5)\n\n\n−+\n05:00"
   },
   {
     "objectID": "layouts/slides.html#accessibility",
@@ -214,7 +214,7 @@
     "href": "layouts/slides.html#but-im-not-a-web-designer",
     "title": "Part 1: UI Layout and Customizing",
     "section": "But … I’m not a Web Designer?",
-    "text": "But … I’m not a Web Designer?\n\n\nWealth of packages available in the Shiny ecosystem\nPlug-in favorite theme styles\nAbility to go as low-level as desired with CSS and JavaScript\n\n\n💡 It’s not all about you! (That’s good)"
+    "text": "But … I’m not a Web Designer?\n\n\nWealth of packages available in the Shiny ecosystem\nPlug-in favorite theme styles\nAbility to go as low-level as desired with CSS and JavaScript\n\n\n\nlibrary(countdown)\ncountdown(minutes = 5, seconds = 0)\n\n\n−+\n05:00"
   },
   {
     "objectID": "layouts/slides.html#language-of-the-web-1",
@@ -523,5 +523,33 @@
     "title": "Part 3: Shiny Modules",
     "section": "Go Further",
     "text": "Go Further\n\nShiny Modules for Beginners - Emily Riederer\nEric Nantz: Effective Use of Shiny modules in App development\nMastering Shiny: Modules\n{rhino} - framework for developing apps from Appsilon"
+  },
+  {
+    "objectID": "layouts/slides.html#section-1",
+    "href": "layouts/slides.html#section-1",
+    "title": "Part 1: UI Layout and Customizing",
+    "section": "",
+    "text": "Beautify with Bootstrap"
+  },
+  {
+    "objectID": "layouts/slides.html#exercise-1",
+    "href": "layouts/slides.html#exercise-1",
+    "title": "Part 1: UI Layout and Customizing",
+    "section": "Exercise",
+    "text": "Exercise\nTry running the following code below and change the bg and fg variables, as well as primary and maybe even the font. Cut and paste your bs_theme_update() code into the Slack to share your creation.\nlibrary(bslib)\nrun_with_themer(\"app_bs_themer.R\")\n\ncountdown::countdown(minutes = 5)\n\n\n−+\n05:00"
+  },
+  {
+    "objectID": "layouts/slides.html#layouts",
+    "href": "layouts/slides.html#layouts",
+    "title": "Part 1: UI Layout and Customizing",
+    "section": "Layouts",
+    "text": "Layouts\n\nlayout_sidebar()\nlayout_column_wrap()\nlayout_columns()"
+  },
+  {
+    "objectID": "layouts/slides.html#pages",
+    "href": "layouts/slides.html#pages",
+    "title": "Part 1: UI Layout and Customizing",
+    "section": "Pages",
+    "text": "Pages\n\npage_sidebar()/sidebar()\npage_navbar()/navbarPage()\npage_fillable()/layout_"
   }
 ]
