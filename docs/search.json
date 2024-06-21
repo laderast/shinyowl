@@ -21,6 +21,13 @@
     "text": "Slides\n    View slides in full screen"
   },
   {
+    "objectID": "modules/index.html#exercises",
+    "href": "modules/index.html#exercises",
+    "title": "Part 3: Modules",
+    "section": "Exercises",
+    "text": "Exercises\n\nExercise 1: Try it out\nrunApp(\"modules/module_demo_01/\")\n\n\nExercise 2: Use a Shiny Module\n\nIn RStudio, open up \"modules/module_demo_02/app.R\"\nWire in a new dataset to one of the plots\nIf you’re feeling adventurous, add a new plot"
+  },
+  {
     "objectID": "layouts/index.html",
     "href": "layouts/index.html",
     "title": "Part 1: UI Layout and Customizing",
@@ -54,6 +61,13 @@
     "title": "Exploring Reactivity",
     "section": "",
     "text": "Slides\n  Download PDF File\n   \n    Unable to display PDF file. Download instead.\n  \n  \n\nExercise 1\nCompare the two apps with a partner. Look at the reactive graph. Are they any different?\nrunApp(\"reactives/app_reactive.R\")\nrunApp(\"reactives/app_isolate.R\")\n\n\nExercise 2\nCompare the two apps with a partner. Look at the reactive graph. Are they any different?\nrunApp(\"reactives/app_eventReactive.R\")\nrunApp(\"reactives/app_observeEvent.R\")\n\n\nExercise 3\nTry and understand this app using {reactlog}.\nrunApp(\"reactives/app_ExtendedTaskSingle.R\")"
+  },
+  {
+    "objectID": "index.html#expectations",
+    "href": "index.html#expectations",
+    "title": "Intermediate shiny: drawing the owl",
+    "section": "Expectations",
+    "text": "Expectations\nI’ve tried to make this easier to understand. However, there are some Shiny concepts that are just inherently difficult to understand. So be easy on yourself (and me).\nBe gentle with yourself and others if there is confusion. We’ll work through it."
   },
   {
     "objectID": "index.html#agenda-roughly",
@@ -294,11 +308,11 @@
     "text": "Using Shiny modules\n\n\nui\n\nui &lt;- fluidPage(   \n    select_hist_ui(\n      id = \"mtcars_module\", \n      var_choices = mtcars_var_choices)\n    )\n\n\nserver\n\nserver &lt;- function(input, output) {\n    select_hist_server(\n      id=\"mtcars_module\", \n      data=mtcars)\n}\n\n\nNote that we have a function select_hist_server()\nAlso uses the id \"mtcars_module\""
   },
   {
-    "objectID": "modules/slides.html#try-it-out",
-    "href": "modules/slides.html#try-it-out",
+    "objectID": "modules/slides.html#exercise-try-it-out",
+    "href": "modules/slides.html#exercise-try-it-out",
     "title": "Part 3: Shiny Modules",
-    "section": "Try it out!",
-    "text": "Try it out!\nrunApp(\"modules/module_demo_01/\")"
+    "section": "Exercise: Try it out",
+    "text": "Exercise: Try it out\nrunApp(\"modules/module_demo_01/\")\n\ncountdown::countdown(minutes = 3)\n\n\n−+\n03:00"
   },
   {
     "objectID": "modules/slides.html#reusing-code",
@@ -368,7 +382,7 @@
     "href": "modules/slides.html#exercise-use-a-shiny-module",
     "title": "Part 3: Shiny Modules",
     "section": "Exercise: Use a Shiny Module",
-    "text": "Exercise: Use a Shiny Module\n\nIn RStudio, open up \"modules/module_demo_02/app.R\"\nWire in a new dataset to one of the plots"
+    "text": "Exercise: Use a Shiny Module\n\nIn RStudio, open up \"modules/module_demo_02/app.R\"\nWire in a new dataset to one of the plots\nIf you’re feeling adventurous, add a new plot\n\n\ncountdown::countdown(minutes = 5)\n\n\n−+\n05:00"
   },
   {
     "objectID": "modules/slides.html#module-design-1",
