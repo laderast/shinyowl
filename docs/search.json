@@ -53,21 +53,21 @@
     "href": "reactives/index.html",
     "title": "Exploring Reactivity",
     "section": "",
-    "text": "Slides\n  Download PDF File\n   \n    Unable to display PDF file. Download instead.\n  \n  \n\nExercise 1\nCompare the two apps with a partner. Look at the reactive graph. Are they any different?\nrunApp(\"reactives/app_reactive.R\")\nrunApp(\"reactives/app_isolate.R\")\n\n\nExercise 2\nCompare the two apps with a partner. Look at the reactive graph. Are they any different?\nrunApp(\"reactives/app_eventReactive.R\")\nrunApp(\"reactives/app_observeEvent.R\")\n\n\nExercise 3\nrunApp(\"reactives/app_ExtendedTaskSingle.R\")"
+    "text": "Slides\n  Download PDF File\n   \n    Unable to display PDF file. Download instead.\n  \n  \n\nExercise 1\nCompare the two apps with a partner. Look at the reactive graph. Are they any different?\nrunApp(\"reactives/app_reactive.R\")\nrunApp(\"reactives/app_isolate.R\")\n\n\nExercise 2\nCompare the two apps with a partner. Look at the reactive graph. Are they any different?\nrunApp(\"reactives/app_eventReactive.R\")\nrunApp(\"reactives/app_observeEvent.R\")\n\n\nExercise 3\nTry and understand this app using {reactlog}\nrunApp(\"reactives/app_ExtendedTaskSingle.R\")"
   },
   {
     "objectID": "index.html",
     "href": "index.html",
     "title": "Intermediate shiny: drawing the owl",
     "section": "",
-    "text": "This workshop aims to get you over the hill to faster, better looking, and dynamic Shiny Apps.\n\nCustomize dashboards with {bslib} and {thematic}\nExplain fundamentals of Reactive Programming\nUtilize Shiny modules in your projects\n\n\n\n\n\n\nSection\nTime\n\n\n\n\nWelcome/Get Started\n9:00-9:10\n\n\nDashboards\n9:10-9:55\n\n\nBreak\n9:55-10\n\n\nReactivity\n10-10:55\n\n\nBreak\n10:55-11\n\n\nModules/Wrap-up\n11-12"
+    "text": "{width = 400}"
   },
   {
     "objectID": "index.html#agenda-roughly",
     "href": "index.html#agenda-roughly",
     "title": "Intermediate shiny: drawing the owl",
-    "section": "",
-    "text": "Section\nTime\n\n\n\n\nWelcome/Get Started\n9:00-9:10\n\n\nDashboards\n9:10-9:55\n\n\nBreak\n9:55-10\n\n\nReactivity\n10-10:55\n\n\nBreak\n10:55-11\n\n\nModules/Wrap-up\n11-12"
+    "section": "Agenda (roughly)",
+    "text": "Agenda (roughly)\n\n\n\nSection\nBegin\nEnd\n\n\n\n\nWelcome/Get Started\n9:00\n9:10\n\n\nDashboards\n9:10\n9:55\n\n\nBreak\n9:55\n10\n\n\nReactivity\n10\n10:55\n\n\nBreak\n10:55\n11\n\n\nModules/Wrap-up\n11\n12"
   },
   {
     "objectID": "layouts/slides.html#learning-objectives",

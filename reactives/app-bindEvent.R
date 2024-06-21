@@ -1,8 +1,16 @@
 library(palmerpenguins)
 choices <- unique(penguins$species)
 library(reactlog)
+<<<<<<< HEAD
 library(shiny)
 library(bslib)
+=======
+library(ggplot2)
+library(shiny)
+library(bslib)
+library(dplyr)
+
+>>>>>>> 3454c46a358523be36c44f7f6b4b2a3b55fad3fd
 
 reactlog_enable()
 
