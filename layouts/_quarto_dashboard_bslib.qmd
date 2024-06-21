@@ -14,7 +14,7 @@ theme_shiny <- bs_theme_update(theme_shiny, bg = "rgb(27, 49, 73)", fg = "rgb(17
                                   "Segoe UI", font_google("Roboto"), "Helvetica Neue", "Arial", 
                                   "sans-serif", "Apple Color Emoji", "Segoe UI Emoji", 
                                   "Segoe UI Symbol"), font_scale = 1.5, `enable-gradients` = TRUE)
-sass(theme_shiny)
+sass(theme_shiny, output="mysheet.css")
 ```
 
 ```{r}

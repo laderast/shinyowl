@@ -6,8 +6,13 @@ format: html
 
 # <https://bit.ly/shinyowl>
 
+# Wi-fi: Patients and Visitors
+
 ![](bit.ly_45BDX9k.png){width=400}
 
+# Join the slack channel!
+
+#shiny-workshop-2024
 
 # Learning Objectives
 
@@ -21,23 +26,59 @@ In other words, we're learning how to Draw the Owl:
 
 ![](owl.png)
 
+## Expectations
+
+I've tried to make this easier to understand. However, there are some Shiny concepts that are just inherently difficult to understand. So be easy on yourself (and me).
+
+Be gentle with yourself and others if there is confusion. We'll work through it.
+
 ## Agenda (roughly)
 
 |Section|Begin|End|
 |-------|----|---|
 |Welcome/Get Started|9:00|9:10|
-|Dashboards|9:10|9:55|
+|[Dashboards](layouts/)|9:10|9:55|
 |Break|9:55|10:00|
-|Reactivity|10:00|10:55|
+|[Reactivity](reactives/)|10:00|10:55|
 |Break|10:55|11:00|
-|Modules/Wrap-up|11:00|12:00|
+|[Modules/Wrap-up](modules/)|11:00|12:00|
 
-# Posit.cloud project 
+# Clone this project to your machine
 
-1. Please create a free user account at posit.cloud 
-1. Invite yourself to the workspace [here](https://posit.cloud/spaces/525494/join?access_code=N0vloDrDMCVvlXLIhXHISNdrWjHe4SOlhPm_9abK)
-1. Create new project with "ShinyOwl" Template
+```{r}
+#| eval: false
+install.packages("usethis")
+usethis::use_course("https://github.com/laderast/shinyowl")
+renv::restore()
+```
+
+# It's dangerous to learn alone!
+
+Introduce yourself to your neighbors so you can learn together. Don't suffer in silence.
+
+# I need help!
+
+- Green sticky note: Don't bother me
+- Pink sticky note: Please help!
 
 # Reminders
 
 This workshop adheres to the [Cascadia-R Code of Conduct](https://cascadiarconf.com/policies/). Please be respectful of others and how they learn.
+
+# Acknowledgements
+
+I went through a lot of material and videos to get to the point where I felt okay with explaining some tough Shiny concepts, including from:
+
+- Emily Riederer
+- Eric Nantz
+- Joe Cheng (of course)
+- Winston Chang
+- Carson Sievert
+- Gordon Shotwell
+
+Thanks all of you for sharing your material and helping me learn.
+
+# Keep in Touch
+
+- email: tedladeras [at] gmail
+- web: <https://laderast.github.io/>

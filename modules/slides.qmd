@@ -119,10 +119,14 @@ server <- function(input, output) {
 :::
 ::::
 
-## Try it out!
+## Exercise: Try it out
 
 ```r
 runApp("modules/module_demo_01/")
+```
+
+```{r}
+countdown::countdown(minutes = 3)
 ```
 
 ## Reusing code
@@ -312,8 +316,11 @@ select_hist_demo <- function(data=mtcars){
 
 - In RStudio, open up `"modules/module_demo_02/app.R"`
 - Wire in a new dataset to one of the plots
+- If you're feeling adventurous, add a new plot
 
-
+```{r}
+countdown::countdown(minutes = 5)
+```
 
 # Module Design
 

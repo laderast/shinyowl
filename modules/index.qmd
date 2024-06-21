@@ -16,4 +16,18 @@ By the end of this session, you should be able to:
 
 {{< revealjs file="slides.html" height="500px">}}
 
+## Exercises
+
+### Exercise 1: Try it out
+
+```r
+runApp("modules/module_demo_01/")
+```
+
+### Exercise 2: Use a Shiny Module
+
+- In RStudio, open up `"modules/module_demo_02/app.R"`
+- Wire in a new dataset to one of the plots
+- If you're feeling adventurous, add a new plot
+
 

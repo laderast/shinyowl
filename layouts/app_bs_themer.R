@@ -6,6 +6,9 @@ choices <- c("species", "island")
 theme_shiny <- bs_theme(preset = "darkly")
 thematic::thematic_shiny()
 
+theme_shiny <- bs_theme_update(theme_shiny, bg = "rgb(168, 65, 65)", font_scale = NULL, 
+                preset = "journal", fg = "rgb(0, 0, 0)")
+
 ui <-  page_sidebar(sidebar=
   sidebar(selectInput("variable", "Select Variable to color by", choices)),
   plotOutput("my_plot"), theme = theme_shiny
