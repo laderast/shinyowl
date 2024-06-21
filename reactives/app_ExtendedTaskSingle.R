@@ -3,6 +3,13 @@ library(shiny)
 library(bslib)
 library(future)
 library(promises)
+library(palmerpenguins)
+library(reactlog)
+library(ggplot2)
+library(shiny)
+library(bslib)
+library(dplyr)
+
 future::plan(multisession)
 
 library(reactlog)

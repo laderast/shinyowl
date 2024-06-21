@@ -2,9 +2,6 @@
 ## https://www.appsilon.com/post/observe-function-r-shiny
 library(shiny)
 library(dplyr)
-library(palmerpenguins)
-
-dummy_data <- penguins
 
 ui <- fluidPage(
   p("The checkbox group controls the select input"),

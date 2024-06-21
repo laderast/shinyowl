@@ -1,5 +1,9 @@
 library(palmerpenguins)
 library(reactlog)
+library(ggplot2)
+library(shiny)
+library(bslib)
+library(dplyr)
 
 reactlog_enable()
 choices <- unique(penguins$species)
