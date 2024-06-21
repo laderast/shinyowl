@@ -20,7 +20,20 @@ By the end of this session, you should be able to:
 
 ### Exercise 1
 
+Modify the `value_box` code in `layouts/app_bslib_box_layout.R`. Try out the following:
 
+- Different colors: check out [R-Gallery's Color Picker](https://r-graph-gallery.com/color-palette-finder)
+- Different icons: check out [Bootstrap Icons](https://icons.getbootstrap.com/)
+- Different content
 
+If you like, paste it into the Cascadia-R slack channel.
 
 ### Exercise 2
+
+Try running the following code below and change the `bg` and `fg` variables, as well as `primary` and maybe even the font. Cut and paste your `bs_theme_update()` code into the Slack to share your creation.
+
+```r
+library(bslib)
+run_with_themer("app_bs_themer.R")
+```
+

@@ -46,7 +46,7 @@
     "href": "layouts/index.html#exercises",
     "title": "Part 1: UI Layout and Customizing",
     "section": "Exercises",
-    "text": "Exercises\n\nExercise 1\n\n\nExercise 2"
+    "text": "Exercises\n\nExercise 1\nModify the value_box code in layouts/app_bslib_box_layout.R. Try out the following:\n\nDifferent colors: check out R-Gallery’s Color Picker\nDifferent icons: check out Bootstrap Icons\nDifferent content\n\nIf you like, paste it into the Cascadia-R slack channel.\n\n\nExercise 2\nTry running the following code below and change the bg and fg variables, as well as primary and maybe even the font. Cut and paste your bs_theme_update() code into the Slack to share your creation.\nlibrary(bslib)\nrun_with_themer(\"app_bs_themer.R\")"
   },
   {
     "objectID": "reactives/index.html",
@@ -102,7 +102,7 @@
     "href": "layouts/slides.html#what-is-bslib",
     "title": "Part 1: UI Layout and Customizing",
     "section": "What is {bslib}?",
-    "text": "What is {bslib}?\n\nShort for BootstrapLibrary\n\n\n\nlibrary(bslib)\nlibrary(bsicons)\nlibrary(shiny)"
+    "text": "What is {bslib}?\n\nShort for BootstrapLibrary\nCode for layout as dashboards\nAllows for applying theming\n\n\nlibrary(bslib)\nlibrary(bsicons)\nlibrary(shiny)"
   },
   {
     "objectID": "layouts/slides.html#components-of-bslib",
@@ -123,21 +123,21 @@
     "href": "layouts/slides.html#cards",
     "title": "Part 1: UI Layout and Customizing",
     "section": "Cards",
-    "text": "Cards\n\nlibrary(bslib)\nui &lt;- page(\n  card({\n    plotOutput(\"penguins\")\n  })\n)"
+    "text": "Cards\n\nlibrary(bslib)\nui &lt;- page(\n  card({\n    plotOutput(\"penguins\")\n  })\n)\n\n\nrunApp(\"layouts/app_card.R\")"
   },
   {
     "objectID": "layouts/slides.html#page_sidebar",
     "href": "layouts/slides.html#page_sidebar",
     "title": "Part 1: UI Layout and Customizing",
     "section": "page_sidebar()",
-    "text": "page_sidebar()\n\nlibrary(bslib)\nui &lt;- page_sidebar(\n  sidebar = sidebar(\n    selectInput(\"var\", \"Select Island\",\n      choices,\n      selected = choices[1]\n    )\n  ),\n  card({\n    plotOutput(\"penguins\")\n  })\n)"
+    "text": "page_sidebar()\n\nlibrary(bslib)\nui &lt;- page_sidebar(\n  sidebar = sidebar(\n    selectInput(\"var\", \"Select Island\",\n      choices,\n      selected = choices[1]\n    )\n  ),\n  card({\n    plotOutput(\"penguins\")\n  })\n)\n\n\nrunApp(\"layouts/app_sidebar.R\")"
   },
   {
     "objectID": "layouts/slides.html#layout_column_wrap",
     "href": "layouts/slides.html#layout_column_wrap",
     "title": "Part 1: UI Layout and Customizing",
     "section": "layout_column_wrap()",
-    "text": "layout_column_wrap()\n\nui &lt;- page_sidebar(\n  sidebar = sidebar(\n    selectInput(\"var\", \"Select Island\", \n                choices, \n                selected = choices[1])\n  ),\n  card(\n    layout_column_wrap(\n      plotOutput(\"penguins\"),\n      plotOutput(\"penguins2\")\n    )\n  )\n)"
+    "text": "layout_column_wrap()\n\nui &lt;- page_sidebar(\n  sidebar = sidebar(\n    selectInput(\"var\", \"Select Island\", \n                choices, \n                selected = choices[1])\n  ),\n  card(\n    layout_column_wrap(\n      plotOutput(\"penguins\"),\n      plotOutput(\"penguins2\")\n    )\n  )\n)\n\n\nrunApp(\"layouts/app_layout_column.R\")"
   },
   {
     "objectID": "layouts/slides.html#value-boxes",
@@ -165,7 +165,7 @@
     "href": "layouts/slides.html#navbars",
     "title": "Part 1: UI Layout and Customizing",
     "section": "navbars",
-    "text": "navbars"
+    "text": "navbars\n\nui &lt;- page_navbar(\n  title = \"My App\",\n  nav_panel(title = \"One\", p(\"First page content.\")),\n  nav_panel(title = \"Two\", p(\"Second page content.\")),\n  nav_panel(\"Three\", p(\"Third page content.\")),\n  nav_spacer(),\n  nav_menu(\n    title = \"Links\",\n    align = \"right\",\n    nav_item(link_shiny),\n    nav_item(link_posit)\n  )\n)\n\n\nrunApp(\"layouts/app_navbar.R\")\nCarson Sievert: Customizing Navbars using {bslib}"
   },
   {
     "objectID": "layouts/slides.html#style-your-app-with-bslib-and-thematic",
@@ -179,7 +179,7 @@
     "href": "layouts/slides.html#exercise",
     "title": "Part 1: UI Layout and Customizing",
     "section": "Exercise",
-    "text": "Exercise\nTry modifying the layouts/app_bslib_box_layout.R code to modify the value boxes. Try out a different icon, different colors.\n\ncountdown::countdown(minutes = 5)\n\n\n−+\n05:00"
+    "text": "Exercise\nModify the value_box code in layouts/app_bslib_box_layout.R. Try out the following:\n\nDifferent colors: check out R-Gallery’s Color Picker\nDifferent icons: check out Bootstrap Icons\nDifferent content\n\nIf you like, paste it into the Cascadia-R slack channel.\n\ncountdown::countdown(minutes = 5)\n\n\n−+\n05:00"
   },
   {
     "objectID": "layouts/slides.html#accessibility",
@@ -235,7 +235,7 @@
     "href": "layouts/slides.html#cascading-style-sheets-css",
     "title": "Part 1: UI Layout and Customizing",
     "section": "Cascading Style Sheets (CSS)",
-    "text": "Cascading Style Sheets (CSS)\nSet of rules that define how HTML content is presented in the browser\n\nselector {\n  property1: value;\n  property2: value;\n}\n\n\nselector defines which elements on page to apply rule\nproperty list set properties of elements to specific values"
+    "text": "Cascading Style Sheets (CSS)\nSet of rules that define how HTML content is presented in the browser\nselector {\n  property1: value;\n  property2: value;\n}\n\n\nselector defines which elements on page to apply rule\nproperty list set properties of elements to specific values"
   },
   {
     "objectID": "layouts/slides.html#customizing-css-in-shiny-1",
@@ -550,6 +550,34 @@
     "href": "layouts/slides.html#pages",
     "title": "Part 1: UI Layout and Customizing",
     "section": "Pages",
-    "text": "Pages\n\npage_sidebar()/sidebar()\npage_navbar()/navbarPage()\npage_fillable()/layout_"
+    "text": "Pages\n\npage_sidebar()/sidebar()\npage_navbar()/ navbar()\npage_fillable()/layout_"
+  },
+  {
+    "objectID": "layouts/slides.html#resources-1",
+    "href": "layouts/slides.html#resources-1",
+    "title": "Part 1: UI Layout and Customizing",
+    "section": "Resources",
+    "text": "Resources\n\nShiny in Production: Design and UX\n[{bslib}]\n\n\n\n\nhttps;//bitly/shinyowl/layouts/"
+  },
+  {
+    "objectID": "layouts/slides.html#section-4",
+    "href": "layouts/slides.html#section-4",
+    "title": "Part 1: UI Layout and Customizing",
+    "section": "",
+    "text": "Beautify with Bootstrap"
+  },
+  {
+    "objectID": "layouts/slides.html#resources",
+    "href": "layouts/slides.html#resources",
+    "title": "Part 1: UI Layout and Customizing",
+    "section": "Resources",
+    "text": "Resources\n\nBeautify with Bootstrap\nShiny in Production: Design and UX\nCarson Sievert: Towards the Next Generation of UI\n\n\n\n\nhttps;//bitly/shinyowl/layouts/"
+  },
+  {
+    "objectID": "layouts/slides.html#getting-bs_themer-to-work-with-shiny-dashboards",
+    "href": "layouts/slides.html#getting-bs_themer-to-work-with-shiny-dashboards",
+    "title": "Part 1: UI Layout and Customizing",
+    "section": "Getting bs_themer() to work with Shiny Dashboards",
+    "text": "Getting bs_themer() to work with Shiny Dashboards\nrunApp(\"layouts/_quarto_dashboard_bslib.qmd\")"
   }
 ]

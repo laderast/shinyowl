@@ -8,8 +8,7 @@ format:
     incremental: true
     slide-number: c/t # c/t | c | h/v | h.v
     code-line-numbers: true
-    footer: "https;//shinyowl.netlify.com/layouts/"
-    
+    footer: "https;//bitly/shinyowl/layouts/"
 ---
 
 ## Learning Objectives
@@ -59,23 +58,6 @@ selectInput(
 :::
 ::::
 
-## Design/HTML is all about containers
-
-```{r}
-#| eval: false
-#| code-line-numbers: "1,11|5,10"
-<div class="form-group shiny-input-container">
-  <label class="control-label" id="dept-label" for="dept">
-    Select Department
-  </label>
-  <div>
-    <select id="dept" class="form-control">
-      <option value="Ancient Near Easter Art" selected>Ancient Near Easter Art</option>
-      <option value="American">American</option>
-    </select>
-  </div>
-</div>
-```
 
 
 # Layout Your Shiny App with `{bslib}`
@@ -83,7 +65,8 @@ selectInput(
 ## What is `{bslib}`?
 
 - Short for **B**oot**s**trap**Lib**rary
-- 
+- Code for layout as dashboards
+- Allows for applying theming
 
 ```{r}
 library(bslib)
@@ -106,7 +89,7 @@ library(shiny)
 ## Pages
 
 - `page_sidebar()`/`sidebar()`
-- `page_navbar()`/`navbarPage()`
+- `page_navbar()`/ `navbar()`
 - `page_fillable()`/`layout_`
 
 
@@ -121,6 +104,12 @@ ui <- page(
   })
 )
 ```
+
+- `runApp("layouts/app_card.R")`
+
+##
+
+![](img/card.png)
 
 ## `page_sidebar()` {auto-animate=true}
 
@@ -139,6 +128,12 @@ ui <- page_sidebar(
   })
 )
 ```
+
+- `runApp("layouts/app_sidebar.R")`
+
+##
+
+![](img/page_sidebar.png)
 
 ## `layout_column_wrap()` {auto-animate=true}
 
@@ -159,6 +154,12 @@ ui <- page_sidebar(
 )
 ```
 
+- `runApp("layouts/app_layout_column.R")`
+
+##
+
+![](img/layout_column.png)
+
 ## Value Boxes
 
 ```{r}
@@ -171,6 +172,7 @@ value_box(
   p("hit me", bs_icon("suit-spade"))
 )
 ```
+
 
 ## Dynamic Value Box
 
@@ -215,7 +217,13 @@ page_fillable(
 
 ## Exercise
 
-Try modifying the `layouts/app_bslib_box_layout.R` code to modify the value boxes. Try out a different icon, different colors.
+Modify the `value_box` code in `layouts/app_bslib_box_layout.R`. Try out the following:
+
+- Different colors: check out [R-Gallery's Color Picker](https://r-graph-gallery.com/color-palette-finder)
+- Different icons: check out [Bootstrap Icons](https://icons.getbootstrap.com/)
+- Different content
+
+If you like, paste it into the Cascadia-R slack channel.
 
 ```{r}
 countdown::countdown(minutes = 5)
@@ -224,15 +232,55 @@ countdown::countdown(minutes = 5)
 
 ## navbars
 
+```{r}
+#| eval: false
+#| code-line-numbers: "1|3-5|6|7-12"
+ui <- page_navbar(
+  title = "My App",
+  nav_panel(title = "One", p("First page content.")),
+  nav_panel(title = "Two", p("Second page content.")),
+  nav_panel("Three", p("Third page content.")),
+  nav_spacer(),
+  nav_menu(
+    title = "Links",
+    align = "right",
+    nav_item(link_shiny),
+    nav_item(link_posit)
+  )
+)
+```
 
+- `runApp("layouts/app_navbar.R")`
+- [Carson Sievert: Customizing Navbars using {bslib}](https://www.youtube.com/watch?v=VNbab8bro2c)
+
+##
+
+![](img/navbar.gif)
 
 # Styling Your App
+
+## Design/HTML is all about containers
+
+```{r}
+#| eval: false
+#| code-line-numbers: "1,11|5,10"
+<div class="form-group shiny-input-container">
+  <label class="control-label" id="dept-label" for="dept">
+    Select Department
+  </label>
+  <div>
+    <select id="dept" class="form-control">
+      <option value="Ancient Near Easter Art" selected>Ancient Near Easter Art</option>
+      <option value="American">American</option>
+    </select>
+  </div>
+</div>
+```
+
 
 ## Cascading Style Sheets (CSS)
 
 Set of **rules** that define how HTML content is **presented** in the browser
-
-<br>
 
 ```html
 selector {
@@ -291,7 +339,7 @@ ui <- fluidPage(
 
 Try running the following code below and change the `bg` and `fg` variables, as well as `primary` and maybe even the font. Cut and paste your `bs_theme_update()` code into the Slack to share your creation.
 
-```
+```r
 library(bslib)
 run_with_themer("app_bs_themer.R")
 ```
@@ -300,6 +348,11 @@ run_with_themer("app_bs_themer.R")
 countdown::countdown(minutes = 5)
 ```
 
+## Getting `bs_themer()` to work with Shiny Dashboards
+
+```r
+runApp("layouts/_quarto_dashboard_bslib.qmd")
+```
 
 # Boosting User Experience (UX)
 
@@ -328,246 +381,11 @@ Prioritizing accessibility leads to better UX!
 3. Import dependencies by declaring `use_cicerone()` in app UI
 4. Define triggers to start guide in app server
 :::
-
-
-# Resources
 
 ## 
 
-[Beautify with Bootstrap](https://unleash-shiny.rinterface.com/beautify-with-bootstraplib)
-
-## But ... I'm not a Web Designer?
-
-::: {.nonincremental}
-* Wealth of packages available in the Shiny ecosystem
-* Plug-in favorite theme styles
-* Ability to go as low-level as desired with CSS and JavaScript
-:::
-
-
-
-```{r}
-#| label: ex-1-timer
-library(countdown)
-countdown(minutes = 5, seconds = 0)
-```
-
-
-## Enter [`{bslib}`](https://rstudio.github.io/bslib/)
-
-> Provides tools for customizing Bootstrap themes directly in R
-
-* Easy to explore theme options **interactively**
-* Logical parameters to most common elements for color, font, and more
-* Built upon the [Sass](https://sass-lang.com/documentation/variables#default-values) stylesheet language to extend traditional CSS with modern features
-
-## Your Turn: [Exercise 2](ex-2.html){target="_blank"}
-
-Building upon the app from exercise 1, use `{bslib}` to customize font and other theme elements!
-
-```{r}
-#| label: ex-2-timer
-library(countdown)
-countdown(minutes = 5, seconds = 0)
-```
-
-# Boosting User Experience (UX)
-
-## Accessibility
-
-Prioritizing accessibility leads to better UX!
-
-::: {.nonincremental}
-* Keyboard navigation (without mouse)
-* Visualization color palettes accounting for vision deficiencies
-* Metadata for HTML tag attributes 
-:::
-
-## Guides with [`{cicerone}`](https://cicerone.john-coene.com/index.html)
-
-> A convienent API to create guided tours of Shiny applications using `driver.js`
-
-![](https://cicerone.john-coene.com/img/home-cicerone.gif)
-
-
-## The `{cicerone}` Workflow
-
-::: {.nonincremental}
-1. Note the input IDs of elements for guide
-2. Use the `Cicerone` R6 class and `step()` methods to define steps
-3. Import dependencies by declaring `use_cicerone()` in app UI
-4. Define triggers to start guide in app server
-:::
-
-## `{shinyWidgets}`
-
-> Custom widgets and other components to enhance your Shiny application
-
-::: {.nonincremental}
-* Alternatives to many classic Shiny inputs wrapping specialized frameworks within Bootstrap, Material Design, and more
-* Fantastic demonstration app: [shinyapps.dreamrs.fr/shinyWidgets](http://shinyapps.dreamrs.fr/shinyWidgets/)
-:::
-
-![](https://dreamrs.github.io/shinyWidgets/reference/figures/checkboxGroupButtons.png)
-
-## The Shiny UI Ecosystem
-
-![[bs4dash.rinterface.com](https://bs4dash.rinterface.com/)](https://analytichealth.co.uk/wp-content/uploads/2021/10/PA-bs4Dash.gif)
-
-## Choose your Widget
-
-:::: {.columns}
-
-::: {.column width="45%"}
-
-[`{shinydashboard}`](https://rstudio.github.io/shinydashboard/index.html)
-
-![](assets/img/valuebox.png){width="120%"}
-
-:::
-
-::: {.column width="55%"}
-
-😀 Easy, right?
-
-<br>
-
-```r
-library(shiny)
-library(shinydashboard)
-ui <- fluidPage(
-  h2("My Title")
-  valueBox(4024, "Total downloads")
-)
-```
-
-:::
-
-::::
-
-. . . 
-
-😐 Not quite: `{shiny}` and `{shinydashboard}` use different styling toolkits under the hood
-
-## 💪 `{htmltools}` to the Rescue
-
-::: {.panel-tabset}
-
-### Define Widget
-
-```r
-useValueBox <- function() {
-  if (!requireNamespace(package = "shinydashboard")) {
-    message("package 'shinydashboard' is required to run this function")
-  }
-  
-  deps <- htmltools::findDependencies(
-      shinydashboard::dashboardPage(
-        header = shinydashboard::dashboardHeader(),
-        sidebar = shinydashboard::dashboardSidebar(),
-        body = shinydashboard::dashboardBody()
-      )
-  )
-  htmltools::attachDependencies(tags$div(), value = deps)
-}
-
-value_box <- function(...) shinydashboard::valueBox(...)
-```
-
-### App Usage
-
-```r
-library(shiny)
-library(shinydashboard)
-
-ui <- fluidPage(
-  useValueBox()
-  h2("My Title")
-  value_box(4024, "Total downloads")
-)
-```
-
-:::
-
-## Back to `{shinyWidgets}`
-
-Usage of this powerful technique in `{shinyWidgets}`:
-
-::: {.nonincremental}
-* [`useArgonDash()`](https://dreamrs.github.io/shinyWidgets/reference/useArgonDash.html)
-* [`usebs4Dash()`](https://dreamrs.github.io/shinyWidgets/reference/useBs4Dash.html)
-* [`useShinyDashboard()`](https://dreamrs.github.io/shinyWidgets/reference/useShinydashboard.html)
-* [`useShinyDashboardPlus()`](https://dreamrs.github.io/shinyWidgets/reference/useShinydashboardPlus.html)
-* [`useTablerDash()`](https://dreamrs.github.io/shinyWidgets/reference/useTablerDash.html)
-:::
-
-# Extend with JavaScript
-
-## Not Just Styling
-
-All of Shiny's interactivity is powered by JavaScript
-
-::: {.nonincremental}
-* Direct pipe to & from R process to client (browser)
-* Normal use: Everything set up for you
-:::
-
-### Foundations in place to extend Shiny's power when desired
-
----
-
-:::: {.columns}
-
-::: {.column width="50%"}
-
-### Shiny to JS
-
-```r
-session$sendCustomMessage(
-  type = "say-hi", 
-  message = "Shiny is Fun!"
-)
-```
-
-:::
-
-::: {.column width="50%"}
-
-### JS to Shiny
-
-```javasript
-Shiny.addCustomMessageHandler(
-  'say-hi', 
-  function(msg) {
-    alert('Hello user! ' + msg)
-  }
-);
-```
-
-:::
-
-::::
-
-Varations underpin many community packages
-
-## [`{shinyjs}`](https://deanattali.com/shinyjs/)
-
-> Easily improve the user experience of your Shiny apps in seconds, without having to know JS
-
-::: {.nonincremental}
-* Enable & disable buttons
-* Show & hide elements
-* Dynamically adding and removing CSS classes
-* Click a shiny button from server side
-* Run JS scripts easily if desired
-:::
-
-## Your Turn: [Exercise 3](ex-3.html){target="_blank"}
-
-Harness the power of custom JavaScript in the Art Viewer App!
-
-```{r}
-#| label: ex-3-timer
-library(countdown)
-countdown(minutes = 10, seconds = 0)
-```
+## Resources
+
+- [Beautify with Bootstrap](https://unleash-shiny.rinterface.com/beautify-with-bootstraplib)
+- [Shiny in Production: Design and UX](https://shinyprod.com/units/d1-03-design-ux.html)
+- [Carson Sievert: Towards the Next Generation of UI](https://www.youtube.com/watch?v=avZ7TDTRnVo)
