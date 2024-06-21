@@ -42,18 +42,18 @@
     "text": "Slides\n    View slides in full screen"
   },
   {
-    "objectID": "layouts/index.html#rstudio-project",
-    "href": "layouts/index.html#rstudio-project",
+    "objectID": "layouts/index.html#exercises",
+    "href": "layouts/index.html#exercises",
     "title": "Part 1: UI Layout and Customizing",
-    "section": "RStudio Project",
-    "text": "RStudio Project"
+    "section": "Exercises",
+    "text": "Exercises\n\nExercise 1\n\n\nExercise 2"
   },
   {
     "objectID": "reactives/index.html",
     "href": "reactives/index.html",
     "title": "Exploring Reactivity",
     "section": "",
-    "text": "Slides\n  Download PDF File\n   \n    Unable to display PDF file. Download instead.\n  \n  \n\nExercise 1\nCompare the two apps with a partner. Look at the reactive graph. Are they any different?\nrunApp(\"reactives/app_reactive.R\")\nrunApp(\"reactives/app_isolate.R\")\n\n\nExercise 2\nrunApp(\"reactives/app_eventReactive.R\")\nrunApp(\"reactives/app_observeEvent.R\")\n\n\nExercise 3\nrunApp(\"reactives/app_ExtendedTaskSingle.R\")"
+    "text": "Slides\n  Download PDF File\n   \n    Unable to display PDF file. Download instead.\n  \n  \n\nExercise 1\nCompare the two apps with a partner. Look at the reactive graph. Are they any different?\nrunApp(\"reactives/app_reactive.R\")\nrunApp(\"reactives/app_isolate.R\")\n\n\nExercise 2\nCompare the two apps with a partner. Look at the reactive graph. Are they any different?\nrunApp(\"reactives/app_eventReactive.R\")\nrunApp(\"reactives/app_observeEvent.R\")\n\n\nExercise 3\nrunApp(\"reactives/app_ExtendedTaskSingle.R\")"
   },
   {
     "objectID": "index.html",
@@ -151,7 +151,7 @@
     "href": "layouts/slides.html#dynamic-value-box",
     "title": "Part 1: UI Layout and Customizing",
     "section": "Dynamic Value Box",
-    "text": "Dynamic Value Box\n\nlibrary(bsicons)\nui &lt;- page_fixed(\n  value_box(\n    title = \"The current time\",\n    value = textOutput(\"time\"),\n    showcase = bs_icon(\"clock\")\n  )\n)\n\nserver &lt;- function(input, output) {\n  output$time &lt;- renderText({\n    invalidateLater(1000)\n    format(Sys.time())\n  })\n}\n\nshinyApp(ui, server)\n\nShiny applications not supported in static R Markdown documents"
+    "text": "Dynamic Value Box"
   },
   {
     "objectID": "layouts/slides.html#laying-out-value-boxes",
