@@ -23,6 +23,8 @@ website:
         text: Reactivity
       - href: modules/index.qmd
         text: Modules
+      - href: https://github.com/laderast/shinyowl/
+        icon: github
 
 format:
   html:
