@@ -6,13 +6,7 @@ format: html
 
 # <https://bit.ly/shinyowl>
 
-# Wi-fi: Patients and Visitors
-
 ![](bit.ly_45BDX9k.png){width=400}
-
-# Join the slack channel!
-
-#shiny-workshop-2024
 
 # Learning Objectives
 
@@ -48,7 +42,9 @@ Be gentle with yourself and others if there is confusion. We'll work through it.
 ```{r}
 #| eval: false
 install.packages("usethis")
-usethis::use_course("https://github.com/laderast/shinyowl")
+# download repository
+usethis::use_course("laderast/shinyowl")
+# install needed packages
 renv::restore()
 ```
 
