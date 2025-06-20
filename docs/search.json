@@ -39,7 +39,7 @@
     "href": "layouts/slides.html#learning-objectives",
     "title": "Part 1: UI Layout and Customizing",
     "section": "Learning Objectives",
-    "text": "Learning Objectives\nBy the end of this session, you should be able to:\n\nLayout your shiny app using {bslib}\nStyle your shiny app using bslib::bs_themer()\nStyle your shiny app plots using {thematic}\nCreate a brand.yml that works with shiny apps\nUtilize cicerone to give help for your shiny app"
+    "text": "Learning Objectives\nBy the end of this session, you should be able to:\n\nLayout your shiny app using {bslib}\nStyle your shiny app using bslib::bs_themer()\nStyle your shiny app plots using {thematic}\nCreate a brand.yml that works with shiny apps\nUtilize `rintrojs`` to give help for your shiny app"
   },
   {
     "objectID": "layouts/slides.html#what-are-shiny-uis",
