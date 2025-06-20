@@ -287,6 +287,20 @@
     "text": "Agenda (roughly)\n\n\n\nSection\nBegin\nEnd\n\n\n\n\nWelcome/Get Started\n9:00\n9:10\n\n\nDashboards\n9:10\n9:55\n\n\nBreak\n9:55\n10:00\n\n\nReactivity\n10:00\n10:55\n\n\nBreak\n10:55\n11:00\n\n\nModules/Wrap-up\n11:00\n12:00"
   },
   {
+    "objectID": "index.html#invite-yourself-to-posit.cloud",
+    "href": "index.html#invite-yourself-to-posit.cloud",
+    "title": "Intermediate shiny: drawing the owl",
+    "section": "Invite Yourself to Posit.cloud",
+    "text": "Invite Yourself to Posit.cloud\n\nCreate an account at Posit.cloud\nInvite yourself to the workpace"
+  },
+  {
+    "objectID": "index.html#clone-this-project-to-your-machine-optional",
+    "href": "index.html#clone-this-project-to-your-machine-optional",
+    "title": "Intermediate shiny: drawing the owl",
+    "section": "Clone this project to your machine (optional)",
+    "text": "Clone this project to your machine (optional)\n\ninstall.packages(\"usethis\")\n# download repository\nusethis::use_course(\"laderast/shinyowl\")\n# install needed packages\nrenv::restore()"
+  },
+  {
     "objectID": "layouts/index.html",
     "href": "layouts/index.html",
     "title": "Part 1: UI Layout and Customizing",
@@ -467,41 +481,6 @@
     "title": "Part 3: Shiny Modules",
     "section": "scatterplot_mod_server",
     "text": "scatterplot_mod_server\n\nscatterplot_mod_server &lt;- function(input, \n                                   output, \n                                   session, \n                                   dataset, \n                                   plot1vars, \n                                   plot2vars) {\n  \n  plot1_obj &lt;- reactive({\n    p &lt;- scatter_sales(dataset, xvar = plot1vars$xvar(), yvar = plot1vars$yvar())\n    return(p)\n  })\n  \n  plot2_obj &lt;- reactive({\n    p &lt;- scatter_sales(dataset, xvar = plot2vars$xvar(), yvar = plot2vars$yvar())\n    return(p)\n  })\n  \n  output$plot1 &lt;- renderPlot({\n    plot1_obj()\n  })"
-  },
-  {
-    "objectID": "modules/slides.html#testing-modules",
-    "href": "modules/slides.html#testing-modules",
-    "title": "Part 3: Shiny Modules",
-    "section": "Testing Modules",
-    "text": "Testing Modules\n\nMastering Shiny: Testing\nPut your code in a package"
-  },
-  {
-    "objectID": "modules/slides.html#starting-up-testthat",
-    "href": "modules/slides.html#starting-up-testthat",
-    "title": "Part 3: Shiny Modules",
-    "section": "Starting up testthat",
-    "text": "Starting up testthat\n\nusethis::use_testthat()\nusethis::use_test(\"\")"
-  },
-  {
-    "objectID": "modules/slides.html#testserver",
-    "href": "modules/slides.html#testserver",
-    "title": "Part 3: Shiny Modules",
-    "section": "testServer()",
-    "text": "testServer()\n\nis your maid"
-  },
-  {
-    "objectID": "modules/slides.html#testing-expectations",
-    "href": "modules/slides.html#testing-expectations",
-    "title": "Part 3: Shiny Modules",
-    "section": "Testing Expectations",
-    "text": "Testing Expectations\n\nexpect_error()\nexpect_equal()\nexpect_snapshot()"
-  },
-  {
-    "objectID": "modules/slides.html#server-module-testing",
-    "href": "modules/slides.html#server-module-testing",
-    "title": "Part 3: Shiny Modules",
-    "section": "Server Module Testing",
-    "text": "Server Module Testing\nSupply your module with an input object:"
   },
   {
     "objectID": "modules/slides.html#go-further",
