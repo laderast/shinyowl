@@ -469,41 +469,6 @@
     "text": "scatterplot_mod_server\n\nscatterplot_mod_server &lt;- function(input, \n                                   output, \n                                   session, \n                                   dataset, \n                                   plot1vars, \n                                   plot2vars) {\n  \n  plot1_obj &lt;- reactive({\n    p &lt;- scatter_sales(dataset, xvar = plot1vars$xvar(), yvar = plot1vars$yvar())\n    return(p)\n  })\n  \n  plot2_obj &lt;- reactive({\n    p &lt;- scatter_sales(dataset, xvar = plot2vars$xvar(), yvar = plot2vars$yvar())\n    return(p)\n  })\n  \n  output$plot1 &lt;- renderPlot({\n    plot1_obj()\n  })"
   },
   {
-    "objectID": "modules/slides.html#testing-modules",
-    "href": "modules/slides.html#testing-modules",
-    "title": "Part 3: Shiny Modules",
-    "section": "Testing Modules",
-    "text": "Testing Modules\n\nMastering Shiny: Testing\nPut your code in a package"
-  },
-  {
-    "objectID": "modules/slides.html#starting-up-testthat",
-    "href": "modules/slides.html#starting-up-testthat",
-    "title": "Part 3: Shiny Modules",
-    "section": "Starting up testthat",
-    "text": "Starting up testthat\n\nusethis::use_testthat()\nusethis::use_test(\"\")"
-  },
-  {
-    "objectID": "modules/slides.html#testserver",
-    "href": "modules/slides.html#testserver",
-    "title": "Part 3: Shiny Modules",
-    "section": "testServer()",
-    "text": "testServer()\n\nis your maid"
-  },
-  {
-    "objectID": "modules/slides.html#testing-expectations",
-    "href": "modules/slides.html#testing-expectations",
-    "title": "Part 3: Shiny Modules",
-    "section": "Testing Expectations",
-    "text": "Testing Expectations\n\nexpect_error()\nexpect_equal()\nexpect_snapshot()"
-  },
-  {
-    "objectID": "modules/slides.html#server-module-testing",
-    "href": "modules/slides.html#server-module-testing",
-    "title": "Part 3: Shiny Modules",
-    "section": "Server Module Testing",
-    "text": "Server Module Testing\nSupply your module with an input object:"
-  },
-  {
     "objectID": "modules/slides.html#go-further",
     "href": "modules/slides.html#go-further",
     "title": "Part 3: Shiny Modules",
