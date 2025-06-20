@@ -1,0 +1,25 @@
+logo: 
+  small: owl-logo.png
+
+color:
+  palette:
+    black: "#1A1A1A"
+    white: "#F7F7F7"
+    light-yellow: "#ECE58B"
+    grey: "#908D90"
+    pink: "#FFeD8F"
+    bg: "#413041"
+    fg: "#EEE8D5"
+  foreground: light-yellow
+  background: bg
+  primary: grey
+  danger: pink
+  dark: "#413041"
+
+typography:
+  fonts:
+    - family: Roboto
+      source: google
+  base: Roboto
+  headings: Roboto
+  monospace: Courier

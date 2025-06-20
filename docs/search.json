@@ -28,34 +28,6 @@
     "text": "Exercises\n\nExercise 1: Try it out\nrunApp(\"modules/module_demo_01/\")\n\n\nExercise 2: Use a Shiny Module\n\nIn RStudio, open up \"modules/module_demo_02/app.R\"\nWire in a new dataset to one of the plots\nIf you’re feeling adventurous, add a new plot"
   },
   {
-    "objectID": "layouts/index.html",
-    "href": "layouts/index.html",
-    "title": "Part 1: UI Layout and Customizing",
-    "section": "",
-    "text": "By the end of this session, you should be able to:\n\nLayout your shiny app using {bslib}\nStyle your shiny app using bslib::bs_themer()\nStyle your shiny app using {thematic}"
-  },
-  {
-    "objectID": "layouts/index.html#learning-objectives",
-    "href": "layouts/index.html#learning-objectives",
-    "title": "Part 1: UI Layout and Customizing",
-    "section": "",
-    "text": "By the end of this session, you should be able to:\n\nLayout your shiny app using {bslib}\nStyle your shiny app using bslib::bs_themer()\nStyle your shiny app using {thematic}"
-  },
-  {
-    "objectID": "layouts/index.html#slides",
-    "href": "layouts/index.html#slides",
-    "title": "Part 1: UI Layout and Customizing",
-    "section": "Slides",
-    "text": "Slides\n    View slides in full screen"
-  },
-  {
-    "objectID": "layouts/index.html#exercises",
-    "href": "layouts/index.html#exercises",
-    "title": "Part 1: UI Layout and Customizing",
-    "section": "Exercises",
-    "text": "Exercises\n\nExercise 1\nModify the value_box code in layouts/app_bslib_box_layout.R. Try out the following:\n\nDifferent colors: check out R-Gallery’s Color Picker\nDifferent icons: check out Bootstrap Icons\nDifferent content\n\nIf you like, paste it into the Cascadia-R slack channel.\n\n\nExercise 2\nTry running the following code below and change the bg and fg variables, as well as primary and maybe even the font. Cut and paste your bs_theme_update() code into the Slack to share your creation.\nlibrary(bslib)\nrun_with_themer(\"app_bs_themer.R\")"
-  },
-  {
     "objectID": "reactives/index.html",
     "href": "reactives/index.html",
     "title": "Exploring Reactivity",
@@ -63,25 +35,11 @@
     "text": "Slides\n  Download PDF File\n   \n    Unable to display PDF file. Download instead.\n  \n  \n\nExercise 1\nCompare the two apps with a partner. Look at the reactive graph. Are they any different?\nrunApp(\"reactives/app_reactive.R\")\nrunApp(\"reactives/app_isolate.R\")\n\n\nExercise 2\nCompare the two apps with a partner. Look at the reactive graph. Are they any different?\nrunApp(\"reactives/app_eventReactive.R\")\nrunApp(\"reactives/app_observeEvent.R\")\n\n\nExercise 3\nTry and understand this app using {reactlog}.\nrunApp(\"reactives/app_ExtendedTaskSingle.R\")"
   },
   {
-    "objectID": "index.html#expectations",
-    "href": "index.html#expectations",
-    "title": "Intermediate shiny: drawing the owl",
-    "section": "Expectations",
-    "text": "Expectations\nI’ve tried to make this easier to understand. However, there are some Shiny concepts that are just inherently difficult to understand. So be easy on yourself (and me).\nBe gentle with yourself and others if there is confusion. We’ll work through it."
-  },
-  {
-    "objectID": "index.html#agenda-roughly",
-    "href": "index.html#agenda-roughly",
-    "title": "Intermediate shiny: drawing the owl",
-    "section": "Agenda (roughly)",
-    "text": "Agenda (roughly)\n\n\n\nSection\nBegin\nEnd\n\n\n\n\nWelcome/Get Started\n9:00\n9:10\n\n\nDashboards\n9:10\n9:55\n\n\nBreak\n9:55\n10:00\n\n\nReactivity\n10:00\n10:55\n\n\nBreak\n10:55\n11:00\n\n\nModules/Wrap-up\n11:00\n12:00"
-  },
-  {
     "objectID": "layouts/slides.html#learning-objectives",
     "href": "layouts/slides.html#learning-objectives",
     "title": "Part 1: UI Layout and Customizing",
     "section": "Learning Objectives",
-    "text": "Learning Objectives\nBy the end of this session, you should be able to:\n\nLayout your shiny app using {bslib}\nStyle your shiny app using bslib::bs_themer()\nStyle your shiny app using {thematic}"
+    "text": "Learning Objectives\nBy the end of this session, you should be able to:\n\nLayout your shiny app using {bslib}\nStyle your shiny app using bslib::bs_themer()\nStyle your shiny app plots using {thematic}\nCreate a brand.yml that works with shiny apps\nUtilize cicerone to give help for your shiny app"
   },
   {
     "objectID": "layouts/slides.html#what-are-shiny-uis",
@@ -102,7 +60,7 @@
     "href": "layouts/slides.html#what-is-bslib",
     "title": "Part 1: UI Layout and Customizing",
     "section": "What is {bslib}?",
-    "text": "What is {bslib}?\n\nShort for BootstrapLibrary\nCode for layout as dashboards\nAllows for applying theming\n\n\nlibrary(bslib)\nlibrary(bsicons)\nlibrary(shiny)"
+    "text": "What is {bslib}?\n\nShort for BootstrapLibrary\nCode for layout as dashboards\nAllows for applying theming / brand.yml\n\n\nlibrary(bslib)\nlibrary(bsicons)\nlibrary(shiny)"
   },
   {
     "objectID": "layouts/slides.html#components-of-bslib",
@@ -144,7 +102,7 @@
     "href": "layouts/slides.html#layout_column_wrap",
     "title": "Part 1: UI Layout and Customizing",
     "section": "layout_column_wrap()",
-    "text": "layout_column_wrap()\n\nui &lt;- page_sidebar(\n  sidebar = sidebar(\n    selectInput(\"var\", \"Select Island\", \n                choices, \n                selected = choices[1])\n  ),\n  card(\n    layout_column_wrap(\n      plotOutput(\"penguins\"),\n      plotOutput(\"penguins2\")\n    )\n  )\n)\n\n\nrunApp(\"layouts/app_layout_column.R\")"
+    "text": "layout_column_wrap()\n\nchoices &lt;- c(\"sex\", \"island\", \"species\")\nui &lt;- page_sidebar(\n  sidebar = sidebar(\n    selectInput(\"var\", \"Select Island\", \n                choices, \n                selected = choices[1])\n  ),\n    layout_column_wrap(\n      card(plotOutput(\"penguins\")),\n      card(plotOutput(\"penguins2\"))\n    )\n)\n\nui\n\n\nrunApp(\"layouts/app_layout_column.R\")"
   },
   {
     "objectID": "layouts/slides.html#value-boxes",
@@ -203,53 +161,158 @@
     "text": "Customizing CSS in Shiny (1)\n\n\nui &lt;- fluidPage(\n  tags$head(\n    tags$style(\n      HTML(\"\n      body {\n        background-color: blue;\n        color: white;\n      }\")\n    )\n  ),\n  # application UI\n  ...\n)\n\n\ntags originates from {htmltools}, but imported with {shiny}"
   },
   {
+    "objectID": "layouts/slides.html#built-in-bootstrap-themes",
+    "href": "layouts/slides.html#built-in-bootstrap-themes",
+    "title": "Part 1: UI Layout and Customizing",
+    "section": "Built in Bootstrap Themes",
+    "text": "Built in Bootstrap Themes"
+  },
+  {
     "objectID": "layouts/slides.html#style-your-app-with-bslib-and-thematic",
     "href": "layouts/slides.html#style-your-app-with-bslib-and-thematic",
     "title": "Part 1: UI Layout and Customizing",
     "section": "Style your App with {bslib} and {thematic}",
-    "text": "Style your App with {bslib} and {thematic}\n\nbslib::bs_themer()\nbslib::run_with_themer()\nthematic::thematic_theme()"
+    "text": "Style your App with {bslib} and {thematic}\n\nput bslib::bs_themer() as an argument to bslib::ui_*() functions\nadd thematic::thematic_theme() to the app code (before runApp())\nuse run_with_themer() on an app to style it"
+  },
+  {
+    "objectID": "layouts/slides.html#example",
+    "href": "layouts/slides.html#example",
+    "title": "Part 1: UI Layout and Customizing",
+    "section": "Example:",
+    "text": "Example:\n\nchoices &lt;- c(\"species\", \"island\") \ntheme_shiny &lt;- bs_theme(brand=TRUE)\n\nui &lt;-  page_sidebar(\n  theme=theme_shiny,\n  sidebar=sidebar(\n  selectInput(\"variable\", \"Select Variable to color by\", choices)),\n  plotOutput(\"my_plot\"), \n)\n\nthematic::thematic_shiny()"
   },
   {
     "objectID": "layouts/slides.html#exercise-1",
     "href": "layouts/slides.html#exercise-1",
     "title": "Part 1: UI Layout and Customizing",
     "section": "Exercise",
-    "text": "Exercise\nTry running the following code below and change the bg and fg variables, as well as primary and maybe even the font. Cut and paste your bs_theme_update() code into the Slack to share your creation.\nlibrary(bslib)\nrun_with_themer(\"app_bs_themer.R\")\n\ncountdown::countdown(minutes = 5)\n\n\n−+\n05:00"
+    "text": "Exercise\nTry running the following code below and change the background and foreground variables, as well as primary and maybe even the font. Cut and paste your bs_theme_update() code into the Slack to share your creation.\nlibrary(bslib)\nrun_with_themer(\"layouts/app_bs_themer.R\")\n\ncountdown::countdown(minutes = 5)\n\n\n−+\n05:00"
   },
   {
-    "objectID": "layouts/slides.html#getting-bs_themer-to-work-with-shiny-dashboards",
-    "href": "layouts/slides.html#getting-bs_themer-to-work-with-shiny-dashboards",
+    "objectID": "layouts/slides.html#full-list-of-bootstrap-options",
+    "href": "layouts/slides.html#full-list-of-bootstrap-options",
     "title": "Part 1: UI Layout and Customizing",
-    "section": "Getting bs_themer() to work with Shiny Dashboards",
-    "text": "Getting bs_themer() to work with Shiny Dashboards\nrunApp(\"layouts/_quarto_dashboard_bslib.qmd\")"
+    "section": "Full List of Bootstrap Options",
+    "text": "Full List of Bootstrap Options\n\nBootstrap Variables"
+  },
+  {
+    "objectID": "layouts/slides.html#what-is-brand.yml",
+    "href": "layouts/slides.html#what-is-brand.yml",
+    "title": "Part 1: UI Layout and Customizing",
+    "section": "What is brand.yml?",
+    "text": "What is brand.yml?\n\nYAML file that has your brand defaults\n\nusually _brand.yml\n\nWhen your org has branded colors, logos, and fonts\nTop level way to specify:\n\nColors\nFonts\nLogos\n\nWorks well with other styling"
+  },
+  {
+    "objectID": "layouts/slides.html#brand.yml-compatibility",
+    "href": "layouts/slides.html#brand.yml-compatibility",
+    "title": "Part 1: UI Layout and Customizing",
+    "section": "brand.yml compatibility",
+    "text": "brand.yml compatibility\n\nShiny layouts (including bslib)\nthematic plot styling\nQuarto Dashboards\nPDF (via typst)\nHTML outputs (revealjs)"
+  },
+  {
+    "objectID": "layouts/slides.html#brand.yml-example",
+    "href": "layouts/slides.html#brand.yml-example",
+    "title": "Part 1: UI Layout and Customizing",
+    "section": "brand.yml example",
+    "text": "brand.yml example\n\nlogo:                          #set logo\n  small: owl-logo.png\n  medium: owl-logo.png\n  large: owl-logo.png\n\ncolor:\n  palette:                     #set color values (for elements)\n    black: \"#1A1A1A\"\n    white: \"#F7F7F7\"\n    light-yellow: \"#ECE58B\"\n    grey: \"#908D90\"\n    pink: \"#FFeD8F\"\n    bg: \"#413041\"\n    fg: \"#EEE8D5\"\n  foreground: light-yellow    #set colors for elements\n  background: bg\n  primary: grey\n  danger: pink\n  dark: \"#413041\"\n\ntypography:                  #set fonts\n  fonts:\n    - family: Roboto\n      source: google\n  base: Roboto\n  headings: Roboto\n  monospace: Courier"
+  },
+  {
+    "objectID": "layouts/slides.html#using-_brand.yml-with-bslib",
+    "href": "layouts/slides.html#using-_brand.yml-with-bslib",
+    "title": "Part 1: UI Layout and Customizing",
+    "section": "Using _brand.yml with bslib",
+    "text": "Using _brand.yml with bslib\n\ncurrent_theme &lt;- bs_theme(brand=TRUE)        #enable brand.yml\n\nui &lt;-  page_sidebar(\n  theme = current_theme,                     #use theme\n\n  sidebar= sidebar(\n    selectInput(\"variable\", \"Select Variable to color by\", choices)),\n\n  plotOutput(\"my_plot\")\n)"
+  },
+  {
+    "objectID": "layouts/slides.html#order-of-priorities",
+    "href": "layouts/slides.html#order-of-priorities",
+    "title": "Part 1: UI Layout and Customizing",
+    "section": "Order of Priorities",
+    "text": "Order of Priorities\n\n\n\n\n\n\n\ngraph TD\n  A[\"brand.yml\"] --&gt; B[\"bs_theme()\"] \n  B --&gt; C[\"custom.scss\"]\n  B --&gt; D[\"thematic\"]\n\n\n\n\n\n\n\n\nbrand.yml takes precedence\nCan override styles with bs_theme()\nThemes will be auto populated from brand.yml into bslib() layouts and plots using thematic()\nCustomize for specific classes with .scss file"
+  },
+  {
+    "objectID": "layouts/slides.html#exercise-2",
+    "href": "layouts/slides.html#exercise-2",
+    "title": "Part 1: UI Layout and Customizing",
+    "section": "Exercise",
+    "text": "Exercise\n\nIn your project, look at the _brand.yml file and try uncommenting the various lines, especially foreground and background\nReload app_bs_themer.R and see changes.\nTry running run_with_themer() for the app and apply the themes again\nHow does the _brand.yml affects the themes?\n\nlibrary(bslib)\nrun_with_themer(\"layouts/app_bs_themer.R\")\n\ncountdown::countdown(minutes = 5)\n\n\n−+\n05:00"
+  },
+  {
+    "objectID": "layouts/slides.html#overriding-brand.yml",
+    "href": "layouts/slides.html#overriding-brand.yml",
+    "title": "Part 1: UI Layout and Customizing",
+    "section": "Overriding brand.yml",
+    "text": "Overriding brand.yml\n\nMay want to add more styling to specific elements\nCan add a .scss file.\nBootstrap Variables"
   },
   {
     "objectID": "layouts/slides.html#accessibility",
     "href": "layouts/slides.html#accessibility",
     "title": "Part 1: UI Layout and Customizing",
     "section": "Accessibility",
-    "text": "Accessibility\nPrioritizing accessibility leads to better UX!\n\n\nKeyboard navigation (without mouse)\nVisualization color palettes accounting for vision deficiencies\nMetadata for HTML tag attributes"
+    "text": "Accessibility\nPrioritizing accessibility leads to better UX!\n\nKeyboard navigation (without mouse)\nVisualization color palettes accounting for vision deficiencies\nMetadata for HTML tag attributes"
   },
   {
-    "objectID": "layouts/slides.html#guides-with-cicerone",
-    "href": "layouts/slides.html#guides-with-cicerone",
+    "objectID": "layouts/slides.html#rintrojs",
+    "href": "layouts/slides.html#rintrojs",
     "title": "Part 1: UI Layout and Customizing",
-    "section": "Guides with {cicerone}",
-    "text": "Guides with {cicerone}\n\nA convienent API to create guided tours of Shiny applications using driver.js"
+    "section": "{rintrojs}",
+    "text": "{rintrojs}\n\nI used to show {cicerone} - but that project is now depracated\n{rintrojs} - walk through UI elements\n\neach UI elemnt needs to be wrapped in introBox()\nadd data.step and data.intro to each UI element."
   },
   {
-    "objectID": "layouts/slides.html#the-cicerone-workflow",
-    "href": "layouts/slides.html#the-cicerone-workflow",
+    "objectID": "layouts/slides.html#example-1",
+    "href": "layouts/slides.html#example-1",
     "title": "Part 1: UI Layout and Customizing",
-    "section": "The {cicerone} Workflow",
-    "text": "The {cicerone} Workflow\n\n\nNote the input IDs of elements for guide\nUse the Cicerone R6 class and step() methods to define steps\nImport dependencies by declaring use_cicerone() in app UI\nDefine triggers to start guide in app server"
+    "section": "Example",
+    "text": "Example\n\n  tabPanel(\"Tree Explorer\",\n           rintrojs::introjsUI(),             #initialize rintrojs\n           actionButton(\"help\", \"Help\", icon = icon(\"circle-question\")),\n           introBox(                           #Wrapper for UI element\n           selectInput(\"covariates\", \"Click Box to Add Covariates\", \n                       choices = covariateNames, multiple=TRUE),\n           data.step = 1,                      #Step Number\n           data.intro = \"&lt;p&gt;Welcome to the Palmer Penguin dataset. We're going to try to predict the Species of Penguin (Adelie, Chinstrap, Gentoo) using a conditional inference decision tree using the {party} package.\n           Click the selector box to start adding a feature to the model.\"\n            ),                                 #Wrapper for UI element\n\n\nTry the example at https://tladeras.shinyapps.io/penguin_party/\nCode is here: https://github.com/laderast/partyExplorer"
   },
   {
     "objectID": "layouts/slides.html#resources",
     "href": "layouts/slides.html#resources",
     "title": "Part 1: UI Layout and Customizing",
     "section": "Resources",
-    "text": "Resources\n\nBeautify with Bootstrap\nShiny in Production: Design and UX\nCarson Sievert: Towards the Next Generation of UI\n\n\n\n\nhttps;//bitly/shinyowl/layouts/"
+    "text": "Resources\n\nBeautify with Bootstrap\nShiny in Production: Design and UX\nCarson Sievert: Towards the Next Generation of UI"
+  },
+  {
+    "objectID": "index.html#expectations",
+    "href": "index.html#expectations",
+    "title": "Intermediate shiny: drawing the owl",
+    "section": "Expectations",
+    "text": "Expectations\nI’ve tried to make this easier to understand. However, there are some Shiny concepts that are just inherently difficult to understand. So be easy on yourself (and me).\nBe gentle with yourself and others if there is confusion. We’ll work through it."
+  },
+  {
+    "objectID": "index.html#agenda-roughly",
+    "href": "index.html#agenda-roughly",
+    "title": "Intermediate shiny: drawing the owl",
+    "section": "Agenda (roughly)",
+    "text": "Agenda (roughly)\n\n\n\nSection\nBegin\nEnd\n\n\n\n\nWelcome/Get Started\n9:00\n9:10\n\n\nDashboards\n9:10\n9:55\n\n\nBreak\n9:55\n10:00\n\n\nReactivity\n10:00\n10:55\n\n\nBreak\n10:55\n11:00\n\n\nModules/Wrap-up\n11:00\n12:00"
+  },
+  {
+    "objectID": "layouts/index.html",
+    "href": "layouts/index.html",
+    "title": "Part 1: UI Layout and Customizing",
+    "section": "",
+    "text": "By the end of this session, you should be able to:\n\nLayout your shiny app using {bslib}\nStyle your shiny app using bslib::bs_themer()\nStyle your shiny app using {thematic}"
+  },
+  {
+    "objectID": "layouts/index.html#learning-objectives",
+    "href": "layouts/index.html#learning-objectives",
+    "title": "Part 1: UI Layout and Customizing",
+    "section": "",
+    "text": "By the end of this session, you should be able to:\n\nLayout your shiny app using {bslib}\nStyle your shiny app using bslib::bs_themer()\nStyle your shiny app using {thematic}"
+  },
+  {
+    "objectID": "layouts/index.html#slides",
+    "href": "layouts/index.html#slides",
+    "title": "Part 1: UI Layout and Customizing",
+    "section": "Slides",
+    "text": "Slides\n    View slides in full screen"
+  },
+  {
+    "objectID": "layouts/index.html#exercises",
+    "href": "layouts/index.html#exercises",
+    "title": "Part 1: UI Layout and Customizing",
+    "section": "Exercises",
+    "text": "Exercises\n\nExercise 1\nModify the value_box code in layouts/app_bslib_box_layout.R. Try out the following:\n\nDifferent colors: check out R-Gallery’s Color Picker\nDifferent icons: check out Bootstrap Icons\nDifferent content\n\nIf you like, paste it into the Cascadia-R slack channel.\n\n\nExercise 2\nTry running the following code below and change the bg and fg variables, as well as primary and maybe even the font. Cut and paste your bs_theme_update() code into the Slack to share your creation.\nlibrary(bslib)\nrun_with_themer(\"app_bs_themer.R\")"
   },
   {
     "objectID": "modules/slides.html#you-have-linkedin-to-blame",
@@ -270,14 +333,14 @@
     "href": "modules/slides.html#why",
     "title": "Part 3: Shiny Modules",
     "section": "Why?",
-    "text": "Why?\n\n\nA new way to thinking about apps\nModularize code into smaller apps\nmakes it easier to develop with others\nmakes it easier to test code"
+    "text": "Why?\n\nA new way to thinking about apps\nModularize code into smaller apps\nmakes it easier to develop with others\nmakes it easier to test code"
   },
   {
     "objectID": "modules/slides.html#use-shiny-modules-if",
     "href": "modules/slides.html#use-shiny-modules-if",
     "title": "Part 3: Shiny Modules",
     "section": "Use Shiny Modules if:",
-    "text": "Use Shiny Modules if:\n\n\nYou want to reuse your code, especially in the same app\nYou are tired of thinking up unique ids for all the elements in your app (namespacing)\nYou need to break up a monolithic shiny application into pieces\n\nmultiple Shiny developers"
+    "text": "Use Shiny Modules if:\n\nYou want to reuse your code, especially in the same app\nYou are tired of thinking up unique ids for all the elements in your app (namespacing)\nYou need to break up a monolithic shiny application into pieces\n\nmultiple Shiny developers"
   },
   {
     "objectID": "modules/slides.html#maybe-not",
@@ -291,7 +354,7 @@
     "href": "modules/slides.html#motivating-example",
     "title": "Part 3: Shiny Modules",
     "section": "Motivating Example",
-    "text": "Motivating Example\n\n\nAn ui that lets you pass in a dataset\nLets you select columns from that dataset\nWant multiple plots in the same app"
+    "text": "Motivating Example\n\nAn ui that lets you pass in a dataset\nLets you select columns from that dataset\nWant multiple plots in the same app"
   },
   {
     "objectID": "modules/slides.html#using-shiny-modules",
@@ -389,7 +452,7 @@
     "href": "modules/slides.html#module-design-1",
     "title": "Part 3: Shiny Modules",
     "section": "Module Design",
-    "text": "Module Design\n\n\nCareful design\n\n\nWhat does the module do?\nWhat is it trying to accomplish?\nWhat is the module’s name?\n\n\n\nInputs and Return Values\n\n\nStatic or Reactive Inputs?\nComplexity of return values\nWhich outputs serve as inputs for other modules?\n\n\n\n\nEric Nantz: Effective Use of Shiny modules in App development :::"
+    "text": "Module Design\n\n\nCareful design\n\nWhat does the module do?\nWhat is it trying to accomplish?\nWhat is the module’s name?\n\n\nInputs and Return Values\n\nStatic or Reactive Inputs?\nComplexity of return values\nWhich outputs serve as inputs for other modules?\n\n\nEric Nantz: Effective Use of Shiny modules in App development :::"
   },
   {
     "objectID": "modules/slides.html#communicating-between-modules",
@@ -404,6 +467,41 @@
     "title": "Part 3: Shiny Modules",
     "section": "scatterplot_mod_server",
     "text": "scatterplot_mod_server\n\nscatterplot_mod_server &lt;- function(input, \n                                   output, \n                                   session, \n                                   dataset, \n                                   plot1vars, \n                                   plot2vars) {\n  \n  plot1_obj &lt;- reactive({\n    p &lt;- scatter_sales(dataset, xvar = plot1vars$xvar(), yvar = plot1vars$yvar())\n    return(p)\n  })\n  \n  plot2_obj &lt;- reactive({\n    p &lt;- scatter_sales(dataset, xvar = plot2vars$xvar(), yvar = plot2vars$yvar())\n    return(p)\n  })\n  \n  output$plot1 &lt;- renderPlot({\n    plot1_obj()\n  })"
+  },
+  {
+    "objectID": "modules/slides.html#testing-modules",
+    "href": "modules/slides.html#testing-modules",
+    "title": "Part 3: Shiny Modules",
+    "section": "Testing Modules",
+    "text": "Testing Modules\n\nMastering Shiny: Testing\nPut your code in a package"
+  },
+  {
+    "objectID": "modules/slides.html#starting-up-testthat",
+    "href": "modules/slides.html#starting-up-testthat",
+    "title": "Part 3: Shiny Modules",
+    "section": "Starting up testthat",
+    "text": "Starting up testthat\n\nusethis::use_testthat()\nusethis::use_test(\"\")"
+  },
+  {
+    "objectID": "modules/slides.html#testserver",
+    "href": "modules/slides.html#testserver",
+    "title": "Part 3: Shiny Modules",
+    "section": "testServer()",
+    "text": "testServer()\n\nis your maid"
+  },
+  {
+    "objectID": "modules/slides.html#testing-expectations",
+    "href": "modules/slides.html#testing-expectations",
+    "title": "Part 3: Shiny Modules",
+    "section": "Testing Expectations",
+    "text": "Testing Expectations\n\nexpect_error()\nexpect_equal()\nexpect_snapshot()"
+  },
+  {
+    "objectID": "modules/slides.html#server-module-testing",
+    "href": "modules/slides.html#server-module-testing",
+    "title": "Part 3: Shiny Modules",
+    "section": "Server Module Testing",
+    "text": "Server Module Testing\nSupply your module with an input object:"
   },
   {
     "objectID": "modules/slides.html#go-further",
