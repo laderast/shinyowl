@@ -32,7 +32,7 @@
     "href": "reactives/index.html",
     "title": "Exploring Reactivity",
     "section": "",
-    "text": "Slides\n  Download PDF File\n   \n    Unable to display PDF file. Download instead.\n  \n  \n\nExercise 1\nCompare the two apps with a partner. Look at the reactive graph. Are they any different?\nrunApp(\"reactives/app_reactive.R\")\nrunApp(\"reactives/app_isolate.R\")\n\n\nExercise 2\nCompare the two apps with a partner. Look at the reactive graph. Are they any different?\nrunApp(\"reactives/app_eventReactive.R\")\nrunApp(\"reactives/app_observeEvent.R\")\n\n\nExercise 3\nTry and understand this app using {reactlog}.\nrunApp(\"reactives/app_ExtendedTaskSingle.R\")"
+    "text": "Slides\n\n\n\nExercise 1\nCompare the two apps with a partner. Look at the reactive graph. Are they any different?\nrunApp(\"reactives/app_reactive.R\")\nrunApp(\"reactives/app_isolate.R\")\n\n\nExercise 2\nCompare the two apps with a partner. Look at the reactive graph. Are they any different?\nrunApp(\"reactives/app_eventReactive.R\")\nrunApp(\"reactives/app_observeEvent.R\")\n\n\nExercise 3\nTry and understand this app using {reactlog}.\nrunApp(\"reactives/app_ExtendedTaskSingle.R\")"
   },
   {
     "objectID": "layouts/slides.html#learning-objectives",
