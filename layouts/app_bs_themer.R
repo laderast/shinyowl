@@ -2,29 +2,34 @@ library(ggplot2)
 library(palmerpenguins)
 library(bslib)
 
-choices <- c("species", "island") 
-theme_shiny <- bs_theme(preset = "darkly")
-thematic::thematic_shiny()
+choices <- c("species", "island")
 
-theme_shiny <- bs_theme_update(theme_shiny, bg = "rgb(168, 65, 65)", font_scale = NULL, 
-                preset = "journal", fg = "rgb(0, 0, 0)")
+current_theme <- bs_theme(brand=FALSE)
 
-ui <-  page_sidebar(sidebar=
-  sidebar(selectInput("variable", "Select Variable to color by", choices)),
-  plotOutput("my_plot"), theme = theme_shiny
+ui <-  page_sidebar(
+  theme = current_theme,
+
+  sidebar= sidebar(
+    selectInput("variable", "Select Variable to color by", choices)),
+
+  plotOutput("my_plot")
 )
 
-server <- function(input, output){
+thematic::thematic_shiny()
 
-output$my_plot <- renderPlot({
-  req(input$variable)
-  
-  ggplot(penguins) +
-    aes(x=bill_length_mm, 
-        y=bill_depth_mm, 
+server <- function(input, output){
+ bs_themer()
+
+  output$my_plot <- renderPlot({
+    req(input$variable)
+
+    ggplot(penguins) +
+      aes(x=bill_length_mm,
+        y=bill_depth_mm,
         color= .data[[input$variable]] ) +
     geom_point()
 })
 }
+
 
 shinyApp(ui, server)

@@ -1,0 +1,31 @@
+---
+title: "Testing"
+---
+
+## Testing Modules
+
+- [Mastering Shiny: Testing](https://mastering-shiny.org/scaling-testing.html)
+- Put your code in a package
+
+## Starting up `testthat`
+
+- `usethis::use_testthat()`
+- `usethis::use_test("")`
+
+## `testServer()`
+
+- is your main
+
+## Testing Expectations
+
+- `expect_error()`
+- `expect_equal()`
+- `expect_snapshot()`
+
+## Server Module Testing
+
+Supply your module with an `input` object:
+
+
+
+## 

@@ -6,18 +6,20 @@ library(palmerpenguins)
 choices <- c("species", "island")
 
 ui <- page_sidebar(
+  theme= bs_theme(bootswatch="vapor"),
   sidebar = sidebar(
     selectInput("var", "Select Island", choices, selected = choices[1])
   ),
-  card(
     layout_column_wrap(
-      plotOutput("penguins"),
-      plotOutput("penguins2")
+      card(
+      plotOutput("penguins")),
+      card(
+      plotOutput("penguins2"))
     )
-  )
 )
 
 server <- function(input, output) {
+  bs_themer()
   output$penguins <- renderPlot({
     ggplot(penguins, aes(
       x = bill_depth_mm,
@@ -36,5 +38,7 @@ server <- function(input, output) {
       geom_point()
   })
 }
+
+thematic::thematic_shiny()
 
 shinyApp(ui, server)

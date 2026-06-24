@@ -1,14 +1,14 @@
 ---
 title: "Part 1: UI Layout and Customizing"
+resources: "../owl-logo.png"
 format: 
   revealjs:
     echo: true
-#    theme: [default, ../slides.scss] # moon= teal bg  |  dark
     scrollable: true
     incremental: true
     slide-number: c/t # c/t | c | h/v | h.v
     code-line-numbers: true
-    footer: "https;//bitly/shinyowl/layouts/"
+    footer: "https://bit.ly/shinyowl/layouts/"
 ---
 
 ## Learning Objectives
@@ -17,7 +17,9 @@ By the end of this session, you should be able to:
 
 - **Layout** your shiny app using `{bslib}`
 - **Style** your shiny app using `bslib::bs_themer()`
-- **Style** your shiny app using `{thematic}`
+- **Style** your shiny app plots using `{thematic}`
+- **Create** a `brand.yml` that works with shiny apps
+- **Utilize** `rintrojs`` to give help for your shiny app
 
 ## What are Shiny UIs?
 
@@ -58,15 +60,13 @@ selectInput(
 :::
 ::::
 
-
-
 # Layout Your Shiny App with `{bslib}`
 
 ## What is `{bslib}`?
 
 - Short for **B**oot**s**trap**Lib**rary
 - Code for layout as dashboards
-- Allows for applying theming
+- Allows for applying theming / `brand.yml`
 
 ```{r}
 library(bslib)
@@ -139,19 +139,21 @@ ui <- page_sidebar(
 
 ```{r}
 #| eval: false
+
+choices <- c("sex", "island", "species")
 ui <- page_sidebar(
   sidebar = sidebar(
     selectInput("var", "Select Island", 
                 choices, 
                 selected = choices[1])
   ),
-  card(
     layout_column_wrap(
-      plotOutput("penguins"),
-      plotOutput("penguins2")
+      card(plotOutput("penguins")),
+      card(plotOutput("penguins2"))
     )
-  )
 )
+
+ui
 ```
 
 - `runApp("layouts/app_layout_column.R")`
@@ -328,33 +330,168 @@ ui <- fluidPage(
 
 # The good news: you don't have to learn CSS
 
+## Built in Bootstrap Themes
+
+
 ## Style your App with `{bslib}` and `{thematic}`
 
-- `bslib::bs_themer()` 
-- `bslib::run_with_themer()`
-- `thematic::thematic_theme()`
+- put `bslib::bs_themer()` as an argument to `bslib::ui_*()` functions
+- add `thematic::thematic_theme()` to the app code (before `runApp()`)
+- use `run_with_themer()` on an app to style it
+
+## Example:
+
+```{r}
+#| eval: false
+#| code-line-numbers: "1-2|7|"
+choices <- c("species", "island") 
+theme_shiny <- bs_theme(brand=TRUE)
+
+ui <-  page_sidebar(
+  theme=theme_shiny,
+  sidebar=sidebar(
+  selectInput("variable", "Select Variable to color by", choices)),
+  plotOutput("my_plot"), 
+)
+
+thematic::thematic_shiny()
+```
 
 
 ## Exercise
 
-Try running the following code below and change the `bg` and `fg` variables, as well as `primary` and maybe even the font. Cut and paste your `bs_theme_update()` code into the Slack to share your creation.
+Try running the following code below and change the `background` and `foreground` variables, as well as `primary` and maybe even the font. Cut and paste your `bs_theme_update()` code into the Slack to share your creation.
 
 ```r
 library(bslib)
-run_with_themer("app_bs_themer.R")
+run_with_themer("layouts/app_bs_themer.R")
 ```
 
 ```{r}
 countdown::countdown(minutes = 5)
 ```
 
-## Getting `bs_themer()` to work with Shiny Dashboards
+## Full List of Bootstrap Options
 
-```r
-runApp("layouts/_quarto_dashboard_bslib.qmd")
+- [Bootstrap Variables](https://rstudio.github.io/bslib/articles/bs5-variables/index.html)
+
+# Be on brand with `brand.yml`
+
+## What is `brand.yml`?
+
+- YAML file that has your brand defaults
+  - usually `_brand.yml`
+- When your org has branded colors, logos, and fonts
+- Top level way to specify:
+  - Colors
+  - Fonts
+  - Logos
+- Works well with other styling
+
+
+## `brand.yml` compatibility
+
+- **Shiny layouts (including `bslib`)**
+- **`thematic` plot styling**
+- Quarto Dashboards
+- PDF (via typst)
+- HTML outputs (`revealjs`)
+
+## `brand.yml` example
+
+```{yml}
+#| code-line-numbers: "1-4|5-14|15-19|21-27"
+logo:                          #set logo
+  small: owl-logo.png
+  medium: owl-logo.png
+  large: owl-logo.png
+
+color:
+  palette:                     #set color values (for elements)
+    black: "#1A1A1A"
+    white: "#F7F7F7"
+    light-yellow: "#ECE58B"
+    grey: "#908D90"
+    pink: "#FFeD8F"
+    bg: "#413041"
+    fg: "#EEE8D5"
+  foreground: light-yellow    #set colors for elements
+  background: bg
+  primary: grey
+  danger: pink
+  dark: "#413041"
+
+typography:                  #set fonts
+  fonts:
+    - family: Roboto
+      source: google
+  base: Roboto
+  headings: Roboto
+  monospace: Courier
 ```
 
-# Boosting User Experience (UX)
+
+## Using `_brand.yml` with `bslib`
+
+```{r}
+#| eval: false
+#| code-line-numbers: "1|4"
+current_theme <- bs_theme(brand=TRUE)        #enable brand.yml
+
+ui <-  page_sidebar(
+  theme = current_theme,                     #use theme
+
+  sidebar= sidebar(
+    selectInput("variable", "Select Variable to color by", choices)),
+
+  plotOutput("my_plot")
+)
+```
+
+## Order of Priorities
+::::{.columns}
+:::{.column}
+```{mermaid}
+%%| echo: false
+graph TD
+  A["brand.yml"] --> B["bs_theme()"] 
+  B --> C["custom.scss"]
+  B --> D["thematic"]
+```
+:::
+:::{.column}
+- `brand.yml` takes precedence
+- Can override styles with `bs_theme()`
+- Themes will be *auto* populated from `brand.yml` into `bslib()` layouts and plots using `thematic()`
+- Customize for specific classes with `.scss` file
+:::
+::::
+
+## Exercise
+
+- In your project, look at the `_brand.yml` file and try uncommenting the various lines, especially `foreground` and `background` 
+- Reload `app_bs_themer.R` and see changes.
+- Try running `run_with_themer()` for the app and apply the themes again
+- How does the `_brand.yml` affects the themes?
+
+```r
+library(bslib)
+run_with_themer("layouts/app_bs_themer.R")
+```
+
+```{r}
+countdown::countdown(minutes = 5)
+```
+
+
+## Overriding `brand.yml`
+
+- May want to add more styling to specific elements
+- Can add a `.scss` file. 
+- [Bootstrap Variables](https://rstudio.github.io/bslib/articles/bs5-variables/index.html)
+
+
+# Improving User Experience (UX)
 
 ## Accessibility
 
@@ -366,23 +503,33 @@ Prioritizing accessibility leads to better UX!
 * Metadata for HTML tag attributes 
 :::
 
-## Guides with [`{cicerone}`](https://cicerone.john-coene.com/index.html)
+## `{rintrojs}`
 
-> A convienent API to create guided tours of Shiny applications using `driver.js`
+- I used to show `{cicerone}` - but that project is now depracated
+- `{rintrojs}` - walk through UI elements
+    - each UI elemnt needs to be wrapped in `introBox()`
+    - add `data.step` and `data.intro` to each UI element.
 
-![](https://cicerone.john-coene.com/img/home-cicerone.gif)
+## Example
 
+```{r}
+#| eval: false
+#| code-line-numbers: "2|4,10|7|8-9"
+  tabPanel("Tree Explorer",
+           rintrojs::introjsUI(),             #initialize rintrojs
+           actionButton("help", "Help", icon = icon("circle-question")),
+           introBox(                           #Wrapper for UI element
+           selectInput("covariates", "Click Box to Add Covariates", 
+                       choices = covariateNames, multiple=TRUE),
+           data.step = 1,                      #Step Number
+           data.intro = "<p>Welcome to the Palmer Penguin dataset. We're going to try to predict the Species of Penguin (Adelie, Chinstrap, Gentoo) using a conditional inference decision tree using the {party} package.
+           Click the selector box to start adding a feature to the model."
+            ),                                 #Wrapper for UI element
 
-## The `{cicerone}` Workflow
+```
 
-::: {.nonincremental}
-1. Note the input IDs of elements for guide
-2. Use the `Cicerone` R6 class and `step()` methods to define steps
-3. Import dependencies by declaring `use_cicerone()` in app UI
-4. Define triggers to start guide in app server
-:::
-
-## 
+- Try the example at <https://tladeras.shinyapps.io/penguin_party/>
+- Code is here: <https://github.com/laderast/partyExplorer>
 
 ## Resources
 

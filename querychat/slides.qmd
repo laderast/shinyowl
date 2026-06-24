@@ -1,0 +1,172 @@
+---
+title: "querychat"
+institute: "Fred Hutch Cancer Center"
+brand: true
+execute: 
+  echo: true
+format: 
+  revealjs:
+    incremental: false
+---
+
+## {querychat}
+
+- Embed a natural language interface into your shinyapp for filtering
+- Add context for LLM to understand your data
+- Translates queries to SQL
+- **Does not share data with LLM providers**
+
+<https://posit-dev.github.io/querychat/r/>
+
+## Why Should You Care?
+
+- Oftentimes, we can't always anticipate queries
+- Lets us bridge the gap
+- Gives us a reactive data frame that we can use elsewhere in our app
+
+# Demo
+
+## Setup: Add your API key to the .Renviron file
+
+```{r}
+#| eval: false
+usethis::edit_r_environ()
+```
+
+```bash
+# Uncomment the appropriate line and fill in the API key below
+# ANTHROPIC_API_KEY=""
+# OPENAI_API_KEY=""
+```
+
+## Select your model
+
+Use `ellmer::models_anthropic()` or `ellmer::models_openai()` to find a model to use
+
+```{r}
+ellmer::models_anthropic()
+```
+
+## Plug your model it into your app:
+
+```{r}
+#| eval: false
+library(palmerpenguins)
+library(querychat)
+data(penguins)
+my_data <- penguins
+client <- ellmer::chat_anthropic(model="claude-sonnet-4-5")
+qc <- querychat(data_source = penguins, client=client)
+qc$app()
+```
+
+
+## Adding Context
+
+- Create a `data_description.md` file in your directory (see `querychat/app_data_description/data_desscription.md)
+
+```{r}
+#| eval: false
+client <- ellmer::chat_anthropic(model="claude-sonnet-4-5")
+qc <- querychat(
+    data_source = penguins, 
+    client=client,
+    data_description = "data_description.md")
+qc$app()
+```
+
+## Adding Context
+
+
+
+## Add a Greeting
+
+```{r}
+#| eval: false
+client <- ellmer::chat_anthropic(model="claude-sonnet-4-5")
+qc <- querychat(
+    data_source = penguins, 
+    client=client,
+    data_description = "data_description.md",
+    greeting = "Welcome to exploring the world of penguins!")
+qc$app()
+```
+
+## Tools: Giving people capabilities
+
+```{r}
+#| eval: false
+client <- ellmer::chat_anthropic(model="claude-sonnet-4-5")
+qc <- querychat(
+    data_source = penguins, 
+    client=client,
+    data_description = "data_description.md",
+    greeting = "Welcome to exploring the world of penguins!",
+    tools=c("query", "filter"))
+qc$app()
+```
+
+- [Tools](https://posit-dev.github.io/querychat/r/articles/tools.html)
+
+
+## Adding visualization to the chat
+
+- Requires the `ggsql` package
+- Modify the `tool` argument to include `visualize`:
+
+```{r}
+#| eval: false
+library(palmerpenguins)
+library(querychat)
+data(penguins)
+my_data <- penguins
+client <- ellmer::chat_anthropic(model="claude-sonnet-4-5")
+qc <- querychat(
+    data_source = penguins, 
+    client=client,
+    data_description = "data_description.md",
+    greeting = "Welcome to exploring the world of penguins!",
+    tools=c("query", "filter", "visualize"))
+qc$app()
+```
+
+
+# How do we integrate it into dashboards?
+
+## Hooking up into visualizations
+
+The QueryChat object has a few methods that act as reactives that you can use to plug in to visualizations:
+
+```r
+# put this in the server function to access the reactive
+qc_vals <- qc$server()
+```
+
+Then you can add this to your code.
+
+- `qc_vals$df()` - the actual filtered data from QueryChat
+- `qc_vals$sql()` - the SQL string
+- `qc_vals$title()` - The title of the filter
+
+## Example
+
+```{r}
+#| eval: false
+# in server function
+  output$avg_mass <- renderText({
+    avg <- mean(qc_vals$df()$body_mass_g, na.rm = TRUE)
+    paste0(round(avg, 0), "g")
+  })
+
+# in ui function
+   value_box(
+      title = "Avg Body Mass",
+      value = textOutput("avg_mass"),
+      showcase = bs_icon("speedometer"),
+      theme = "info"
+    )
+```
+
+```r
+runApp("querychat/app_big_example")
+```

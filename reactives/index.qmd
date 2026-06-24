@@ -4,7 +4,7 @@ title: "Exploring Reactivity"
 
 # Slides
 
-{{< pdf file="reactivity.pdf"  height="500px" download-link="true">}}
+<iframe src="https://docs.google.com/presentation/d/e/2PACX-1vQGaaOpHX4RN1uLfPO7mRWM_XVMuIVb_l_aS_b10Y6AmWSRRPSkDD655NiVQXJdQfyOyAN90FnrTx_Y/pubembed?start=false&loop=false&delayms=60000" frameborder="0" width="960" height="569" allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true"></iframe>
 
 ### Exercise 1
 

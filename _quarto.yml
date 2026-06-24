@@ -6,6 +6,7 @@ project:
     - "layouts/"
     - "reactives/"
     - "modules/"
+    - "querychat/"
   output-dir: docs
   post-render:
     - "rm docs/reactives/reactivity.pdf"
@@ -23,6 +24,8 @@ website:
         text: Reactivity
       - href: modules/index.qmd
         text: Modules
+      - href: querychat/index.qmd
+        text: querychat
       - href: https://github.com/laderast/shinyowl/
         icon: github
 

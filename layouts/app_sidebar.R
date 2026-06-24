@@ -4,9 +4,10 @@ library(bslib)
 library(bsicons)
 library(ggplot2)
 
-choices <- c("species", "island")
+choices <- c("species", "island", "sex")
 
 ui <- page_sidebar(
+  theme = bs_theme(),
   sidebar = sidebar(
     selectInput("var", "Select Island",
                 choices,
@@ -29,5 +30,6 @@ server <- function(input, output) {
       geom_point()
   })
 }
+thematic::thematic_shiny()
 
 shinyApp(ui, server)

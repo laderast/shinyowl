@@ -6,8 +6,6 @@ format: html
 
 # <https://bit.ly/shinyowl>
 
-![](bit.ly_45BDX9k.png){width=400}
-
 # Learning Objectives
 
 This workshop aims to get you over the hill to faster, better looking, and dynamic Shiny Apps.
@@ -37,7 +35,7 @@ Be gentle with yourself and others if there is confusion. We'll work through it.
 |Break|10:55|11:00|
 |[Modules/Wrap-up](modules/)|11:00|12:00|
 
-# Clone this project to your machine
+## Clone this project to your machine (optional)
 
 ```{r}
 #| eval: false
@@ -55,7 +53,7 @@ Introduce yourself to your neighbors so you can learn together. Don't suffer in 
 # I need help!
 
 - Green sticky note: Don't bother me
-- Pink sticky note: Please help!
+- Red sticky note: Please help!
 
 # Reminders
 
