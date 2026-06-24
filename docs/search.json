@@ -130,7 +130,7 @@
     "href": "layouts/slides.html#exercise",
     "title": "Part 1: UI Layout and Customizing",
     "section": "Exercise",
-    "text": "Exercise\nModify the value_box code in layouts/app_bslib_box_layout.R. Try out the following:\n\nDifferent colors: check out R-Gallery’s Color Picker\nDifferent icons: check out Bootstrap Icons\nDifferent content\n\nIf you like, paste it into the Cascadia-R slack channel.\n\ncountdown::countdown(minutes = 5)\n\n\n−+\n05:00"
+    "text": "Exercise\nModify the value_box code in layouts/app_bslib_box_layout.R. Try out the following:\n\nDifferent colors: check out R-Gallery’s Color Picker\nDifferent icons: check out Bootstrap Icons\nDifferent content\n\nIf you like, paste it into the Cascadia-R slack channel.\n\ncountdown::countdown(minutes = 5)"
   },
   {
     "objectID": "layouts/slides.html#navbars",
@@ -186,7 +186,7 @@
     "href": "layouts/slides.html#exercise-1",
     "title": "Part 1: UI Layout and Customizing",
     "section": "Exercise",
-    "text": "Exercise\nTry running the following code below and change the background and foreground variables, as well as primary and maybe even the font. Cut and paste your bs_theme_update() code into the Slack to share your creation.\nlibrary(bslib)\nrun_with_themer(\"layouts/app_bs_themer.R\")\n\ncountdown::countdown(minutes = 5)\n\n\n−+\n05:00"
+    "text": "Exercise\nTry running the following code below and change the background and foreground variables, as well as primary and maybe even the font. Cut and paste your bs_theme_update() code into the Slack to share your creation.\nlibrary(bslib)\nrun_with_themer(\"layouts/app_bs_themer.R\")\n\ncountdown::countdown(minutes = 5)"
   },
   {
     "objectID": "layouts/slides.html#full-list-of-bootstrap-options",
@@ -235,7 +235,7 @@
     "href": "layouts/slides.html#exercise-2",
     "title": "Part 1: UI Layout and Customizing",
     "section": "Exercise",
-    "text": "Exercise\n\nIn your project, look at the _brand.yml file and try uncommenting the various lines, especially foreground and background\nReload app_bs_themer.R and see changes.\nTry running run_with_themer() for the app and apply the themes again\nHow does the _brand.yml affects the themes?\n\nlibrary(bslib)\nrun_with_themer(\"layouts/app_bs_themer.R\")\n\ncountdown::countdown(minutes = 5)\n\n\n−+\n05:00"
+    "text": "Exercise\n\nIn your project, look at the _brand.yml file and try uncommenting the various lines, especially foreground and background\nReload app_bs_themer.R and see changes.\nTry running run_with_themer() for the app and apply the themes again\nHow does the _brand.yml affects the themes?\n\nlibrary(bslib)\nrun_with_themer(\"layouts/app_bs_themer.R\")\n\ncountdown::countdown(minutes = 5)"
   },
   {
     "objectID": "layouts/slides.html#overriding-brand.yml",
@@ -382,7 +382,7 @@
     "href": "modules/slides.html#exercise-try-it-out",
     "title": "Part 3: Shiny Modules",
     "section": "Exercise: Try it out",
-    "text": "Exercise: Try it out\nrunApp(\"modules/module_demo_01/\")\n\ncountdown::countdown(minutes = 3)\n\n\n−+\n03:00"
+    "text": "Exercise: Try it out\nrunApp(\"modules/module_demo_01/\")\n\ncountdown::countdown(minutes = 3)"
   },
   {
     "objectID": "modules/slides.html#reusing-code",
@@ -452,7 +452,7 @@
     "href": "modules/slides.html#exercise-use-a-shiny-module",
     "title": "Part 3: Shiny Modules",
     "section": "Exercise: Use a Shiny Module",
-    "text": "Exercise: Use a Shiny Module\n\nIn RStudio, open up \"modules/module_demo_02/app.R\"\nWire in a new dataset to one of the plots\nIf you’re feeling adventurous, add a new plot\n\n\ncountdown::countdown(minutes = 5)\n\n\n−+\n05:00"
+    "text": "Exercise: Use a Shiny Module\n\nIn RStudio, open up \"modules/module_demo_02/app.R\"\nWire in a new dataset to one of the plots\nIf you’re feeling adventurous, add a new plot\n\n\ncountdown::countdown(minutes = 5)"
   },
   {
     "objectID": "modules/slides.html#module-design-1",
