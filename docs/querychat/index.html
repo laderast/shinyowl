@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Intermediate shiny: drawing the owl – shinyowl</title>
+<title>querychat – shinyowl</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -23,66 +23,31 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-/* CSS for syntax highlighting */
-html { -webkit-text-size-adjust: 100%; }
-pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
-pre > code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-div.sourceCode { margin: 1em 0; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
-}
-@media print {
-pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
-}
-pre.numberSource code
-  { counter-reset: source-line 0; }
-pre.numberSource code > span
-  { position: relative; left: -4em; counter-increment: source-line; }
-pre.numberSource code > span > a:first-child::before
-  { content: counter(source-line);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; display: inline-block;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-  }
-pre.numberSource { margin-left: 3em;  padding-left: 4px; }
-div.sourceCode
-  {   }
-@media screen {
-pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
-}
 </style>
 
 
-<script src="site_libs/quarto-nav/quarto-nav.js"></script>
-<script src="site_libs/quarto-nav/headroom.min.js"></script>
-<script src="site_libs/clipboard/clipboard.min.js"></script>
-<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
-<script src="site_libs/quarto-search/fuse.min.js"></script>
-<script src="site_libs/quarto-search/quarto-search.js"></script>
-<meta name="quarto:offset" content="./">
-<link href="./owl-logo.png" rel="icon" type="image/png">
-<script src="site_libs/quarto-html/quarto.js" type="module"></script>
-<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
-<script src="site_libs/quarto-html/popper.min.js"></script>
-<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
-<script src="site_libs/quarto-html/anchor.min.js"></script>
-<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-315356f726042110fc727fd77c9bd4a3.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark-b3f3fd3b70cf5164c1b3caa5a92a50cc.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-315356f726042110fc727fd77c9bd4a3.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
-<script src="site_libs/bootstrap/bootstrap.min.js"></script>
-<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-e015161faea75163b563f1e76d961cf3.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="dark">
-<link href="site_libs/bootstrap/bootstrap-dark-e015161faea75163b563f1e76d961cf3.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
-<link href="site_libs/bootstrap/bootstrap-e015161faea75163b563f1e76d961cf3.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="dark">
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<link href="../owl-logo.png" rel="icon" type="image/png">
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-315356f726042110fc727fd77c9bd4a3.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-dark-b3f3fd3b70cf5164c1b3caa5a92a50cc.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-315356f726042110fc727fd77c9bd4a3.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-e015161faea75163b563f1e76d961cf3.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="dark">
+<link href="../site_libs/bootstrap/bootstrap-dark-e015161faea75163b563f1e76d961cf3.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../site_libs/bootstrap/bootstrap-e015161faea75163b563f1e76d961cf3.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="dark">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -110,6 +75,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     "search-label": "Search"
   }
 }</script>
+ 
+  <style>
+  .slide-deck {
+      border: 3px solid #dee2e6;
+      width: 100%;
+  }
+  </style>
+  
 
 
 </head>
@@ -121,11 +94,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
-    <a href="./index.html" class="navbar-brand navbar-brand-logo">
-    <img src="./owl-logo.png" alt="" class="navbar-logo light-content">
-    <img src="./owl-logo.png" alt="" class="navbar-logo dark-content">
+    <a href="../index.html" class="navbar-brand navbar-brand-logo">
+    <img src="../owl-logo.png" alt="" class="navbar-logo light-content">
+    <img src="../owl-logo.png" alt="" class="navbar-logo dark-content">
     </a>
-    <a class="navbar-brand" href="./index.html">
+    <a class="navbar-brand" href="../index.html">
     <span class="navbar-title">shinyowl</span>
     </a>
   </div>
@@ -136,23 +109,23 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link active" href="./index.html" aria-current="page"> 
+    <a class="nav-link" href="../index.html"> 
 <span class="menu-text">Home</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="./layouts/index.html"> 
+    <a class="nav-link" href="../layouts/index.html"> 
 <span class="menu-text">Layouts</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="./reactives/index.html"> 
+    <a class="nav-link" href="../reactives/index.html"> 
 <span class="menu-text">Reactivity</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="./modules/index.html"> 
+    <a class="nav-link" href="../modules/index.html"> 
 <span class="menu-text">Modules</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="./querychat/index.html"> 
+    <a class="nav-link active" href="../querychat/index.html" aria-current="page"> 
 <span class="menu-text">querychat</span></a>
   </li>  
   <li class="nav-item compact">
@@ -176,18 +149,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#httpsbit.lyshinyowl" id="toc-httpsbit.lyshinyowl" class="nav-link active" data-scroll-target="#httpsbit.lyshinyowl">https://bit.ly/shinyowl</a></li>
-  <li><a href="#learning-objectives" id="toc-learning-objectives" class="nav-link" data-scroll-target="#learning-objectives">Learning Objectives</a>
-  <ul class="collapse">
-  <li><a href="#expectations" id="toc-expectations" class="nav-link" data-scroll-target="#expectations">Expectations</a></li>
-  <li><a href="#agenda-roughly" id="toc-agenda-roughly" class="nav-link" data-scroll-target="#agenda-roughly">Agenda (roughly)</a></li>
-  <li><a href="#clone-this-project-to-your-machine-optional" id="toc-clone-this-project-to-your-machine-optional" class="nav-link" data-scroll-target="#clone-this-project-to-your-machine-optional">Clone this project to your machine (optional)</a></li>
-  </ul></li>
-  <li><a href="#its-dangerous-to-learn-alone" id="toc-its-dangerous-to-learn-alone" class="nav-link" data-scroll-target="#its-dangerous-to-learn-alone">It’s dangerous to learn alone!</a></li>
-  <li><a href="#i-need-help" id="toc-i-need-help" class="nav-link" data-scroll-target="#i-need-help">I need help!</a></li>
-  <li><a href="#reminders" id="toc-reminders" class="nav-link" data-scroll-target="#reminders">Reminders</a></li>
-  <li><a href="#acknowledgements" id="toc-acknowledgements" class="nav-link" data-scroll-target="#acknowledgements">Acknowledgements</a></li>
-  <li><a href="#keep-in-touch" id="toc-keep-in-touch" class="nav-link" data-scroll-target="#keep-in-touch">Keep in Touch</a></li>
+  <li><a href="#slides" id="toc-slides" class="nav-link active" data-scroll-target="#slides">Slides</a></li>
   </ul>
 </nav>
     </div>
@@ -196,7 +158,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Intermediate shiny: drawing the owl</h1>
+<h1 class="title">querychat</h1>
 </div>
 
 
@@ -213,113 +175,18 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<section id="httpsbit.lyshinyowl" class="level1">
-<h1><a href="https://bit.ly/shinyowl" class="uri">https://bit.ly/shinyowl</a></h1>
-</section>
-<section id="learning-objectives" class="level1">
-<h1>Learning Objectives</h1>
-<p>This workshop aims to get you over the hill to faster, better looking, and dynamic Shiny Apps.</p>
-<ol type="1">
-<li><strong>Customize</strong> dashboards with <code>{bslib}</code> and <code>{thematic}</code></li>
-<li><strong>Explain</strong> fundamentals of Reactive Programming</li>
-<li><strong>Utilize</strong> Shiny modules in your projects</li>
-</ol>
-<p>In other words, we’re learning how to Draw the Owl:</p>
-<p><img src="owl.png" class="img-fluid"></p>
-<section id="expectations" class="level2">
-<h2 class="anchored" data-anchor-id="expectations">Expectations</h2>
-<p>I’ve tried to make this easier to understand. However, there are some Shiny concepts that are just inherently difficult to understand. So be easy on yourself (and me).</p>
-<p>Be gentle with yourself and others if there is confusion. We’ll work through it.</p>
-</section>
-<section id="agenda-roughly" class="level2">
-<h2 class="anchored" data-anchor-id="agenda-roughly">Agenda (roughly)</h2>
-<table class="caption-top table">
-<thead>
-<tr class="header">
-<th>Section</th>
-<th>Begin</th>
-<th>End</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>Welcome/Get Started</td>
-<td>9:00</td>
-<td>9:10</td>
-</tr>
-<tr class="even">
-<td><a href="layouts/">Dashboards</a></td>
-<td>9:10</td>
-<td>9:55</td>
-</tr>
-<tr class="odd">
-<td>Break</td>
-<td>9:55</td>
-<td>10:00</td>
-</tr>
-<tr class="even">
-<td><a href="reactives/">Reactivity</a></td>
-<td>10:00</td>
-<td>10:55</td>
-</tr>
-<tr class="odd">
-<td>Break</td>
-<td>10:55</td>
-<td>11:00</td>
-</tr>
-<tr class="even">
-<td><a href="modules/">Modules/Wrap-up</a></td>
-<td>11:00</td>
-<td>12:00</td>
-</tr>
-</tbody>
-</table>
-</section>
-<section id="clone-this-project-to-your-machine-optional" class="level2">
-<h2 class="anchored" data-anchor-id="clone-this-project-to-your-machine-optional">Clone this project to your machine (optional)</h2>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"usethis"</span>)</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="co"># download repository</span></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>usethis<span class="sc">::</span><span class="fu">use_course</span>(<span class="st">"laderast/shinyowl"</span>)</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co"># install needed packages</span></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>renv<span class="sc">::</span><span class="fu">restore</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-</section>
-</section>
-<section id="its-dangerous-to-learn-alone" class="level1">
-<h1>It’s dangerous to learn alone!</h1>
-<p>Introduce yourself to your neighbors so you can learn together. Don’t suffer in silence.</p>
-</section>
-<section id="i-need-help" class="level1">
-<h1>I need help!</h1>
 <ul>
-<li>Green sticky note: Don’t bother me</li>
-<li>Red sticky note: Please help!</li>
+<li>Embed a natural language interface into your shinyapp for filtering</li>
+<li>Add context for LLM to understand your data</li>
+<li>Translates queries to SQL</li>
 </ul>
-</section>
-<section id="reminders" class="level1">
-<h1>Reminders</h1>
-<p>This workshop adheres to the <a href="https://cascadiarconf.com/policies/">Cascadia-R Code of Conduct</a>. Please be respectful of others and how they learn.</p>
-</section>
-<section id="acknowledgements" class="level1">
-<h1>Acknowledgements</h1>
-<p>I went through a lot of material and videos to get to the point where I felt okay with explaining some tough Shiny concepts, including from:</p>
-<ul>
-<li>Emily Riederer</li>
-<li>Eric Nantz</li>
-<li>Joe Cheng (of course)</li>
-<li>Winston Chang</li>
-<li>Carson Sievert</li>
-<li>Gordon Shotwell</li>
-</ul>
-<p>Thanks all of you for sharing your material and helping me learn.</p>
-</section>
-<section id="keep-in-touch" class="level1">
-<h1>Keep in Touch</h1>
-<ul>
-<li>email: tedladeras [at] gmail</li>
-<li>web: <a href="https://laderast.github.io/" class="uri">https://laderast.github.io/</a></li>
-</ul>
+<section id="slides" class="level2">
+<h2 class="anchored" data-anchor-id="slides">Slides</h2>
+    <p><a href="slides.html" target="_blank">View slides in full screen</a></p>
+       <div>
+      <iframe class="slide-deck" src="slides.html" height="500px"></iframe>
+    </div>
+  
 
 
 </section>

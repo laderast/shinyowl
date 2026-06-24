@@ -1,38 +1,262 @@
 [
   {
-    "objectID": "modules/index.html",
-    "href": "modules/index.html",
-    "title": "Part 3: Modules",
+    "objectID": "querychat/index.html",
+    "href": "querychat/index.html",
+    "title": "querychat",
     "section": "",
-    "text": "By the end of this session, you should be able to:\n\nUtilize pre-built Shiny modules in your apps\nBuild your own Shiny modules\nExplain the basics of module communication"
+    "text": "Embed a natural language interface into your shinyapp for filtering\nAdd context for LLM to understand your data\nTranslates queries to SQL"
   },
   {
-    "objectID": "modules/index.html#learning-objectives",
-    "href": "modules/index.html#learning-objectives",
-    "title": "Part 3: Modules",
-    "section": "",
-    "text": "By the end of this session, you should be able to:\n\nUtilize pre-built Shiny modules in your apps\nBuild your own Shiny modules\nExplain the basics of module communication"
-  },
-  {
-    "objectID": "modules/index.html#slides",
-    "href": "modules/index.html#slides",
-    "title": "Part 3: Modules",
+    "objectID": "querychat/index.html#slides",
+    "href": "querychat/index.html#slides",
+    "title": "querychat",
     "section": "Slides",
     "text": "Slides\n    View slides in full screen"
   },
   {
-    "objectID": "modules/index.html#exercises",
-    "href": "modules/index.html#exercises",
-    "title": "Part 3: Modules",
-    "section": "Exercises",
-    "text": "Exercises\n\nExercise 1: Try it out\nrunApp(\"modules/module_demo_01/\")\n\n\nExercise 2: Use a Shiny Module\n\nIn RStudio, open up \"modules/module_demo_02/app.R\"\nWire in a new dataset to one of the plots\nIf you’re feeling adventurous, add a new plot"
+    "objectID": "querychat/app_data_description/data_description.html",
+    "href": "querychat/app_data_description/data_description.html",
+    "title": "Health Variables",
+    "section": "",
+    "text": "NHANES and NHANESraw each include 75 variables available for the 2009-2010 and 2011-2012 sample years. NHANESraw has 20,293 observations of these variables plus four additional variables that describe that sample weighting scheme employed. NHANES contains 10,000 rows of data resampled from NHANESraw to undo these oversampling effects. NHANES can be treated, for educational purposes, as if it were a simple random sample from the American population. A list of the variables in the data set follows appears below along with variable descriptions and links to the original NHANES documentation. NHANES warning The following warning comes directly from the NHANES web site: For NHANES datasets, the use of sampling weights and sample design variables is recommended for all analyses because the sample design is a clustered design and incorporates differential probabilities of selection. If you fail to account for the sampling parameters, you may obtain biased estimates and overstate significance levels. NHANES 3 Disclamer Please note that the data sets provided in this package are derived from the NHANES database and have been adapted for educational purposes. As such, they are NOT suitable for use as a research database. For research purposes you should download original data files from the NHANES website and follow the analysis instructions given there. Further details and relevant documentation can be found on the following NHANES websites • http://www.cdc.gov/nchs/nhanes.htm, • http://wwwn.cdc.gov/nchs/nhanes/search/nhanes11_12.aspx, and • http://wwwn.cdc.gov/nchs/nhanes/search/nhanes09_10.aspx."
   },
   {
-    "objectID": "reactives/index.html",
-    "href": "reactives/index.html",
-    "title": "Exploring Reactivity",
+    "objectID": "querychat/app_data_description/data_description.html#study-variables",
+    "href": "querychat/app_data_description/data_description.html#study-variables",
+    "title": "Health Variables",
+    "section": "Study Variables",
+    "text": "Study Variables\n\nSurveyYr Which survey the participant participated in.\nID Participant identifier."
+  },
+  {
+    "objectID": "querychat/app_data_description/data_description.html#demographic-variables",
+    "href": "querychat/app_data_description/data_description.html#demographic-variables",
+    "title": "Health Variables",
+    "section": "Demographic Variables",
+    "text": "Demographic Variables\nFor more information on these demographic variables, see http://www.cdc.gov/nchs/nhanes/ nhanes2009-2010/DEMO_F.htm or http://www.cdc.gov/nchs/nhanes/nhanes2011-2012/DEMO_ G.htm. - Gender Gender (sex) of study participant coded as male or female - Age Age in years at screening of study participant. Note: Subjects 80 years or older were recorded as 80. - AgeDecade Categorical variable derived from age with levels 0-9, 10-19, . . . 70+ - AgeMonths Age in months at screening of study participant. Reported for participants aged 0 to 79 years for 2009 to 2010 data Reported for participants aged 0 to 2 years for 2011 to 2012 data. - Race1 Reported race of study participant: Mexican, Hispanic, White, Black, or Other. - Race3 Reported race of study participant, including non-Hispanic Asian category: Mexican, Hispanic, White, Black, Asian, or Other. Not availale for 2009-10. - Education Educational level of study participant Reported for participants aged 20 years or older. One of 8thGrade, 9-11thGrade, HighSchool, SomeCollege, or CollegeGrad. - MaritalStatus Marital status of study participant. Reported for participants aged 20 years or older. One of Married, Widowed, Divorced, Separated, NeverMarried, or LivePartner (living with partner). - HHIncome Total annual gross income for the household in US dollars. One of 0 - 4999, 5000 - 9,999, 10000 - 14999, 15000 - 19999, 20000 - 24,999, 25000 - 34999, 35000 - 44999, 45000 - 54999, 55000 - 64999, 65000 - 74999, 75000 - 99999, or 100000 or More. - HHIncomeMid Numerical version of HHIncome derived from the middle income in each category - Poverty A ratio of family income to poverty guidelines. Smaller numbers indicate more poverty - HomeRooms How many rooms are in home of study participant (counting kitchen but not bathroom). 13 rooms = 13 or more rooms. - HomeOwn One of Home, Rent, or Other indicating whether the home of study participant or someone in their family is owned, rented or occupied by some other arrangement."
+  },
+  {
+    "objectID": "querychat/app_data_description/data_description.html#physical-measurements",
+    "href": "querychat/app_data_description/data_description.html#physical-measurements",
+    "title": "Health Variables",
+    "section": "Physical Measurements",
+    "text": "Physical Measurements\nFor more information on body measurements, see http://www.cdc.gov/nchs/nhanes/nhanes2009-2010/ BMX_F.htm and http://www.cdc.gov/nchs/nhanes/nhanes2011-2012/BMX_G.htm. - Weight Weight in kg - Length Recumbent length in cm. Reported for participants aged 0 - 3 years. - HeadCirc Head circumference in cm. Reported for participants aged 0 years (0 - 6 months). - Height Standing height in cm. Reported for participants aged 2 years or older. - BMI Body mass index (weight/height2 in kg/m2). Reported for participants aged 2 years or older. - BMICatUnder20yrs Body mass index category. Reported for participants aged 2 to 19 years. - One of UnderWeight (BMI &lt; 5th percentile) NormWeight (BMI 5th to &lt; 85th percentile), - OverWeight (BMI 85th to &lt; 95th percentile), Obese (BMI &gt;= 95th percentile). - BMI_WHO Body mass index category. Reported for participants aged 2 years or older. One of 12.0_18.4, 18.5_24.9, 25.0_29.9, or 30.0_plus. - Pulse 60 second pulse rate - BPSysAve Combined systolic blood pressure reading, following the procedure outlined for BPXSAR. - BPDiaAve Combined diastolic blood pressure reading, following the procedure outlined for BPXDAR. - BPSys1 Systolic blood pressure in mm Hg – first reading - BPDia1 Diastolic blood pressure in mm Hg – second reading (consecutive readings) - BPSys2 Systolic blood pressure in mm Hg – second reading (consecutive readings) - BPDia2 Diastolic blood pressure in mm Hg – second reading - BPSys3 Systolic blood pressure in mm Hg third reading (consecutive readings) - BPDia3 Diastolic blood pressure in mm Hg – third reading (consecutive readings) - Testosterone Testerone total (ng/dL). Reported for participants aged 6 years or older. Not available for 2009-2010."
+  },
+  {
+    "objectID": "querychat/app_data_description/data_description.html#weighting-variables-nhanesraw-only",
+    "href": "querychat/app_data_description/data_description.html#weighting-variables-nhanesraw-only",
+    "title": "Health Variables",
+    "section": "Weighting Variables (NHANESraw only)",
+    "text": "Weighting Variables (NHANESraw only)\n\nWTINT2YR, WTMEC2YR, SDMVPSU, SDMVSTRA Sample weighting variables. For more details see one of the following. • http://www.cdc.gov/Nchs/tutorials/environmental/orientation/sample_design/ index.htm • http://www.cdc.gov/nchs/nhanes/nhanes2009-2010/DEMO_F.htm#WTINT2YR and • http://www.cdc.gov/nchs/nhanes/nhanes2011-2012/DEMO_G.htm#WTINT2YR Source These data were originally assembled by Michelle Dalrymple of Cashmere High School and Chris Wild of the University of Auckland, New Zealand for use in teaching statistics."
+  },
+  {
+    "objectID": "modules/slides.html#you-have-linkedin-to-blame",
+    "href": "modules/slides.html#you-have-linkedin-to-blame",
+    "title": "Part 3: Shiny Modules",
+    "section": "You have LinkedIn to Blame",
+    "text": "You have LinkedIn to Blame"
+  },
+  {
+    "objectID": "modules/slides.html#modules",
+    "href": "modules/slides.html#modules",
+    "title": "Part 3: Shiny Modules",
+    "section": "Modules",
+    "text": "Modules\n\n\n\n\nWhy?\nMotivating example\nHow to code"
+  },
+  {
+    "objectID": "modules/slides.html#why",
+    "href": "modules/slides.html#why",
+    "title": "Part 3: Shiny Modules",
+    "section": "Why?",
+    "text": "Why?\n\nA new way to thinking about apps\nModularize code into smaller apps\nmakes it easier to develop with others\nmakes it easier to test code"
+  },
+  {
+    "objectID": "modules/slides.html#use-shiny-modules-if",
+    "href": "modules/slides.html#use-shiny-modules-if",
+    "title": "Part 3: Shiny Modules",
+    "section": "Use Shiny Modules if:",
+    "text": "Use Shiny Modules if:\n\nYou want to reuse your code, especially in the same app\nYou are tired of thinking up unique ids for all the elements in your app (namespacing)\nYou need to break up a monolithic shiny application into pieces\n\nmultiple Shiny developers"
+  },
+  {
+    "objectID": "modules/slides.html#maybe-not",
+    "href": "modules/slides.html#maybe-not",
+    "title": "Part 3: Shiny Modules",
+    "section": "Maybe not:",
+    "text": "Maybe not:\n\nYour app is a one and done - single version\nIt doesn’t have that many controls that need to be reused"
+  },
+  {
+    "objectID": "modules/slides.html#motivating-example",
+    "href": "modules/slides.html#motivating-example",
+    "title": "Part 3: Shiny Modules",
+    "section": "Motivating Example",
+    "text": "Motivating Example\n\nAn ui that lets you pass in a dataset\nLets you select columns from that dataset\nWant multiple plots in the same app"
+  },
+  {
+    "objectID": "modules/slides.html#using-shiny-modules",
+    "href": "modules/slides.html#using-shiny-modules",
+    "title": "Part 3: Shiny Modules",
+    "section": "Using Shiny modules",
+    "text": "Using Shiny modules\n\n\nui\n\nui &lt;- fluidPage(   \n    select_hist_ui(\n      id = \"mtcars_module\", \n      var_choices = mtcars_var_choices)\n    )\n\n\nnote that select_hist_ui() is a function that takes an id argument\nuses an id called mtcars_module"
+  },
+  {
+    "objectID": "modules/slides.html#using-shiny-modules-1",
+    "href": "modules/slides.html#using-shiny-modules-1",
+    "title": "Part 3: Shiny Modules",
+    "section": "Using Shiny modules",
+    "text": "Using Shiny modules\n\n\nui\n\nui &lt;- fluidPage(   \n    select_hist_ui(\n      id = \"mtcars_module\", \n      var_choices = mtcars_var_choices)\n    )\n\n\nserver\n\nserver &lt;- function(input, output) {\n    select_hist_server(\n      id=\"mtcars_module\", \n      data=mtcars)\n}\n\n\nNote that we have a function select_hist_server()\nAlso uses the id \"mtcars_module\""
+  },
+  {
+    "objectID": "modules/slides.html#exercise-try-it-out",
+    "href": "modules/slides.html#exercise-try-it-out",
+    "title": "Part 3: Shiny Modules",
+    "section": "Exercise: Try it out",
+    "text": "Exercise: Try it out\nrunApp(\"modules/module_demo_01/\")\n\ncountdown::countdown(minutes = 3)"
+  },
+  {
+    "objectID": "modules/slides.html#reusing-code",
+    "href": "modules/slides.html#reusing-code",
+    "title": "Part 3: Shiny Modules",
+    "section": "Reusing code",
+    "text": "Reusing code\n\n\nui\n\nui &lt;- fluidPage(   \n    select_hist_ui(id = \"mtcars_module\", \n                   var_choices = mtcars_var_choices),\n    select_hist_ui(id = \"penguin_module\",\n                   var_choices = penguin_choices)\n    )\n\n\nnote we have two select_hist_ui() functions\nthe second one has the id of penguin_module"
+  },
+  {
+    "objectID": "modules/slides.html#reusing-code-1",
+    "href": "modules/slides.html#reusing-code-1",
+    "title": "Part 3: Shiny Modules",
+    "section": "Reusing code",
+    "text": "Reusing code\n\n\nui\n\nui &lt;- fluidPage(   \n    select_hist_ui(id = \"mtcars_module\", \n                   var_choices = mtcars_var_choices),\n    select_hist_ui(id = \"penguin_module\",\n                   var_choices = penguin_choices)\n    )\n\n\nserver\n\nserver &lt;- function(input, output) {\n    select_hist_server(id=\"mtcars_module\", \n                       data=mtcars)\n    select_hist_server(id=\"penguin_module\", \n                       data=penguins)\n}\n\n\nNote that we have two instances of select_hist_server()\nThe second one use the id \"penguin_module\"\nWe can have two different plots/interfaces!"
+  },
+  {
+    "objectID": "modules/slides.html#two-modules-two-datasets",
+    "href": "modules/slides.html#two-modules-two-datasets",
+    "title": "Part 3: Shiny Modules",
+    "section": "Two modules, two datasets",
+    "text": "Two modules, two datasets\n\n\n\ndataset is mtcars\n\n\n\n\ndataset is penguins"
+  },
+  {
+    "objectID": "modules/slides.html#making-your-own-modules",
+    "href": "modules/slides.html#making-your-own-modules",
+    "title": "Part 3: Shiny Modules",
+    "section": "Making Your Own Modules",
+    "text": "Making Your Own Modules\n\nui module\nserver module\ndemo app"
+  },
+  {
+    "objectID": "modules/slides.html#make-it-easy-on-yourself",
+    "href": "modules/slides.html#make-it-easy-on-yourself",
+    "title": "Part 3: Shiny Modules",
+    "section": "Make it easy on yourself",
+    "text": "Make it easy on yourself\n\nPut your code in a package (usethis::create_package())\nUse &lt;module_name&gt;_server and &lt;module_name&gt;_ui for your module names\nHave a demo app &lt;module_name&gt;_demo (makes it easier for testing)"
+  },
+  {
+    "objectID": "modules/slides.html#ui-module",
+    "href": "modules/slides.html#ui-module",
+    "title": "Part 3: Shiny Modules",
+    "section": "ui module",
+    "text": "ui module\n\nselect_hist_ui &lt;- function(id, var_choices){\n  ns &lt;- NS(id)\n  tagList(\n    selectInput(inputId = ns(\"x_var\"), \n                label=\"Select X Variable\", \n                choices=var_choices, \n                selected = var_choices[1]),\n    plotOutput(ns(\"hist_plot\"))\n  )\n}\n\n\nInitialize the namespace for id using NS() function\nNeed to refer to any controls/plots with ids wrapped in ns()\n\nsuch as ns(\"x_var\") or ns(\"hist_plot\")"
+  },
+  {
+    "objectID": "modules/slides.html#server-module",
+    "href": "modules/slides.html#server-module",
+    "title": "Part 3: Shiny Modules",
+    "section": "Server Module",
+    "text": "Server Module\n\nselect_hist_server &lt;- function(id, data) {\n  moduleServer(id, function(input, output, session) {\n\n  })\n  \n}\n\n\ndefine a function that takes an id as input\nmoduleServer() encapsulates your server code"
+  },
+  {
+    "objectID": "modules/slides.html#server-module-1",
+    "href": "modules/slides.html#server-module-1",
+    "title": "Part 3: Shiny Modules",
+    "section": "Server Module",
+    "text": "Server Module\n\nselect_hist_server &lt;- function(id, data) {\n  moduleServer(id, function(input, output, session) {\n\n    output$hist_plot &lt;- \n      renderPlot({\n        x_var &lt;- input$x_var\n        data %&gt;% ggplot(aes(x=.data[[x_var]])) +\n          geom_histogram()\n    })\n    \n  })\n  \n}\n\n\nPut your server code in moduleServer()\nbe really careful with closing curly brackets and parentheses"
+  },
+  {
+    "objectID": "modules/slides.html#write-a-demo-app-function",
+    "href": "modules/slides.html#write-a-demo-app-function",
+    "title": "Part 3: Shiny Modules",
+    "section": "Write a demo app function",
+    "text": "Write a demo app function\n\n## modules.R\nselect_hist_demo &lt;- function(data=mtcars){\n  var_choices &lt;- names(data)\n  ui &lt;- fluidPage(\n    select_hist_ui(id = \"module\", \n                   var_choices = var_choices)  \n  )\n  server &lt;- function(input,output,session){\n    select_hist_server(id=\"module\", data=data)\n  }\n  shinyApp(ui, server)\n}\n\n\nwrite an &lt;module_name&gt;_demo() function\nuseful for documentation and testing"
+  },
+  {
+    "objectID": "modules/slides.html#exercise-use-a-shiny-module",
+    "href": "modules/slides.html#exercise-use-a-shiny-module",
+    "title": "Part 3: Shiny Modules",
+    "section": "Exercise: Use a Shiny Module",
+    "text": "Exercise: Use a Shiny Module\n\nIn RStudio, open up \"modules/module_demo_02/app.R\"\nWire in a new dataset to one of the plots\nIf you’re feeling adventurous, add a new plot\n\n\ncountdown::countdown(minutes = 5)"
+  },
+  {
+    "objectID": "modules/slides.html#module-design-1",
+    "href": "modules/slides.html#module-design-1",
+    "title": "Part 3: Shiny Modules",
+    "section": "Module Design",
+    "text": "Module Design\n\n\nCareful design\n\nWhat does the module do?\nWhat is it trying to accomplish?\nWhat is the module’s name?\n\n\nInputs and Return Values\n\nStatic or Reactive Inputs?\nComplexity of return values\nWhich outputs serve as inputs for other modules?\n\n\nEric Nantz: Effective Use of Shiny modules in App development :::"
+  },
+  {
+    "objectID": "modules/slides.html#communicating-between-modules",
+    "href": "modules/slides.html#communicating-between-modules",
+    "title": "Part 3: Shiny Modules",
+    "section": "Communicating between modules",
+    "text": "Communicating between modules\n\nmodules can return single objects or named lists\nAmes Housing App\n\n\n  # execute plot variable selection modules\n  plot1vars &lt;- varselect_mod_server(\"plot1_vars\") #returns a reactive\n  plot2vars &lt;- varselect_mod_server(\"plot2_vars\") #returns a reactive\n  \n  # execute scatterplot module\n  res &lt;- scatterplot_mod_server(\n                    \"plots\",\n                    dataset = ames,\n                    plot1vars = plot1vars,\n                    plot2vars = plot2vars)"
+  },
+  {
+    "objectID": "modules/slides.html#scatterplot_mod_server",
+    "href": "modules/slides.html#scatterplot_mod_server",
+    "title": "Part 3: Shiny Modules",
+    "section": "scatterplot_mod_server",
+    "text": "scatterplot_mod_server\n\nscatterplot_mod_server &lt;- function(input, \n                                   output, \n                                   session, \n                                   dataset, \n                                   plot1vars, \n                                   plot2vars) {\n  \n  plot1_obj &lt;- reactive({\n    p &lt;- scatter_sales(dataset, xvar = plot1vars$xvar(), yvar = plot1vars$yvar())\n    return(p)\n  })\n  \n  plot2_obj &lt;- reactive({\n    p &lt;- scatter_sales(dataset, xvar = plot2vars$xvar(), yvar = plot2vars$yvar())\n    return(p)\n  })\n  \n  output$plot1 &lt;- renderPlot({\n    plot1_obj()\n  })"
+  },
+  {
+    "objectID": "modules/slides.html#go-further",
+    "href": "modules/slides.html#go-further",
+    "title": "Part 3: Shiny Modules",
+    "section": "Go Further",
+    "text": "Go Further\n\nShiny Modules for Beginners - Emily Riederer\nEric Nantz: Effective Use of Shiny modules in App development\nMastering Shiny: Modules\n{rhino} - framework for developing apps from Appsilon"
+  },
+  {
+    "objectID": "layouts/index.html",
+    "href": "layouts/index.html",
+    "title": "Part 1: UI Layout and Customizing",
     "section": "",
-    "text": "Slides\n\n\n\nExercise 1\nCompare the two apps with a partner. Look at the reactive graph. Are they any different?\nrunApp(\"reactives/app_reactive.R\")\nrunApp(\"reactives/app_isolate.R\")\n\n\nExercise 2\nCompare the two apps with a partner. Look at the reactive graph. Are they any different?\nrunApp(\"reactives/app_eventReactive.R\")\nrunApp(\"reactives/app_observeEvent.R\")\n\n\nExercise 3\nTry and understand this app using {reactlog}.\nrunApp(\"reactives/app_ExtendedTaskSingle.R\")"
+    "text": "By the end of this session, you should be able to:\n\nLayout your shiny app using {bslib}\nStyle your shiny app using bslib::bs_themer()\nStyle your shiny app using {thematic}"
+  },
+  {
+    "objectID": "layouts/index.html#learning-objectives",
+    "href": "layouts/index.html#learning-objectives",
+    "title": "Part 1: UI Layout and Customizing",
+    "section": "",
+    "text": "By the end of this session, you should be able to:\n\nLayout your shiny app using {bslib}\nStyle your shiny app using bslib::bs_themer()\nStyle your shiny app using {thematic}"
+  },
+  {
+    "objectID": "layouts/index.html#slides",
+    "href": "layouts/index.html#slides",
+    "title": "Part 1: UI Layout and Customizing",
+    "section": "Slides",
+    "text": "Slides\n    View slides in full screen"
+  },
+  {
+    "objectID": "layouts/index.html#exercises",
+    "href": "layouts/index.html#exercises",
+    "title": "Part 1: UI Layout and Customizing",
+    "section": "Exercises",
+    "text": "Exercises\n\nExercise 1\nModify the value_box code in layouts/app_bslib_box_layout.R. Try out the following:\n\nDifferent colors: check out R-Gallery’s Color Picker\nDifferent icons: check out Bootstrap Icons\nDifferent content\n\nIf you like, paste it into the Cascadia-R slack channel.\n\n\nExercise 2\nTry running the following code below and change the bg and fg variables, as well as primary and maybe even the font. Cut and paste your bs_theme_update() code into the Slack to share your creation.\nlibrary(bslib)\nrun_with_themer(\"app_bs_themer.R\")"
+  },
+  {
+    "objectID": "index.html#expectations",
+    "href": "index.html#expectations",
+    "title": "Intermediate shiny: drawing the owl",
+    "section": "Expectations",
+    "text": "Expectations\nI’ve tried to make this easier to understand. However, there are some Shiny concepts that are just inherently difficult to understand. So be easy on yourself (and me).\nBe gentle with yourself and others if there is confusion. We’ll work through it."
+  },
+  {
+    "objectID": "index.html#agenda-roughly",
+    "href": "index.html#agenda-roughly",
+    "title": "Intermediate shiny: drawing the owl",
+    "section": "Agenda (roughly)",
+    "text": "Agenda (roughly)\n\n\n\nSection\nBegin\nEnd\n\n\n\n\nWelcome/Get Started\n9:00\n9:10\n\n\nDashboards\n9:10\n9:55\n\n\nBreak\n9:55\n10:00\n\n\nReactivity\n10:00\n10:55\n\n\nBreak\n10:55\n11:00\n\n\nModules/Wrap-up\n11:00\n12:00"
+  },
+  {
+    "objectID": "index.html#clone-this-project-to-your-machine-optional",
+    "href": "index.html#clone-this-project-to-your-machine-optional",
+    "title": "Intermediate shiny: drawing the owl",
+    "section": "Clone this project to your machine (optional)",
+    "text": "Clone this project to your machine (optional)\n\ninstall.packages(\"usethis\")\n# download repository\nusethis::use_course(\"laderast/shinyowl\")\n# install needed packages\nrenv::restore()"
   },
   {
     "objectID": "layouts/slides.html#learning-objectives",
@@ -130,7 +354,7 @@
     "href": "layouts/slides.html#exercise",
     "title": "Part 1: UI Layout and Customizing",
     "section": "Exercise",
-    "text": "Exercise\nModify the value_box code in layouts/app_bslib_box_layout.R. Try out the following:\n\nDifferent colors: check out R-Gallery’s Color Picker\nDifferent icons: check out Bootstrap Icons\nDifferent content\n\nIf you like, paste it into the Cascadia-R slack channel.\n\ncountdown::countdown(minutes = 5)\n\n\n−+\n05:00"
+    "text": "Exercise\nModify the value_box code in layouts/app_bslib_box_layout.R. Try out the following:\n\nDifferent colors: check out R-Gallery’s Color Picker\nDifferent icons: check out Bootstrap Icons\nDifferent content\n\nIf you like, paste it into the Cascadia-R slack channel.\n\ncountdown::countdown(minutes = 5)"
   },
   {
     "objectID": "layouts/slides.html#navbars",
@@ -186,7 +410,7 @@
     "href": "layouts/slides.html#exercise-1",
     "title": "Part 1: UI Layout and Customizing",
     "section": "Exercise",
-    "text": "Exercise\nTry running the following code below and change the background and foreground variables, as well as primary and maybe even the font. Cut and paste your bs_theme_update() code into the Slack to share your creation.\nlibrary(bslib)\nrun_with_themer(\"layouts/app_bs_themer.R\")\n\ncountdown::countdown(minutes = 5)\n\n\n−+\n05:00"
+    "text": "Exercise\nTry running the following code below and change the background and foreground variables, as well as primary and maybe even the font. Cut and paste your bs_theme_update() code into the Slack to share your creation.\nlibrary(bslib)\nrun_with_themer(\"layouts/app_bs_themer.R\")\n\ncountdown::countdown(minutes = 5)"
   },
   {
     "objectID": "layouts/slides.html#full-list-of-bootstrap-options",
@@ -235,7 +459,7 @@
     "href": "layouts/slides.html#exercise-2",
     "title": "Part 1: UI Layout and Customizing",
     "section": "Exercise",
-    "text": "Exercise\n\nIn your project, look at the _brand.yml file and try uncommenting the various lines, especially foreground and background\nReload app_bs_themer.R and see changes.\nTry running run_with_themer() for the app and apply the themes again\nHow does the _brand.yml affects the themes?\n\nlibrary(bslib)\nrun_with_themer(\"layouts/app_bs_themer.R\")\n\ncountdown::countdown(minutes = 5)\n\n\n−+\n05:00"
+    "text": "Exercise\n\nIn your project, look at the _brand.yml file and try uncommenting the various lines, especially foreground and background\nReload app_bs_themer.R and see changes.\nTry running run_with_themer() for the app and apply the themes again\nHow does the _brand.yml affects the themes?\n\nlibrary(bslib)\nrun_with_themer(\"layouts/app_bs_themer.R\")\n\ncountdown::countdown(minutes = 5)"
   },
   {
     "objectID": "layouts/slides.html#overriding-brand.yml",
@@ -273,213 +497,122 @@
     "text": "Resources\n\nBeautify with Bootstrap\nShiny in Production: Design and UX\nCarson Sievert: Towards the Next Generation of UI"
   },
   {
-    "objectID": "index.html#expectations",
-    "href": "index.html#expectations",
-    "title": "Intermediate shiny: drawing the owl",
-    "section": "Expectations",
-    "text": "Expectations\nI’ve tried to make this easier to understand. However, there are some Shiny concepts that are just inherently difficult to understand. So be easy on yourself (and me).\nBe gentle with yourself and others if there is confusion. We’ll work through it."
-  },
-  {
-    "objectID": "index.html#agenda-roughly",
-    "href": "index.html#agenda-roughly",
-    "title": "Intermediate shiny: drawing the owl",
-    "section": "Agenda (roughly)",
-    "text": "Agenda (roughly)\n\n\n\nSection\nBegin\nEnd\n\n\n\n\nWelcome/Get Started\n9:00\n9:10\n\n\nDashboards\n9:10\n9:55\n\n\nBreak\n9:55\n10:00\n\n\nReactivity\n10:00\n10:55\n\n\nBreak\n10:55\n11:00\n\n\nModules/Wrap-up\n11:00\n12:00"
-  },
-  {
-    "objectID": "index.html#clone-this-project-to-your-machine-optional",
-    "href": "index.html#clone-this-project-to-your-machine-optional",
-    "title": "Intermediate shiny: drawing the owl",
-    "section": "Clone this project to your machine (optional)",
-    "text": "Clone this project to your machine (optional)\n\ninstall.packages(\"usethis\")\n# download repository\nusethis::use_course(\"laderast/shinyowl\")\n# install needed packages\nrenv::restore()"
-  },
-  {
-    "objectID": "layouts/index.html",
-    "href": "layouts/index.html",
-    "title": "Part 1: UI Layout and Customizing",
+    "objectID": "reactives/index.html",
+    "href": "reactives/index.html",
+    "title": "Exploring Reactivity",
     "section": "",
-    "text": "By the end of this session, you should be able to:\n\nLayout your shiny app using {bslib}\nStyle your shiny app using bslib::bs_themer()\nStyle your shiny app using {thematic}"
+    "text": "Slides\n\n\n\nExercise 1\nCompare the two apps with a partner. Look at the reactive graph. Are they any different?\nrunApp(\"reactives/app_reactive.R\")\nrunApp(\"reactives/app_isolate.R\")\n\n\nExercise 2\nCompare the two apps with a partner. Look at the reactive graph. Are they any different?\nrunApp(\"reactives/app_eventReactive.R\")\nrunApp(\"reactives/app_observeEvent.R\")\n\n\nExercise 3\nTry and understand this app using {reactlog}.\nrunApp(\"reactives/app_ExtendedTaskSingle.R\")"
   },
   {
-    "objectID": "layouts/index.html#learning-objectives",
-    "href": "layouts/index.html#learning-objectives",
-    "title": "Part 1: UI Layout and Customizing",
+    "objectID": "modules/index.html",
+    "href": "modules/index.html",
+    "title": "Part 3: Modules",
     "section": "",
-    "text": "By the end of this session, you should be able to:\n\nLayout your shiny app using {bslib}\nStyle your shiny app using bslib::bs_themer()\nStyle your shiny app using {thematic}"
+    "text": "By the end of this session, you should be able to:\n\nUtilize pre-built Shiny modules in your apps\nBuild your own Shiny modules\nExplain the basics of module communication"
   },
   {
-    "objectID": "layouts/index.html#slides",
-    "href": "layouts/index.html#slides",
-    "title": "Part 1: UI Layout and Customizing",
+    "objectID": "modules/index.html#learning-objectives",
+    "href": "modules/index.html#learning-objectives",
+    "title": "Part 3: Modules",
+    "section": "",
+    "text": "By the end of this session, you should be able to:\n\nUtilize pre-built Shiny modules in your apps\nBuild your own Shiny modules\nExplain the basics of module communication"
+  },
+  {
+    "objectID": "modules/index.html#slides",
+    "href": "modules/index.html#slides",
+    "title": "Part 3: Modules",
     "section": "Slides",
     "text": "Slides\n    View slides in full screen"
   },
   {
-    "objectID": "layouts/index.html#exercises",
-    "href": "layouts/index.html#exercises",
-    "title": "Part 1: UI Layout and Customizing",
+    "objectID": "modules/index.html#exercises",
+    "href": "modules/index.html#exercises",
+    "title": "Part 3: Modules",
     "section": "Exercises",
-    "text": "Exercises\n\nExercise 1\nModify the value_box code in layouts/app_bslib_box_layout.R. Try out the following:\n\nDifferent colors: check out R-Gallery’s Color Picker\nDifferent icons: check out Bootstrap Icons\nDifferent content\n\nIf you like, paste it into the Cascadia-R slack channel.\n\n\nExercise 2\nTry running the following code below and change the bg and fg variables, as well as primary and maybe even the font. Cut and paste your bs_theme_update() code into the Slack to share your creation.\nlibrary(bslib)\nrun_with_themer(\"app_bs_themer.R\")"
+    "text": "Exercises\n\nExercise 1: Try it out\nrunApp(\"modules/module_demo_01/\")\n\n\nExercise 2: Use a Shiny Module\n\nIn RStudio, open up \"modules/module_demo_02/app.R\"\nWire in a new dataset to one of the plots\nIf you’re feeling adventurous, add a new plot"
   },
   {
-    "objectID": "modules/slides.html#you-have-linkedin-to-blame",
-    "href": "modules/slides.html#you-have-linkedin-to-blame",
-    "title": "Part 3: Shiny Modules",
-    "section": "You have LinkedIn to Blame",
-    "text": "You have LinkedIn to Blame"
+    "objectID": "querychat/slides.html#querychat",
+    "href": "querychat/slides.html#querychat",
+    "title": "querychat",
+    "section": "{querychat}",
+    "text": "{querychat}\n\nEmbed a natural language interface into your shinyapp for filtering\nAdd context for LLM to understand your data\nTranslates queries to SQL\nDoes not share data with LLM providers\n\nhttps://posit-dev.github.io/querychat/r/"
   },
   {
-    "objectID": "modules/slides.html#modules",
-    "href": "modules/slides.html#modules",
-    "title": "Part 3: Shiny Modules",
-    "section": "Modules",
-    "text": "Modules\n\n\n\n\nWhy?\nMotivating example\nHow to code"
+    "objectID": "querychat/slides.html#why-should-you-care",
+    "href": "querychat/slides.html#why-should-you-care",
+    "title": "querychat",
+    "section": "Why Should You Care?",
+    "text": "Why Should You Care?\n\nOftentimes, we can’t always anticipate queries\nLets us bridge the gap\nGives us a reactive data frame that we can use elsewhere in our app"
   },
   {
-    "objectID": "modules/slides.html#why",
-    "href": "modules/slides.html#why",
-    "title": "Part 3: Shiny Modules",
-    "section": "Why?",
-    "text": "Why?\n\nA new way to thinking about apps\nModularize code into smaller apps\nmakes it easier to develop with others\nmakes it easier to test code"
+    "objectID": "querychat/slides.html#setup-add-your-api-key-to-the-.renviron-file",
+    "href": "querychat/slides.html#setup-add-your-api-key-to-the-.renviron-file",
+    "title": "querychat",
+    "section": "Setup: Add your API key to the .Renviron file",
+    "text": "Setup: Add your API key to the .Renviron file\n\nusethis::edit_r_environ()\n\n# Uncomment the appropriate line and fill in the API key below\n# ANTHROPIC_API_KEY=\"\"\n# OPENAI_API_KEY=\"\""
   },
   {
-    "objectID": "modules/slides.html#use-shiny-modules-if",
-    "href": "modules/slides.html#use-shiny-modules-if",
-    "title": "Part 3: Shiny Modules",
-    "section": "Use Shiny Modules if:",
-    "text": "Use Shiny Modules if:\n\nYou want to reuse your code, especially in the same app\nYou are tired of thinking up unique ids for all the elements in your app (namespacing)\nYou need to break up a monolithic shiny application into pieces\n\nmultiple Shiny developers"
+    "objectID": "querychat/slides.html#select-your-model",
+    "href": "querychat/slides.html#select-your-model",
+    "title": "querychat",
+    "section": "Select your model",
+    "text": "Select your model\nUse ellmer::models_anthropic() or ellmer::models_openai() to find a model to use\n\nellmer::models_anthropic()\n\n                             id              name created_at cached_input input\nNA               claude-fable-5    Claude Fable 5 2026-06-07           NA    NA\nNA.1            claude-opus-4-8   Claude Opus 4.8 2026-05-28           NA    NA\n16              claude-opus-4-7   Claude Opus 4.7 2026-04-14          0.5     5\n24            claude-sonnet-4-6 Claude Sonnet 4.6 2026-02-17          0.3     3\n14              claude-opus-4-6   Claude Opus 4.6 2026-02-04          0.5     5\n13     claude-opus-4-5-20251101   Claude Opus 4.5 2025-11-24          0.5     5\n8     claude-haiku-4-5-20251001  Claude Haiku 4.5 2025-10-15          0.1     1\n22   claude-sonnet-4-5-20250929 Claude Sonnet 4.5 2025-09-29          0.3     3\n10     claude-opus-4-1-20250805   Claude Opus 4.1 2025-08-05          1.5    15\n     output\nNA       NA\nNA.1     NA\n16       25\n24       15\n14       25\n13       25\n8         5\n22       15\n10       75"
   },
   {
-    "objectID": "modules/slides.html#maybe-not",
-    "href": "modules/slides.html#maybe-not",
-    "title": "Part 3: Shiny Modules",
-    "section": "Maybe not:",
-    "text": "Maybe not:\n\nYour app is a one and done - single version\nIt doesn’t have that many controls that need to be reused"
+    "objectID": "querychat/slides.html#plug-your-model-it-into-your-app",
+    "href": "querychat/slides.html#plug-your-model-it-into-your-app",
+    "title": "querychat",
+    "section": "Plug your model it into your app:",
+    "text": "Plug your model it into your app:\n\nlibrary(palmerpenguins)\nlibrary(querychat)\ndata(penguins)\nmy_data &lt;- penguins\nclient &lt;- ellmer::chat_anthropic(model=\"claude-sonnet-4-5\")\nqc &lt;- querychat(data_source = penguins, client=client)\nqc$app()"
   },
   {
-    "objectID": "modules/slides.html#motivating-example",
-    "href": "modules/slides.html#motivating-example",
-    "title": "Part 3: Shiny Modules",
-    "section": "Motivating Example",
-    "text": "Motivating Example\n\nAn ui that lets you pass in a dataset\nLets you select columns from that dataset\nWant multiple plots in the same app"
+    "objectID": "querychat/slides.html#adding-context",
+    "href": "querychat/slides.html#adding-context",
+    "title": "querychat",
+    "section": "Adding Context",
+    "text": "Adding Context\n\nCreate a data_description.md file in your directory (see `querychat/app_data_description/data_desscription.md)\n\n\nclient &lt;- ellmer::chat_anthropic(model=\"claude-sonnet-4-5\")\nqc &lt;- querychat(\n    data_source = penguins, \n    client=client,\n    data_description = \"data_description.md\")\nqc$app()"
   },
   {
-    "objectID": "modules/slides.html#using-shiny-modules",
-    "href": "modules/slides.html#using-shiny-modules",
-    "title": "Part 3: Shiny Modules",
-    "section": "Using Shiny modules",
-    "text": "Using Shiny modules\n\n\nui\n\nui &lt;- fluidPage(   \n    select_hist_ui(\n      id = \"mtcars_module\", \n      var_choices = mtcars_var_choices)\n    )\n\n\nnote that select_hist_ui() is a function that takes an id argument\nuses an id called mtcars_module"
+    "objectID": "querychat/slides.html#adding-context-1",
+    "href": "querychat/slides.html#adding-context-1",
+    "title": "querychat",
+    "section": "Adding Context",
+    "text": "Adding Context"
   },
   {
-    "objectID": "modules/slides.html#using-shiny-modules-1",
-    "href": "modules/slides.html#using-shiny-modules-1",
-    "title": "Part 3: Shiny Modules",
-    "section": "Using Shiny modules",
-    "text": "Using Shiny modules\n\n\nui\n\nui &lt;- fluidPage(   \n    select_hist_ui(\n      id = \"mtcars_module\", \n      var_choices = mtcars_var_choices)\n    )\n\n\nserver\n\nserver &lt;- function(input, output) {\n    select_hist_server(\n      id=\"mtcars_module\", \n      data=mtcars)\n}\n\n\nNote that we have a function select_hist_server()\nAlso uses the id \"mtcars_module\""
+    "objectID": "querychat/slides.html#add-a-greeting",
+    "href": "querychat/slides.html#add-a-greeting",
+    "title": "querychat",
+    "section": "Add a Greeting",
+    "text": "Add a Greeting\n\nclient &lt;- ellmer::chat_anthropic(model=\"claude-sonnet-4-5\")\nqc &lt;- querychat(\n    data_source = penguins, \n    client=client,\n    data_description = \"data_description.md\",\n    greeting = \"Welcome to exploring the world of penguins!\")\nqc$app()"
   },
   {
-    "objectID": "modules/slides.html#exercise-try-it-out",
-    "href": "modules/slides.html#exercise-try-it-out",
-    "title": "Part 3: Shiny Modules",
-    "section": "Exercise: Try it out",
-    "text": "Exercise: Try it out\nrunApp(\"modules/module_demo_01/\")\n\ncountdown::countdown(minutes = 3)\n\n\n−+\n03:00"
+    "objectID": "querychat/slides.html#tools-giving-people-capabilities",
+    "href": "querychat/slides.html#tools-giving-people-capabilities",
+    "title": "querychat",
+    "section": "Tools: Giving people capabilities",
+    "text": "Tools: Giving people capabilities\n\nclient &lt;- ellmer::chat_anthropic(model=\"claude-sonnet-4-5\")\nqc &lt;- querychat(\n    data_source = penguins, \n    client=client,\n    data_description = \"data_description.md\",\n    greeting = \"Welcome to exploring the world of penguins!\",\n    tools=c(\"query\", \"filter\"))\nqc$app()\n\n\nTools"
   },
   {
-    "objectID": "modules/slides.html#reusing-code",
-    "href": "modules/slides.html#reusing-code",
-    "title": "Part 3: Shiny Modules",
-    "section": "Reusing code",
-    "text": "Reusing code\n\n\nui\n\nui &lt;- fluidPage(   \n    select_hist_ui(id = \"mtcars_module\", \n                   var_choices = mtcars_var_choices),\n    select_hist_ui(id = \"penguin_module\",\n                   var_choices = penguin_choices)\n    )\n\n\nnote we have two select_hist_ui() functions\nthe second one has the id of penguin_module"
+    "objectID": "querychat/slides.html#adding-visualization-to-the-chat",
+    "href": "querychat/slides.html#adding-visualization-to-the-chat",
+    "title": "querychat",
+    "section": "Adding visualization to the chat",
+    "text": "Adding visualization to the chat\n\nRequires the ggsql package\nModify the tool argument to include visualize:\n\n\nlibrary(palmerpenguins)\nlibrary(querychat)\ndata(penguins)\nmy_data &lt;- penguins\nclient &lt;- ellmer::chat_anthropic(model=\"claude-sonnet-4-5\")\nqc &lt;- querychat(\n    data_source = penguins, \n    client=client,\n    data_description = \"data_description.md\",\n    greeting = \"Welcome to exploring the world of penguins!\",\n    tools=c(\"query\", \"filter\", \"visualize\"))\nqc$app()"
   },
   {
-    "objectID": "modules/slides.html#reusing-code-1",
-    "href": "modules/slides.html#reusing-code-1",
-    "title": "Part 3: Shiny Modules",
-    "section": "Reusing code",
-    "text": "Reusing code\n\n\nui\n\nui &lt;- fluidPage(   \n    select_hist_ui(id = \"mtcars_module\", \n                   var_choices = mtcars_var_choices),\n    select_hist_ui(id = \"penguin_module\",\n                   var_choices = penguin_choices)\n    )\n\n\nserver\n\nserver &lt;- function(input, output) {\n    select_hist_server(id=\"mtcars_module\", \n                       data=mtcars)\n    select_hist_server(id=\"penguin_module\", \n                       data=penguins)\n}\n\n\nNote that we have two instances of select_hist_server()\nThe second one use the id \"penguin_module\"\nWe can have two different plots/interfaces!"
+    "objectID": "querychat/slides.html#hooking-up-into-visualizations",
+    "href": "querychat/slides.html#hooking-up-into-visualizations",
+    "title": "querychat",
+    "section": "Hooking up into visualizations",
+    "text": "Hooking up into visualizations\nThe QueryChat object has a few methods that act as reactives that you can use to plug in to visualizations:\n# put this in the server function to access the reactive\nqc_vals &lt;- qc$server()\nThen you can add this to your code.\n\nqc_vals$df() - the actual filtered data from QueryChat\nqc_vals$sql() - the SQL string\nqc_vals$title() - The title of the filter"
   },
   {
-    "objectID": "modules/slides.html#two-modules-two-datasets",
-    "href": "modules/slides.html#two-modules-two-datasets",
-    "title": "Part 3: Shiny Modules",
-    "section": "Two modules, two datasets",
-    "text": "Two modules, two datasets\n\n\n\ndataset is mtcars\n\n\n\n\ndataset is penguins"
-  },
-  {
-    "objectID": "modules/slides.html#making-your-own-modules",
-    "href": "modules/slides.html#making-your-own-modules",
-    "title": "Part 3: Shiny Modules",
-    "section": "Making Your Own Modules",
-    "text": "Making Your Own Modules\n\nui module\nserver module\ndemo app"
-  },
-  {
-    "objectID": "modules/slides.html#make-it-easy-on-yourself",
-    "href": "modules/slides.html#make-it-easy-on-yourself",
-    "title": "Part 3: Shiny Modules",
-    "section": "Make it easy on yourself",
-    "text": "Make it easy on yourself\n\nPut your code in a package (usethis::create_package())\nUse &lt;module_name&gt;_server and &lt;module_name&gt;_ui for your module names\nHave a demo app &lt;module_name&gt;_demo (makes it easier for testing)"
-  },
-  {
-    "objectID": "modules/slides.html#ui-module",
-    "href": "modules/slides.html#ui-module",
-    "title": "Part 3: Shiny Modules",
-    "section": "ui module",
-    "text": "ui module\n\nselect_hist_ui &lt;- function(id, var_choices){\n  ns &lt;- NS(id)\n  tagList(\n    selectInput(inputId = ns(\"x_var\"), \n                label=\"Select X Variable\", \n                choices=var_choices, \n                selected = var_choices[1]),\n    plotOutput(ns(\"hist_plot\"))\n  )\n}\n\n\nInitialize the namespace for id using NS() function\nNeed to refer to any controls/plots with ids wrapped in ns()\n\nsuch as ns(\"x_var\") or ns(\"hist_plot\")"
-  },
-  {
-    "objectID": "modules/slides.html#server-module",
-    "href": "modules/slides.html#server-module",
-    "title": "Part 3: Shiny Modules",
-    "section": "Server Module",
-    "text": "Server Module\n\nselect_hist_server &lt;- function(id, data) {\n  moduleServer(id, function(input, output, session) {\n\n  })\n  \n}\n\n\ndefine a function that takes an id as input\nmoduleServer() encapsulates your server code"
-  },
-  {
-    "objectID": "modules/slides.html#server-module-1",
-    "href": "modules/slides.html#server-module-1",
-    "title": "Part 3: Shiny Modules",
-    "section": "Server Module",
-    "text": "Server Module\n\nselect_hist_server &lt;- function(id, data) {\n  moduleServer(id, function(input, output, session) {\n\n    output$hist_plot &lt;- \n      renderPlot({\n        x_var &lt;- input$x_var\n        data %&gt;% ggplot(aes(x=.data[[x_var]])) +\n          geom_histogram()\n    })\n    \n  })\n  \n}\n\n\nPut your server code in moduleServer()\nbe really careful with closing curly brackets and parentheses"
-  },
-  {
-    "objectID": "modules/slides.html#write-a-demo-app-function",
-    "href": "modules/slides.html#write-a-demo-app-function",
-    "title": "Part 3: Shiny Modules",
-    "section": "Write a demo app function",
-    "text": "Write a demo app function\n\n## modules.R\nselect_hist_demo &lt;- function(data=mtcars){\n  var_choices &lt;- names(data)\n  ui &lt;- fluidPage(\n    select_hist_ui(id = \"module\", \n                   var_choices = var_choices)  \n  )\n  server &lt;- function(input,output,session){\n    select_hist_server(id=\"module\", data=data)\n  }\n  shinyApp(ui, server)\n}\n\n\nwrite an &lt;module_name&gt;_demo() function\nuseful for documentation and testing"
-  },
-  {
-    "objectID": "modules/slides.html#exercise-use-a-shiny-module",
-    "href": "modules/slides.html#exercise-use-a-shiny-module",
-    "title": "Part 3: Shiny Modules",
-    "section": "Exercise: Use a Shiny Module",
-    "text": "Exercise: Use a Shiny Module\n\nIn RStudio, open up \"modules/module_demo_02/app.R\"\nWire in a new dataset to one of the plots\nIf you’re feeling adventurous, add a new plot\n\n\ncountdown::countdown(minutes = 5)\n\n\n−+\n05:00"
-  },
-  {
-    "objectID": "modules/slides.html#module-design-1",
-    "href": "modules/slides.html#module-design-1",
-    "title": "Part 3: Shiny Modules",
-    "section": "Module Design",
-    "text": "Module Design\n\n\nCareful design\n\nWhat does the module do?\nWhat is it trying to accomplish?\nWhat is the module’s name?\n\n\nInputs and Return Values\n\nStatic or Reactive Inputs?\nComplexity of return values\nWhich outputs serve as inputs for other modules?\n\n\nEric Nantz: Effective Use of Shiny modules in App development :::"
-  },
-  {
-    "objectID": "modules/slides.html#communicating-between-modules",
-    "href": "modules/slides.html#communicating-between-modules",
-    "title": "Part 3: Shiny Modules",
-    "section": "Communicating between modules",
-    "text": "Communicating between modules\n\nmodules can return single objects or named lists\nAmes Housing App\n\n\n  # execute plot variable selection modules\n  plot1vars &lt;- varselect_mod_server(\"plot1_vars\") #returns a reactive\n  plot2vars &lt;- varselect_mod_server(\"plot2_vars\") #returns a reactive\n  \n  # execute scatterplot module\n  res &lt;- scatterplot_mod_server(\n                    \"plots\",\n                    dataset = ames,\n                    plot1vars = plot1vars,\n                    plot2vars = plot2vars)"
-  },
-  {
-    "objectID": "modules/slides.html#scatterplot_mod_server",
-    "href": "modules/slides.html#scatterplot_mod_server",
-    "title": "Part 3: Shiny Modules",
-    "section": "scatterplot_mod_server",
-    "text": "scatterplot_mod_server\n\nscatterplot_mod_server &lt;- function(input, \n                                   output, \n                                   session, \n                                   dataset, \n                                   plot1vars, \n                                   plot2vars) {\n  \n  plot1_obj &lt;- reactive({\n    p &lt;- scatter_sales(dataset, xvar = plot1vars$xvar(), yvar = plot1vars$yvar())\n    return(p)\n  })\n  \n  plot2_obj &lt;- reactive({\n    p &lt;- scatter_sales(dataset, xvar = plot2vars$xvar(), yvar = plot2vars$yvar())\n    return(p)\n  })\n  \n  output$plot1 &lt;- renderPlot({\n    plot1_obj()\n  })"
-  },
-  {
-    "objectID": "modules/slides.html#go-further",
-    "href": "modules/slides.html#go-further",
-    "title": "Part 3: Shiny Modules",
-    "section": "Go Further",
-    "text": "Go Further\n\nShiny Modules for Beginners - Emily Riederer\nEric Nantz: Effective Use of Shiny modules in App development\nMastering Shiny: Modules\n{rhino} - framework for developing apps from Appsilon"
+    "objectID": "querychat/slides.html#example",
+    "href": "querychat/slides.html#example",
+    "title": "querychat",
+    "section": "Example",
+    "text": "Example\n\n# in server function\n  output$avg_mass &lt;- renderText({\n    avg &lt;- mean(qc_vals$df()$body_mass_g, na.rm = TRUE)\n    paste0(round(avg, 0), \"g\")\n  })\n\n# in ui function\n   value_box(\n      title = \"Avg Body Mass\",\n      value = textOutput(\"avg_mass\"),\n      showcase = bs_icon(\"speedometer\"),\n      theme = \"info\"\n    )\n\nrunApp(\"querychat/app_big_example\")"
   }
 ]
