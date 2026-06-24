@@ -4,7 +4,10 @@ library(bslib)
 library(bsicons)
 library(palmerpenguins)
 
+thematic::thematic_shiny()
+
 ui <- page(
+  theme = bs_theme(brand=FALSE),
   card({
     plotOutput("penguins")
   })

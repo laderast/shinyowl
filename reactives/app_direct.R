@@ -2,6 +2,7 @@ library(shiny)
 library(ggplot2)
 library(palmerpenguins)
 library(shiny)
+library(bslib)
 library(reactlog)
 
 reactlog_enable()

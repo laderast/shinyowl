@@ -1,0 +1,37 @@
+---
+title: "Dashboards with Quarto"
+format: dashboard
+server: shiny
+brand: true
+---
+
+
+```{r}
+## UI Code Here
+choices <- c("species", "island")   
+selectInput("variable", "Select Variable to color by", choices)
+
+```
+
+
+```{r}
+plotOutput("my_plot")
+```
+
+```{r}
+#| context: server
+#thematic::thematic_shiny(bg = "#F9F9F9", fg = "#1A1A1A", accent="#FFFFFF")
+thematic::thematic_shiny(inherit = TRUE)
+library(ggplot2)
+library(palmerpenguins)
+output$my_plot <- renderPlot({
+  req(input$variable)
+  
+  ggplot(penguins) +
+    aes(x=bill_length_mm, 
+        y=bill_depth_mm, 
+        color= .data[[input$variable]] ) +
+      geom_point() +
+    theme_minimal()
+})
+```
