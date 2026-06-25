@@ -5,6 +5,8 @@ library(plotly)
 library(palmerpenguins)
 library(dplyr)
 library(bsicons)
+library(quarto)
+library(duckdb)
 library(querychat)
 
 client <- ellmer::chat_anthropic("claude-sonnet-4-5")
