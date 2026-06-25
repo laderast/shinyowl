@@ -1,0 +1,10 @@
+name: app_big_example
+title:
+username: tladeras
+account: tladeras
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 17552759
+bundleId: 12179720
+url: https://tladeras.shinyapps.io/app_big_example/
+version: 1
